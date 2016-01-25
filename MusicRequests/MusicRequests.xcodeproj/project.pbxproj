@@ -13,6 +13,15 @@
 		505B5E3C1C55CDFB00235C1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 505B5E3B1C55CDFB00235C1C /* Assets.xcassets */; };
 		505B5E3F1C55CDFB00235C1C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 505B5E3D1C55CDFB00235C1C /* LaunchScreen.storyboard */; };
 		505B5E4A1C55CDFC00235C1C /* MusicRequestsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E491C55CDFB00235C1C /* MusicRequestsTests.swift */; };
+		505B5E561C55CEC900235C1C /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E551C55CEC900235C1C /* Library.swift */; };
+		505B5E581C55CEE100235C1C /* FilteredLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E571C55CEE100235C1C /* FilteredLibrary.swift */; };
+		505B5E5E1C55D0B300235C1C /* NowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E5D1C55D0B300235C1C /* NowPlaying.swift */; };
+		505B5E601C55D0E100235C1C /* RemoteLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */; };
+		505B5E631C55D15700235C1C /* LibraryServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E621C55D15700235C1C /* LibraryServer.swift */; };
+		505B5E651C55D16800235C1C /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E641C55D16800235C1C /* Queue.swift */; };
+		505B5E671C55D18B00235C1C /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E661C55D18B00235C1C /* Session.swift */; };
+		505B5E691C55D19D00235C1C /* LocalSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E681C55D19D00235C1C /* LocalSession.swift */; };
+		505B5E6B1C55D1AC00235C1C /* RemoteSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E6A1C55D1AC00235C1C /* RemoteSession.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +45,15 @@
 		505B5E451C55CDFB00235C1C /* MusicRequestsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicRequestsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		505B5E491C55CDFB00235C1C /* MusicRequestsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicRequestsTests.swift; sourceTree = "<group>"; };
 		505B5E4B1C55CDFC00235C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		505B5E551C55CEC900235C1C /* Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Library.swift; path = Sources/Library.swift; sourceTree = "<group>"; };
+		505B5E571C55CEE100235C1C /* FilteredLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilteredLibrary.swift; path = Sources/FilteredLibrary.swift; sourceTree = "<group>"; };
+		505B5E5D1C55D0B300235C1C /* NowPlaying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlaying.swift; path = Sources/NowPlaying.swift; sourceTree = "<group>"; };
+		505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteLibrary.swift; path = Sources/RemoteLibrary.swift; sourceTree = "<group>"; };
+		505B5E621C55D15700235C1C /* LibraryServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LibraryServer.swift; path = Sources/LibraryServer.swift; sourceTree = "<group>"; };
+		505B5E641C55D16800235C1C /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Queue.swift; path = Sources/Queue.swift; sourceTree = "<group>"; };
+		505B5E661C55D18B00235C1C /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Session.swift; path = Sources/Session.swift; sourceTree = "<group>"; };
+		505B5E681C55D19D00235C1C /* LocalSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalSession.swift; path = Sources/LocalSession.swift; sourceTree = "<group>"; };
+		505B5E6A1C55D1AC00235C1C /* RemoteSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteSession.swift; path = Sources/RemoteSession.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +95,10 @@
 		505B5E331C55CDFB00235C1C /* MusicRequests */ = {
 			isa = PBXGroup;
 			children = (
+				505B5E541C55CE9600235C1C /* Library */,
+				505B5E5C1C55D09800235C1C /* Playing */,
 				505B5E341C55CDFB00235C1C /* AppDelegate.swift */,
+				505B5E611C55D0F700235C1C /* Networking */,
 				505B5E361C55CDFB00235C1C /* ViewController.swift */,
 				505B5E381C55CDFB00235C1C /* Main.storyboard */,
 				505B5E3B1C55CDFB00235C1C /* Assets.xcassets */,
@@ -94,6 +115,44 @@
 				505B5E4B1C55CDFC00235C1C /* Info.plist */,
 			);
 			path = MusicRequestsTests;
+			sourceTree = "<group>";
+		};
+		505B5E541C55CE9600235C1C /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				505B5E551C55CEC900235C1C /* Library.swift */,
+				505B5E571C55CEE100235C1C /* FilteredLibrary.swift */,
+				505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		505B5E5C1C55D09800235C1C /* Playing */ = {
+			isa = PBXGroup;
+			children = (
+				505B5E5D1C55D0B300235C1C /* NowPlaying.swift */,
+				505B5E641C55D16800235C1C /* Queue.swift */,
+			);
+			name = Playing;
+			sourceTree = "<group>";
+		};
+		505B5E611C55D0F700235C1C /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				505B5E6C1C55D1B700235C1C /* Session */,
+				505B5E621C55D15700235C1C /* LibraryServer.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		505B5E6C1C55D1B700235C1C /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				505B5E661C55D18B00235C1C /* Session.swift */,
+				505B5E681C55D19D00235C1C /* LocalSession.swift */,
+				505B5E6A1C55D1AC00235C1C /* RemoteSession.swift */,
+			);
+			name = Session;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,8 +255,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				505B5E671C55D18B00235C1C /* Session.swift in Sources */,
+				505B5E691C55D19D00235C1C /* LocalSession.swift in Sources */,
+				505B5E581C55CEE100235C1C /* FilteredLibrary.swift in Sources */,
 				505B5E371C55CDFB00235C1C /* ViewController.swift in Sources */,
+				505B5E631C55D15700235C1C /* LibraryServer.swift in Sources */,
+				505B5E601C55D0E100235C1C /* RemoteLibrary.swift in Sources */,
+				505B5E6B1C55D1AC00235C1C /* RemoteSession.swift in Sources */,
 				505B5E351C55CDFB00235C1C /* AppDelegate.swift in Sources */,
+				505B5E561C55CEC900235C1C /* Library.swift in Sources */,
+				505B5E651C55D16800235C1C /* Queue.swift in Sources */,
+				505B5E5E1C55D0B300235C1C /* NowPlaying.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
