@@ -15,6 +15,7 @@
 		505B5E4A1C55CDFC00235C1C /* MusicRequestsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E491C55CDFB00235C1C /* MusicRequestsTests.swift */; };
 		505B5E561C55CEC900235C1C /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E551C55CEC900235C1C /* Library.swift */; };
 		505B5E581C55CEE100235C1C /* FilteredLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E571C55CEE100235C1C /* FilteredLibrary.swift */; };
+		505B5E5B1C55CF0300235C1C /* Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E591C55CF0300235C1C /* Data.xcdatamodeld */; };
 		505B5E5E1C55D0B300235C1C /* NowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E5D1C55D0B300235C1C /* NowPlaying.swift */; };
 		505B5E601C55D0E100235C1C /* RemoteLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */; };
 		505B5E631C55D15700235C1C /* LibraryServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E621C55D15700235C1C /* LibraryServer.swift */; };
@@ -47,6 +48,7 @@
 		505B5E4B1C55CDFC00235C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		505B5E551C55CEC900235C1C /* Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Library.swift; path = Sources/Library.swift; sourceTree = "<group>"; };
 		505B5E571C55CEE100235C1C /* FilteredLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilteredLibrary.swift; path = Sources/FilteredLibrary.swift; sourceTree = "<group>"; };
+		505B5E5A1C55CF0300235C1C /* Data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Data.xcdatamodel; sourceTree = "<group>"; };
 		505B5E5D1C55D0B300235C1C /* NowPlaying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlaying.swift; path = Sources/NowPlaying.swift; sourceTree = "<group>"; };
 		505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteLibrary.swift; path = Sources/RemoteLibrary.swift; sourceTree = "<group>"; };
 		505B5E621C55D15700235C1C /* LibraryServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LibraryServer.swift; path = Sources/LibraryServer.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				505B5E551C55CEC900235C1C /* Library.swift */,
 				505B5E571C55CEE100235C1C /* FilteredLibrary.swift */,
 				505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */,
+				505B5E591C55CF0300235C1C /* Data.xcdatamodeld */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				505B5E631C55D15700235C1C /* LibraryServer.swift in Sources */,
 				505B5E601C55D0E100235C1C /* RemoteLibrary.swift in Sources */,
 				505B5E6B1C55D1AC00235C1C /* RemoteSession.swift in Sources */,
+				505B5E5B1C55CF0300235C1C /* Data.xcdatamodeld in Sources */,
 				505B5E351C55CDFB00235C1C /* AppDelegate.swift in Sources */,
 				505B5E561C55CEC900235C1C /* Library.swift in Sources */,
 				505B5E651C55D16800235C1C /* Queue.swift in Sources */,
@@ -465,6 +469,19 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		505B5E591C55CF0300235C1C /* Data.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				505B5E5A1C55CF0300235C1C /* Data.xcdatamodel */,
+			);
+			currentVersion = 505B5E5A1C55CF0300235C1C /* Data.xcdatamodel */;
+			path = Data.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 505B5E291C55CDFB00235C1C /* Project object */;
 }
