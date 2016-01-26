@@ -1,25 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1605" minimumToolsVersion="Xcode 7.0">
-    <entity name="Album" syncable="YES"/>
-    <entity name="Artist" syncable="YES">
-        <relationship name="songs" optional="YES" maxCount="1" deletionRule="Nullify" syncable="YES"/>
+    <entity name="Album" representedClassName=".Album" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="artists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Artist" inverseName="albums" inverseEntity="Artist" syncable="YES"/>
+        <relationship name="tracks" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Track" inverseName="album" inverseEntity="Track" syncable="YES"/>
     </entity>
-    <entity name="Genre" syncable="YES">
-        <relationship name="songs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Song" inverseName="genre" inverseEntity="Song" syncable="YES"/>
+    <entity name="Artist" representedClassName=".Artist" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="albums" toMany="YES" deletionRule="Nullify" destinationEntity="Album" inverseName="artists" inverseEntity="Album" syncable="YES"/>
+        <relationship name="people" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="artists" inverseEntity="Person" syncable="YES"/>
+        <relationship name="singles" toMany="YES" deletionRule="Nullify" destinationEntity="Song" inverseName="artists" inverseEntity="Song" syncable="YES"/>
     </entity>
-    <entity name="Person" syncable="YES"/>
-    <entity name="Playlist" syncable="YES"/>
-    <entity name="Song" syncable="YES">
+    <entity name="Genre" representedClassName=".Genre" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="songs" toMany="YES" deletionRule="Nullify" destinationEntity="Song" inverseName="genres" inverseEntity="Song" syncable="YES"/>
+    </entity>
+    <entity name="Person" representedClassName=".Person" syncable="YES">
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" attributeType="String" syncable="YES"/>
+        <relationship name="artists" toMany="YES" deletionRule="Nullify" destinationEntity="Artist" inverseName="people" inverseEntity="Artist" syncable="YES"/>
+    </entity>
+    <entity name="Playlist" representedClassName=".Playlist" syncable="YES">
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
-        <relationship name="artist" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Artist" syncable="YES"/>
-        <relationship name="genre" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Genre" inverseName="songs" inverseEntity="Genre" syncable="YES"/>
+        <relationship name="tracks" toMany="YES" deletionRule="Nullify" destinationEntity="Track" inverseName="playlist" inverseEntity="Track" syncable="YES"/>
+    </entity>
+    <entity name="Song" representedClassName=".Song" syncable="YES">
+        <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="artists" toMany="YES" deletionRule="Nullify" destinationEntity="Artist" inverseName="singles" inverseEntity="Artist" syncable="YES"/>
+        <relationship name="genres" toMany="YES" deletionRule="Nullify" destinationEntity="Genre" inverseName="songs" inverseEntity="Genre" syncable="YES"/>
+        <relationship name="tracks" toMany="YES" deletionRule="Nullify" destinationEntity="Track" inverseName="song" inverseEntity="Track" syncable="YES"/>
+    </entity>
+    <entity name="Track" representedClassName=".Track" syncable="YES">
+        <attribute name="discNumber" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="songNumber" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
+        <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="tracks" inverseEntity="Album" syncable="YES"/>
+        <relationship name="playlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Playlist" inverseName="tracks" inverseEntity="Playlist" syncable="YES"/>
+        <relationship name="song" maxCount="1" deletionRule="Nullify" destinationEntity="Song" inverseName="tracks" inverseEntity="Song" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Song" positionX="-63" positionY="-18" width="128" height="90"/>
-        <element name="Artist" positionX="-54" positionY="-9" width="128" height="60"/>
-        <element name="Person" positionX="-36" positionY="9" width="128" height="45"/>
-        <element name="Album" positionX="-18" positionY="27" width="128" height="45"/>
-        <element name="Playlist" positionX="0" positionY="45" width="128" height="45"/>
-        <element name="Genre" positionX="18" positionY="63" width="128" height="60"/>
+        <element name="Album" positionX="-18" positionY="27" width="128" height="90"/>
+        <element name="Artist" positionX="-54" positionY="-9" width="128" height="105"/>
+        <element name="Genre" positionX="18" positionY="63" width="128" height="75"/>
+        <element name="Person" positionX="-36" positionY="9" width="128" height="90"/>
+        <element name="Playlist" positionX="0" positionY="45" width="128" height="75"/>
+        <element name="Song" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Track" positionX="36" positionY="90" width="128" height="120"/>
     </elements>
 </model>

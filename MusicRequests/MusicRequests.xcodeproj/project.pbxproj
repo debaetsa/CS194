@@ -23,6 +23,20 @@
 		505B5E671C55D18B00235C1C /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E661C55D18B00235C1C /* Session.swift */; };
 		505B5E691C55D19D00235C1C /* LocalSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E681C55D19D00235C1C /* LocalSession.swift */; };
 		505B5E6B1C55D1AC00235C1C /* RemoteSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E6A1C55D1AC00235C1C /* RemoteSession.swift */; };
+		505B5E7B1C56EF0F00235C1C /* Track+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E6D1C56EF0F00235C1C /* Track+CoreDataProperties.swift */; };
+		505B5E7C1C56EF0F00235C1C /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E6E1C56EF0F00235C1C /* Track.swift */; };
+		505B5E7D1C56EF0F00235C1C /* Artist+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E6F1C56EF0F00235C1C /* Artist+CoreDataProperties.swift */; };
+		505B5E7E1C56EF0F00235C1C /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E701C56EF0F00235C1C /* Artist.swift */; };
+		505B5E7F1C56EF0F00235C1C /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E711C56EF0F00235C1C /* Person+CoreDataProperties.swift */; };
+		505B5E801C56EF0F00235C1C /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E721C56EF0F00235C1C /* Person.swift */; };
+		505B5E811C56EF0F00235C1C /* Genre+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E731C56EF0F00235C1C /* Genre+CoreDataProperties.swift */; };
+		505B5E821C56EF0F00235C1C /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E741C56EF0F00235C1C /* Genre.swift */; };
+		505B5E831C56EF0F00235C1C /* Song+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E751C56EF0F00235C1C /* Song+CoreDataProperties.swift */; };
+		505B5E841C56EF0F00235C1C /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E761C56EF0F00235C1C /* Song.swift */; };
+		505B5E851C56EF0F00235C1C /* Album+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E771C56EF0F00235C1C /* Album+CoreDataProperties.swift */; };
+		505B5E861C56EF0F00235C1C /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E781C56EF0F00235C1C /* Album.swift */; };
+		505B5E871C56EF0F00235C1C /* Playlist+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E791C56EF0F00235C1C /* Playlist+CoreDataProperties.swift */; };
+		505B5E881C56EF0F00235C1C /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E7A1C56EF0F00235C1C /* Playlist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +70,20 @@
 		505B5E661C55D18B00235C1C /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Session.swift; path = Sources/Session.swift; sourceTree = "<group>"; };
 		505B5E681C55D19D00235C1C /* LocalSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalSession.swift; path = Sources/LocalSession.swift; sourceTree = "<group>"; };
 		505B5E6A1C55D1AC00235C1C /* RemoteSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteSession.swift; path = Sources/RemoteSession.swift; sourceTree = "<group>"; };
+		505B5E6D1C56EF0F00235C1C /* Track+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Track+CoreDataProperties.swift"; path = "Sources/Track+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		505B5E6E1C56EF0F00235C1C /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Track.swift; path = Sources/Track.swift; sourceTree = "<group>"; };
+		505B5E6F1C56EF0F00235C1C /* Artist+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Artist+CoreDataProperties.swift"; path = "Sources/Artist+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		505B5E701C56EF0F00235C1C /* Artist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Artist.swift; path = Sources/Artist.swift; sourceTree = "<group>"; };
+		505B5E711C56EF0F00235C1C /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Person+CoreDataProperties.swift"; path = "Sources/Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		505B5E721C56EF0F00235C1C /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Person.swift; path = Sources/Person.swift; sourceTree = "<group>"; };
+		505B5E731C56EF0F00235C1C /* Genre+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Genre+CoreDataProperties.swift"; path = "Sources/Genre+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		505B5E741C56EF0F00235C1C /* Genre.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Genre.swift; path = Sources/Genre.swift; sourceTree = "<group>"; };
+		505B5E751C56EF0F00235C1C /* Song+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Song+CoreDataProperties.swift"; path = "Sources/Song+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		505B5E761C56EF0F00235C1C /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Sources/Song.swift; sourceTree = "<group>"; };
+		505B5E771C56EF0F00235C1C /* Album+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Album+CoreDataProperties.swift"; path = "Sources/Album+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		505B5E781C56EF0F00235C1C /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Album.swift; path = Sources/Album.swift; sourceTree = "<group>"; };
+		505B5E791C56EF0F00235C1C /* Playlist+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Playlist+CoreDataProperties.swift"; path = "Sources/Playlist+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		505B5E7A1C56EF0F00235C1C /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playlist.swift; path = Sources/Playlist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +150,7 @@
 		505B5E541C55CE9600235C1C /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				505B5E891C56EF3000235C1C /* Model */,
 				505B5E551C55CEC900235C1C /* Library.swift */,
 				505B5E571C55CEE100235C1C /* FilteredLibrary.swift */,
 				505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */,
@@ -156,6 +185,27 @@
 				505B5E6A1C55D1AC00235C1C /* RemoteSession.swift */,
 			);
 			name = Session;
+			sourceTree = "<group>";
+		};
+		505B5E891C56EF3000235C1C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				505B5E6E1C56EF0F00235C1C /* Track.swift */,
+				505B5E6D1C56EF0F00235C1C /* Track+CoreDataProperties.swift */,
+				505B5E701C56EF0F00235C1C /* Artist.swift */,
+				505B5E6F1C56EF0F00235C1C /* Artist+CoreDataProperties.swift */,
+				505B5E721C56EF0F00235C1C /* Person.swift */,
+				505B5E711C56EF0F00235C1C /* Person+CoreDataProperties.swift */,
+				505B5E741C56EF0F00235C1C /* Genre.swift */,
+				505B5E731C56EF0F00235C1C /* Genre+CoreDataProperties.swift */,
+				505B5E761C56EF0F00235C1C /* Song.swift */,
+				505B5E751C56EF0F00235C1C /* Song+CoreDataProperties.swift */,
+				505B5E781C56EF0F00235C1C /* Album.swift */,
+				505B5E771C56EF0F00235C1C /* Album+CoreDataProperties.swift */,
+				505B5E7A1C56EF0F00235C1C /* Playlist.swift */,
+				505B5E791C56EF0F00235C1C /* Playlist+CoreDataProperties.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,18 +308,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				505B5E7B1C56EF0F00235C1C /* Track+CoreDataProperties.swift in Sources */,
+				505B5E881C56EF0F00235C1C /* Playlist.swift in Sources */,
 				505B5E671C55D18B00235C1C /* Session.swift in Sources */,
+				505B5E7D1C56EF0F00235C1C /* Artist+CoreDataProperties.swift in Sources */,
 				505B5E691C55D19D00235C1C /* LocalSession.swift in Sources */,
 				505B5E581C55CEE100235C1C /* FilteredLibrary.swift in Sources */,
+				505B5E871C56EF0F00235C1C /* Playlist+CoreDataProperties.swift in Sources */,
+				505B5E7F1C56EF0F00235C1C /* Person+CoreDataProperties.swift in Sources */,
+				505B5E801C56EF0F00235C1C /* Person.swift in Sources */,
 				505B5E371C55CDFB00235C1C /* ViewController.swift in Sources */,
 				505B5E631C55D15700235C1C /* LibraryServer.swift in Sources */,
+				505B5E831C56EF0F00235C1C /* Song+CoreDataProperties.swift in Sources */,
 				505B5E601C55D0E100235C1C /* RemoteLibrary.swift in Sources */,
 				505B5E6B1C55D1AC00235C1C /* RemoteSession.swift in Sources */,
 				505B5E5B1C55CF0300235C1C /* Data.xcdatamodeld in Sources */,
 				505B5E351C55CDFB00235C1C /* AppDelegate.swift in Sources */,
+				505B5E851C56EF0F00235C1C /* Album+CoreDataProperties.swift in Sources */,
 				505B5E561C55CEC900235C1C /* Library.swift in Sources */,
 				505B5E651C55D16800235C1C /* Queue.swift in Sources */,
+				505B5E841C56EF0F00235C1C /* Song.swift in Sources */,
 				505B5E5E1C55D0B300235C1C /* NowPlaying.swift in Sources */,
+				505B5E7E1C56EF0F00235C1C /* Artist.swift in Sources */,
+				505B5E811C56EF0F00235C1C /* Genre+CoreDataProperties.swift in Sources */,
+				505B5E7C1C56EF0F00235C1C /* Track.swift in Sources */,
+				505B5E821C56EF0F00235C1C /* Genre.swift in Sources */,
+				505B5E861C56EF0F00235C1C /* Album.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +523,7 @@
 				505B5E501C55CDFC00235C1C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		505B5E511C55CDFC00235C1C /* Build configuration list for PBXNativeTarget "MusicRequestsTests" */ = {
 			isa = XCConfigurationList;
@@ -467,6 +532,7 @@
 				505B5E531C55CDFC00235C1C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
