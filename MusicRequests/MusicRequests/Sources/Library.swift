@@ -9,5 +9,35 @@
 import UIKit
 
 class Library: NSObject {
-
+  
+  var songs: [Song] {
+    get {
+      return []
+    }
+  }
+  
+  var artists: [Artist] {
+    get {
+      return []
+    }
+  }
+  
+  var albums: [Album] {
+    get {
+      return []
+    }
+  }
+  
+  var playlists: [Playlist] {
+    get {
+      return []
+    }
+  }
+  
+  var genres: [Genre] {
+    get {
+      return []
+    }
+  }
+  
 }
