@@ -14,8 +14,8 @@ import CoreData
 
 extension Person {
 
-    @NSManaged var lastName: String?
-    @NSManaged var firstName: String?
-    @NSManaged var artists: NSSet?
+  @NSManaged var lastName: String?
+  @NSManaged var firstName: String?
+  @NSManaged var artists: NSSet?
 
 }

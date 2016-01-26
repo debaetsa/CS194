@@ -14,7 +14,7 @@ import CoreData
 
 extension Playlist {
 
-    @NSManaged var name: String?
-    @NSManaged var tracks: NSSet?
+  @NSManaged var name: String?
+  @NSManaged var tracks: NSSet?
 
 }

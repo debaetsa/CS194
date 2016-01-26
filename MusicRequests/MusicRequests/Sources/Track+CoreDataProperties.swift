@@ -14,10 +14,10 @@ import CoreData
 
 extension Track {
 
-    @NSManaged var discNumber: Int16
-    @NSManaged var songNumber: Int16
-    @NSManaged var album: Album?
-    @NSManaged var playlist: Playlist?
-    @NSManaged var song: Song?
+  @NSManaged var discNumber: Int16
+  @NSManaged var songNumber: Int16
+  @NSManaged var album: Album?
+  @NSManaged var playlist: Playlist?
+  @NSManaged var song: Song?
 
 }
