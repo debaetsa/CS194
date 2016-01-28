@@ -13,5 +13,6 @@ import CoreData
 class Person: NSManagedObject {
 
   // Insert code here to add functionality to your managed object subclass
+  // Not going to implement this class until we (Max&Alex) talk about how we want to deal with people.
   
 }
