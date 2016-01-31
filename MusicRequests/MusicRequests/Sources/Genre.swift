@@ -6,12 +6,14 @@
 //
 //
 
-import Foundation
-import CoreData
+import UIKit
 
+class Genre: Item {
 
-class Genre: NSManagedObject {
-
-  // Insert code here to add functionality to your managed object subclass
+  var songs: [Song] {
+    get {
+      return []
+    }
+  }
   
 }

@@ -10,14 +10,14 @@ import UIKit
 
 protocol Library {
 
-  var songs: [Song] { get }
+  var allSongs: [Song] { get }
   
-  var artists: [Artist] { get }
+  var allArtists: [Artist] { get }
   
-  var albums: [Album] { get }
+  var allAlbums: [Album] { get }
 
-  var playlists: [Playlist] { get }
+  var allPlaylists: [Playlist] { get }
 
-  var genres: [Genre] { get }
+  var allGenres: [Genre] { get }
 
 }

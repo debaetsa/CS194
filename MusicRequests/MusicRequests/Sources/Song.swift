@@ -6,12 +6,41 @@
 //
 //
 
-import Foundation
-import CoreData
+import UIKit
 
+class Song: Item {
 
-class Song: NSManagedObject {
+  let album: Album?
 
-  // Insert code here to add functionality to your managed object subclass
-  
+  init(name: String, sortName: String, artist: Artist?, album: Album?, discNumber: Int?, trackNumber: Int?) {
+    self.album = album
+
+    super.init(name: name, sortName: sortName)
+
+    self.album?.addSong(self, discNumber: discNumber, trackNumber: trackNumber)
+  }
+
+  convenience init(name: String, artist: Artist?, album: Album?, discNumber: Int?, trackNumber: Int?) {
+    self.init(
+      name: name,
+      sortName: name,
+      artist: artist,
+      album: album,
+      discNumber: discNumber,
+      trackNumber: trackNumber
+    )
+  }
+
+  var artists: NSSet {
+    get {
+      return NSSet()
+    }
+  }
+
+  var genres: NSSet {
+    get {
+      return NSSet()
+    }
+  }
+
 }

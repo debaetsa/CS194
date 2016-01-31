@@ -6,12 +6,28 @@
 //
 //
 
-import Foundation
-import CoreData
+import UIKit
 
+class Artist: Item {
 
-class Artist: NSManagedObject {
+  var albums: [Album] = []
 
-  // Insert code here to add functionality to your managed object subclass
+  var singles: NSSet {
+    get {
+      return NSSet()
+    }
+  }
+
+  func addAlbum(album: Album) {
+    albums.append(album)
+  }
+
+  var allAlbums: [Album] {
+    get {
+      return albums.sort({ (first, second) -> Bool in
+        first.sortName.caseInsensitiveCompare(second.sortName) == NSComparisonResult.OrderedAscending
+      })
+    }
+  }
   
 }
