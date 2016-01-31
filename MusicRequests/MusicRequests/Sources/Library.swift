@@ -8,6 +8,16 @@
 
 import UIKit
 
-class Library: NSObject {
+protocol Library {
+
+  var allSongs: [Song] { get }
+  
+  var allArtists: [Artist] { get }
+  
+  var allAlbums: [Album] { get }
+
+  var allPlaylists: [Playlist] { get }
+
+  var allGenres: [Genre] { get }
 
 }

@@ -6,12 +6,12 @@
 //
 //
 
-import Foundation
-import CoreData
+import UIKit
 
+class Playlist: Item {
 
-class Playlist: NSManagedObject {
+  // A Playlist is a list of songs, and it is empty by default.
+  var songs: [Song] = []
 
-  // Insert code here to add functionality to your managed object subclass
-  
 }
+

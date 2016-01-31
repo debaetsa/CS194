@@ -12,10 +12,28 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
+  var library: Library?
 
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    // Override point for customization after application launch.
+    library = TemporaryLibrary()
+    for song in library!.allSongs {
+      print(song.name)
+    }
+    for album in library!.allAlbums {
+      print("Album: \(album.name)")
+      for details in album.allSongs {
+        print("\(details.disc)-\(details.track): \(details.song.name)")
+      }
+      print("")
+    }
+    for artist in library!.allArtists {
+      print(artist.name)
+      for album in artist.allAlbums {
+        print("Album: \(album.name)")
+      }
+      print("")
+    }
     return true
   }
 
