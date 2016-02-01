@@ -39,6 +39,7 @@
 		50B7F3DC1C6A6CC1006F3CE7 /* ItemPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7F3DB1C6A6CC1006F3CE7 /* ItemPresentation.swift */; };
 		50D2492B1C5D754E00A10E97 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492A1C5D754E00A10E97 /* Item.swift */; };
 		50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */; };
+		50DC09251C60171B00323425 /* RemoteSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DC09241C60171B00323425 /* RemoteSessionManager.swift */; };
 		B3572B221C694E62007A8BD3 /* DetailedAlbumTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3572B211C694E62007A8BD3 /* DetailedAlbumTableViewController.swift */; };
 		B3BD51BE1C680EBA0079299F /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */; };
 		B3BD51C01C682B860079299F /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BF1C682B860079299F /* SongViewController.swift */; };
@@ -94,6 +95,7 @@
 		50B7F3DB1C6A6CC1006F3CE7 /* ItemPresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemPresentation.swift; path = Sources/ItemPresentation.swift; sourceTree = "<group>"; };
 		50D2492A1C5D754E00A10E97 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Item.swift; path = Sources/Item.swift; sourceTree = "<group>"; };
 		50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporaryLibrary.swift; path = Sources/TemporaryLibrary.swift; sourceTree = "<group>"; };
+		50DC09241C60171B00323425 /* RemoteSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteSessionManager.swift; path = Sources/RemoteSessionManager.swift; sourceTree = "<group>"; };
 		B3572B211C694E62007A8BD3 /* DetailedAlbumTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailedAlbumTableViewController.swift; path = Sources/DetailedAlbumTableViewController.swift; sourceTree = "<group>"; };
 		B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlayingViewController.swift; path = Sources/NowPlayingViewController.swift; sourceTree = "<group>"; };
 		B3BD51BF1C682B860079299F /* SongViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongViewController.swift; path = Sources/SongViewController.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				505B5E6C1C55D1B700235C1C /* Session */,
+				50DC09241C60171B00323425 /* RemoteSessionManager.swift */,
 				505B5E621C55D15700235C1C /* LibraryServer.swift */,
 			);
 			name = Networking;
@@ -388,6 +391,7 @@
 				50D2492B1C5D754E00A10E97 /* Item.swift in Sources */,
 				505B5E881C56EF0F00235C1C /* Playlist.swift in Sources */,
 				505B5E671C55D18B00235C1C /* Session.swift in Sources */,
+				50DC09251C60171B00323425 /* RemoteSessionManager.swift in Sources */,
 				505B5E691C55D19D00235C1C /* LocalSession.swift in Sources */,
 				505B5E581C55CEE100235C1C /* FilteredLibrary.swift in Sources */,
 				50159F641C65AE26000E4878 /* UpNextTableViewController.swift in Sources */,

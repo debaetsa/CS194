@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var queue: Queue?
   var nowPlaying: NowPlaying?
 
+  var localSession: LocalSession!
+  var remoteSessionManager: RemoteSessionManager!
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
@@ -48,6 +50,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       self.queue?.nowPlaying.next()
     }
     */
+
+    // start the browser first
+    remoteSessionManager = RemoteSessionManager()
+
+    // do some tests with broadcasting the service
+    localSession = LocalSession(port: 8000)
+    localSession.broadcast()
 
     return true
   }
