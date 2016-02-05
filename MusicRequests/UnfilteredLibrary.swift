@@ -7,31 +7,30 @@
 //
 
 import MediaPlayer
-
 import UIKit
 
 class UnfilteredLibrary: Library {
   
-  var allSongs: [Song] = []
-  var allArtists: [Artist] = []
-  var allAlbums: [Album] = []
-  var allPlaylists: [Playlist] = []
-  var allGenres: [Genre] = []
-  
-  
+  var allSongs: [Song]
+  var allArtists: [Artist]
+  var allAlbums: [Album]
+  var allPlaylists: [Playlist]
+  var allGenres: [Genre]
+
+
   init() {
-    let query: MPMediaQuery = MPMediaQuery.songsQuery()
-    let items: [MPMediaItem] = query.items!
-    var songs: [Song] = [Song]()
+    let query = MPMediaQuery.songsQuery()
+    let items = query.items!
+    var songs = [Song]()
     
-    var artistsDict = [String:Artist]()
-    var albumDict = [String:Album]()
-    var genresDict = [String:Genre]()
+    var artistsDict = [String: Artist]()
+    var albumDict = [String: Album]()
+    var genresDict = [String: Genre]()
     
-    for item: MPMediaItem in items {
+    for item in items {
       
       var artist: Artist
-      if (artistsDict.keys.contains(item.artist!)){
+      if artistsDict.keys.contains(item.artist!) {
         artist = artistsDict[item.artist!]!
       } else {
         artist = Artist(name: item.artist!)
@@ -39,7 +38,7 @@ class UnfilteredLibrary: Library {
       }
       
       var album: Album
-      if (albumDict.keys.contains(item.albumTitle!)){
+      if albumDict.keys.contains(item.albumTitle!) {
         album = albumDict[item.albumTitle!]!
       } else {
         album = Album(name: item.albumTitle!, artist: artist)
@@ -49,18 +48,19 @@ class UnfilteredLibrary: Library {
       artist.addAlbum(album)
       
       var genre: Genre
-      if(genresDict.keys.contains(item.genre!)){
+      if genresDict.keys.contains(item.genre!) {
         genre = genresDict[item.genre!]!
       } else {
         genre = Genre(name: item.genre!)
         genresDict[item.genre!] = genre
       }
       
-      let song: Song = Song(name: item.title!, artist: artist, album: album, discNumber: item.discNumber,trackNumber: item.albumTrackNumber)
+      let song = Song(name: item.title!, artist: artist, album: album, discNumber: item.discNumber, trackNumber: item.albumTrackNumber)
       
       songs.append(song)
     }
-    
+
+    allPlaylists = []
     allSongs = songs
     allArtists = artistsDict.values.sort({$0.name < $1.name})
     allAlbums = albumDict.values.sort({$0.name < $1.name})
