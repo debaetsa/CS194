@@ -43,7 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5010EB4B1C6488EE0085D615 /* UnfilteredLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnfilteredLibrary.swift; sourceTree = SOURCE_ROOT; };
+		5010EB4B1C6488EE0085D615 /* UnfilteredLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnfilteredLibrary.swift; path = Sources/UnfilteredLibrary.swift; sourceTree = "<group>"; };
 		505B5E311C55CDFB00235C1C /* MusicRequests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicRequests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505B5E341C55CDFB00235C1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		505B5E361C55CDFB00235C1C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
