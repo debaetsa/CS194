@@ -10,17 +10,22 @@ import UIKit
 
 class TemporaryLibrary: NSObject, Library {
 
-  var songs: [Song] = []
-  var artists: [Artist] = []
-  var albums: [Album] = []
-  var playlists: [Playlist] = []
-  var genres: [Genre] = []
+  let allSongs: [Song]
+  let allArtists: [Artist]
+  let allAlbums: [Album]
+  let allPlaylists: [Playlist]
+  let allGenres: [Genre]
 
   override init() {
-    // create initial data at this point
+    // Create arrays to hold the data as we add it.
+    var artists = [Artist]()
+    var albums = [Album]()
+    var songs = [Song]()
 
     var album: Album?
     var artist: Artist?
+
+    // Then start actually creating and loading the data.
 
     // a-ha
     artist = Artist(name: "a-ha")
@@ -122,44 +127,13 @@ class TemporaryLibrary: NSObject, Library {
 
     songs.append(Song(name: "Blinded By the Light", artist: artist, album: album, discNumber: nil, trackNumber: 1))
 
+    allSongs = songs.sort(Item.sorter)
+    allArtists = artists.sort(Item.sorter)
+    allAlbums = albums.sort(Item.sorter)
+    allPlaylists = []
+    allGenres = []
+
     super.init()
   }
-
-  func sortedItems<T: Item>(items: [T]) -> [T] {
-    return items.sort({ (first, second) -> Bool in
-      first.sortName.caseInsensitiveCompare(second.sortName) == NSComparisonResult.OrderedAscending
-    })
-  }
-
-  var allSongs: [Song] {
-    get {
-      return sortedItems(songs)
-    }
-  }
-
-  var allArtists: [Artist] {
-    get {
-      return sortedItems(artists)
-    }
-  }
-
-  var allAlbums: [Album] {
-    get {
-      return sortedItems(albums)
-    }
-  }
-
-  var allPlaylists: [Playlist] {
-    get {
-      return sortedItems(playlists)
-    }
-  }
-
-  var allGenres: [Genre] {
-    get {
-      return sortedItems(genres)
-    }
-  }
-
 
 }
