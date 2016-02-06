@@ -17,23 +17,16 @@ class AlbumsTableViewController: ItemTableViewController {
 
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let albums = library.allAlbums
-
     let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
+
+    let albums = library.allAlbums
     let currentAlbum = albums[indexPath.row]
-
-    cell.textLabel?.text = "\(currentAlbum.name)"
-
-    let artistNames = currentAlbum.artists.map{String($0.name)}.joinWithSeparator(", ")
-
+    let artistNames = currentAlbum.artists.map({ $0.name }).joinWithSeparator(", ")
     let songCount = currentAlbum.songs.count
-    var suffix = "songs"
-    if (songCount == 1) {
-      suffix = "song"
-    }
 
-    cell.detailTextLabel?.text = "\(artistNames) - \(currentAlbum.songs.count) \(suffix)"
+    cell.textLabel?.text = currentAlbum.name
+    cell.detailTextLabel?.text = "\(artistNames) • \(songCount.pluralize(("Song", "Songs")))"
+
     return cell
-
   }
 }

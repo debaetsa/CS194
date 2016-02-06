@@ -15,33 +15,20 @@ class ArtistsTableViewController: ItemTableViewController {
     return library.allArtists.count
   }
 
-
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let artists = library.allArtists
-
     let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
+
+    let artists = library.allArtists
     let currentArtist = artists[indexPath.row]
+    let albums = currentArtist.allAlbums
+    let albumCount = albums.count
+    let songCount = albums.reduce(0) { $0 + $1.songs.count }
 
-    cell.textLabel?.text = "\(currentArtist.name)"
+    // currentArtist.name is a String, so it doesn't need to be wrapped in
+    // "\()" unless something else is being added to it.  It's redundant.
+    cell.textLabel?.text = currentArtist.name
+    cell.detailTextLabel?.text = "\(albumCount.pluralize(("Album", "Albums"))) • \(songCount.pluralize(("Song", "Songs")))"
 
-    let albumCount = currentArtist.albums.count
-    var albumSuffix = "albums"
-    if (albumCount == 1) {
-      albumSuffix = "album"
-    }
-
-    var songCount = 0
-    for album in currentArtist.albums {
-      songCount += album.songs.count
-    }
-
-    var songSuffix = "songs"
-    if (songCount == 1) {
-      songSuffix = "song"
-    }
-
-    cell.detailTextLabel?.text = "\(albumCount) \(albumSuffix) - \(songCount) \(songSuffix)"
     return cell
-    
   }
 }

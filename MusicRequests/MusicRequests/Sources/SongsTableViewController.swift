@@ -16,16 +16,13 @@ class SongsTableViewController: ItemTableViewController {
 
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let songs = library.allSongs
-
     let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
 
+    let songs = library.allSongs
     let currentSong = songs[indexPath.row]
+    let artistNames = currentSong.artists.map({ $0.name }).joinWithSeparator(", ")
 
-    cell.textLabel?.text = "\(currentSong.name)"
-
-    let artistNames = currentSong.artists.map{String($0)}.joinWithSeparator(", ")
-
+    cell.textLabel?.text = currentSong.name
     cell.detailTextLabel?.text = "\(artistNames) - \(songs[indexPath.row].album!.name)"
 
     return cell
