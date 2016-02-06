@@ -58,7 +58,7 @@ class AppleLibrary: NSObject, Library {
         artist?.addAlbum(album!)
       }
 
-      songs.append(Song(name: item.title ?? "", artist: artist, album: album, discNumber: item.discNumber, trackNumber: item.albumTrackNumber))
+      songs.append(Song(name: item.title ?? "", artist: artist, album: album, discNumber: item.discNumber, trackNumber: item.albumTrackNumber, userInfo: item))
     }
 
     allSongs = songs.sort(Item.sorter)

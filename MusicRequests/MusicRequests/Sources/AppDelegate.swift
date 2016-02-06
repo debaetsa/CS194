@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
   var library: Library?
+  var queue: Queue?
 
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -20,7 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     #if (arch(i386) || arch(x86_64)) && os(iOS)
       library = TemporaryLibrary()
     #else
-      library = AppleLibrary()
+      let appleLibrary = AppleLibrary()
+      library = appleLibrary
+      queue = AppleQueue(sourceLibrary: appleLibrary)
     #endif
 
     return true
