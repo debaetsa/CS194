@@ -14,7 +14,6 @@
 		50159F631C65AE26000E4878 /* SongsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50159F5E1C65AE26000E4878 /* SongsTableViewController.swift */; };
 		50159F641C65AE26000E4878 /* UpNextTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50159F5F1C65AE26000E4878 /* UpNextTableViewController.swift */; };
 		50159F671C65B3C7000E4878 /* Pluralize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50159F661C65B3C7000E4878 /* Pluralize.swift */; };
-		505B5E351C55CDFB00235C1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E341C55CDFB00235C1C /* AppDelegate.swift */; };
 		505B5E3A1C55CDFB00235C1C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 505B5E381C55CDFB00235C1C /* Main.storyboard */; };
 		505B5E3C1C55CDFB00235C1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 505B5E3B1C55CDFB00235C1C /* Assets.xcassets */; };
 		505B5E3F1C55CDFB00235C1C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 505B5E3D1C55CDFB00235C1C /* LaunchScreen.storyboard */; };
@@ -32,6 +31,7 @@
 		505B5E841C56EF0F00235C1C /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E761C56EF0F00235C1C /* Song.swift */; };
 		505B5E861C56EF0F00235C1C /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E781C56EF0F00235C1C /* Album.swift */; };
 		505B5E881C56EF0F00235C1C /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E7A1C56EF0F00235C1C /* Playlist.swift */; };
+		507B3A7B1C66B98F00E4D27F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507B3A7A1C66B98F00E4D27F /* AppDelegate.swift */; };
 		50D2492B1C5D754E00A10E97 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492A1C5D754E00A10E97 /* Item.swift */; };
 		50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */; };
 		BDE3E5391C584651006C1850 /* MusicRequestsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E491C55CDFB00235C1C /* MusicRequestsTests.swift */; };
@@ -56,7 +56,6 @@
 		50159F5F1C65AE26000E4878 /* UpNextTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UpNextTableViewController.swift; path = Sources/UpNextTableViewController.swift; sourceTree = "<group>"; };
 		50159F661C65B3C7000E4878 /* Pluralize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pluralize.swift; path = Sources/Pluralize.swift; sourceTree = "<group>"; };
 		505B5E311C55CDFB00235C1C /* MusicRequests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicRequests.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		505B5E341C55CDFB00235C1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		505B5E391C55CDFB00235C1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		505B5E3B1C55CDFB00235C1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		505B5E3E1C55CDFB00235C1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -78,6 +77,7 @@
 		505B5E761C56EF0F00235C1C /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Sources/Song.swift; sourceTree = "<group>"; };
 		505B5E781C56EF0F00235C1C /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Album.swift; path = Sources/Album.swift; sourceTree = "<group>"; };
 		505B5E7A1C56EF0F00235C1C /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playlist.swift; path = Sources/Playlist.swift; sourceTree = "<group>"; };
+		507B3A7A1C66B98F00E4D27F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Sources/AppDelegate.swift; sourceTree = "<group>"; };
 		50D2492A1C5D754E00A10E97 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Item.swift; path = Sources/Item.swift; sourceTree = "<group>"; };
 		50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporaryLibrary.swift; path = Sources/TemporaryLibrary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,7 +156,7 @@
 				505B5E541C55CE9600235C1C /* Library */,
 				505B5E5C1C55D09800235C1C /* Playing */,
 				505B5E611C55D0F700235C1C /* Networking */,
-				505B5E341C55CDFB00235C1C /* AppDelegate.swift */,
+				507B3A7A1C66B98F00E4D27F /* AppDelegate.swift */,
 				50159F661C65B3C7000E4878 /* Pluralize.swift */,
 				505B5E3D1C55CDFB00235C1C /* LaunchScreen.storyboard */,
 				505B5E401C55CDFB00235C1C /* Info.plist */,
@@ -334,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				507B3A7B1C66B98F00E4D27F /* AppDelegate.swift in Sources */,
 				50D2492B1C5D754E00A10E97 /* Item.swift in Sources */,
 				505B5E881C56EF0F00235C1C /* Playlist.swift in Sources */,
 				505B5E671C55D18B00235C1C /* Session.swift in Sources */,
@@ -348,7 +349,6 @@
 				50159F601C65AE26000E4878 /* AlbumsTableViewController.swift in Sources */,
 				50159F611C65AE26000E4878 /* ArtistsTableViewController.swift in Sources */,
 				50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */,
-				505B5E351C55CDFB00235C1C /* AppDelegate.swift in Sources */,
 				5010EB4C1C6488EE0085D615 /* AppleLibrary.swift in Sources */,
 				505B5E561C55CEC900235C1C /* Library.swift in Sources */,
 				50159F621C65AE26000E4878 /* ItemTableViewController.swift in Sources */,
