@@ -18,7 +18,6 @@ class AlbumsTableViewController: ItemTableViewController {
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let albums = library.allAlbums
-    let images = ["killers_album.png", "the_postal_service_album.png", "the_family_crest_album.png", "hozier_album.png", "sf_symphony_album.png"]
 
     let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
     let currentAlbum = albums[indexPath.row]
@@ -34,7 +33,6 @@ class AlbumsTableViewController: ItemTableViewController {
     }
 
     cell.detailTextLabel?.text = "\(artistNames) - \(currentAlbum.songs.count) \(suffix)"
-    cell.imageView?.image = UIImage(named: images[indexPath.row % images.count])!
     return cell
 
   }
