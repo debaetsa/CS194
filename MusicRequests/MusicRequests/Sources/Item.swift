@@ -29,7 +29,7 @@ class Item: NSObject {
 
   /** Returns the sort value for some "Item." */
   static func sorter(first: Item, second: Item) -> Bool {
-    return first.name < second.name
+    return first.name.localizedCompare(second.name) == NSComparisonResult.OrderedAscending
   }
 
 }
