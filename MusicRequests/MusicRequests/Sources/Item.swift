@@ -27,4 +27,9 @@ class Item: NSObject {
     self.init(name: name, sortName: name)
   }
 
+  /** Returns the sort value for some "Item." */
+  static func sorter(first: Item, second: Item) -> Bool {
+    return first.name < second.name
+  }
+
 }

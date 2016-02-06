@@ -9,61 +9,66 @@
 import MediaPlayer
 import UIKit
 
-class UnfilteredLibrary: Library {
-  
-  var allSongs: [Song]
-  var allArtists: [Artist]
-  var allAlbums: [Album]
-  var allPlaylists: [Playlist]
-  var allGenres: [Genre]
+class UnfilteredLibrary: NSObject, Library {
 
+  let allSongs: [Song]
+  let allArtists: [Artist]
+  let allAlbums: [Album]
+  let allPlaylists: [Playlist]
+  let allGenres: [Genre]
 
-  init() {
+  override init() {
     let query = MPMediaQuery.songsQuery()
+
+    // By using the "!", we ensure that a runtime error occurs if something
+    // doesn't work.  This probably shouldn't be done in production code, but
+    // it should be fine for prototype and testing.
+    //
+    // TODO: Build in more robust error handling.
     let items = query.items!
-    var songs = [Song]()
-    
-    var artistsDict = [String: Artist]()
-    var albumDict = [String: Album]()
-    var genresDict = [String: Genre]()
-    
+
+    var songs = [Song]()  // store all the songs as they are imported
+
+    var artists = [String: Artist]()
+    var albums = [String: Album]()
+
     for item in items {
-      
-      var artist: Artist
-      if artistsDict.keys.contains(item.artist!) {
-        artist = artistsDict[item.artist!]!
-      } else {
-        artist = Artist(name: item.artist!)
-        artistsDict[item.artist!] = artist
+      var artist: Artist?
+      if let artistName = item.artist {
+        // The artist has a name, so we want to use it with this Song.
+        artist = artists[artistName]
+        if artist == nil {
+          // We haven't seen this artist before, so create a new entry.
+          artist = Artist(name: artistName)
+          artists[artistName] = artist
+        }
       }
-      
-      var album: Album
-      if albumDict.keys.contains(item.albumTitle!) {
-        album = albumDict[item.albumTitle!]!
-      } else {
-        album = Album(name: item.albumTitle!, artist: artist)
-        albumDict[item.albumTitle!] = album
+
+      var album: Album?
+      if let albumName = item.albumTitle {
+        album = albums[albumName]
+        if album == nil {
+          album = Album(name: albumName, artist: artist)
+          albums[albumName] = album
+        }
+
+        // We just ran code that ensures that the album exists, so it's fine to
+        // unwrap the value.  If it is nil, it means that there is some sort of
+        // a problem that should be corrected.
+        artist?.addAlbum(album!)
       }
-      
-      artist.addAlbum(album)
-      
-      var genre: Genre
-      if genresDict.keys.contains(item.genre!) {
-        genre = genresDict[item.genre!]!
-      } else {
-        genre = Genre(name: item.genre!)
-        genresDict[item.genre!] = genre
-      }
-      
-      let song = Song(name: item.title!, artist: artist, album: album, discNumber: item.discNumber, trackNumber: item.albumTrackNumber)
-      
-      songs.append(song)
+
+      songs.append(Song(name: item.title ?? "", artist: artist, album: album, discNumber: item.discNumber, trackNumber: item.albumTrackNumber))
     }
 
+    allSongs = songs.sort(Item.sorter)
+    allArtists = artists.values.sort(Item.sorter)
+    allAlbums = albums.values.sort(Item.sorter)
     allPlaylists = []
-    allSongs = songs
-    allArtists = artistsDict.values.sort({$0.name < $1.name})
-    allAlbums = albumDict.values.sort({$0.name < $1.name})
-    allGenres = genresDict.values.sort({$0.name < $1.name})
+    allGenres = []
+
+    // We have to set all of our local instance variables to some value before
+    // we invoke the superclass's initialization method.
+    super.init()
   }
 }
