@@ -1562,7 +1562,7 @@
         <!--Albums Library-->
         <scene sceneID="Z5Z-Aq-JpJ">
             <objects>
-                <tableViewController storyboardIdentifier="Albums" title="Albums Library" id="b27-j9-jh3" userLabel="Albums Library" customClass="AlbumsTableViewController" customModule="appName" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Albums" title="Albums Library" id="b27-j9-jh3" userLabel="Albums Library" customClass="AlbumsTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="LbS-DA-q9p">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="531"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
