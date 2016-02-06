@@ -16,7 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    library = TemporaryLibrary()
+
+    #if (arch(i386) || arch(x86_64)) && os(iOS)
+      library = TemporaryLibrary()
+    #else
+      library = AppleLibrary()
+    #endif
+
     for song in library!.allSongs {
       print(song.name)
     }
