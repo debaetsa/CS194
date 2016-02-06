@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5010EB4C1C6488EE0085D615 /* UnfilteredLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5010EB4B1C6488EE0085D615 /* UnfilteredLibrary.swift */; };
+		5010EB4C1C6488EE0085D615 /* AppleLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5010EB4B1C6488EE0085D615 /* AppleLibrary.swift */; };
 		505B5E351C55CDFB00235C1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E341C55CDFB00235C1C /* AppDelegate.swift */; };
 		505B5E371C55CDFB00235C1C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E361C55CDFB00235C1C /* ViewController.swift */; };
 		505B5E3A1C55CDFB00235C1C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 505B5E381C55CDFB00235C1C /* Main.storyboard */; };
@@ -43,7 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5010EB4B1C6488EE0085D615 /* UnfilteredLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnfilteredLibrary.swift; path = Sources/UnfilteredLibrary.swift; sourceTree = "<group>"; };
+		5010EB4B1C6488EE0085D615 /* AppleLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppleLibrary.swift; path = Sources/AppleLibrary.swift; sourceTree = "<group>"; };
 		505B5E311C55CDFB00235C1C /* MusicRequests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicRequests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505B5E341C55CDFB00235C1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		505B5E361C55CDFB00235C1C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 				505B5E891C56EF3000235C1C /* Model */,
 				505B5E551C55CEC900235C1C /* Library.swift */,
 				505B5E571C55CEE100235C1C /* FilteredLibrary.swift */,
-				5010EB4B1C6488EE0085D615 /* UnfilteredLibrary.swift */,
+				5010EB4B1C6488EE0085D615 /* AppleLibrary.swift */,
 				505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */,
 			);
 			name = Library;
@@ -306,7 +306,7 @@
 				505B5E6B1C55D1AC00235C1C /* RemoteSession.swift in Sources */,
 				50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */,
 				505B5E351C55CDFB00235C1C /* AppDelegate.swift in Sources */,
-				5010EB4C1C6488EE0085D615 /* UnfilteredLibrary.swift in Sources */,
+				5010EB4C1C6488EE0085D615 /* AppleLibrary.swift in Sources */,
 				505B5E561C55CEC900235C1C /* Library.swift in Sources */,
 				505B5E651C55D16800235C1C /* Queue.swift in Sources */,
 				505B5E841C56EF0F00235C1C /* Song.swift in Sources */,

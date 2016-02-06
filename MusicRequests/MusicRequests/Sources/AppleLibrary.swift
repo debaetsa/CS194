@@ -9,7 +9,7 @@
 import MediaPlayer
 import UIKit
 
-class UnfilteredLibrary: NSObject, Library {
+class AppleLibrary: NSObject, Library {
 
   let allSongs: [Song]
   let allArtists: [Artist]
