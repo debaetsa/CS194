@@ -10,7 +10,7 @@
 		5010EB4C1C6488EE0085D615 /* AppleLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5010EB4B1C6488EE0085D615 /* AppleLibrary.swift */; };
 		50159F601C65AE26000E4878 /* AlbumsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50159F5B1C65AE26000E4878 /* AlbumsTableViewController.swift */; };
 		50159F611C65AE26000E4878 /* ArtistsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50159F5C1C65AE26000E4878 /* ArtistsTableViewController.swift */; };
-		50159F621C65AE26000E4878 /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50159F5D1C65AE26000E4878 /* MyTableViewController.swift */; };
+		50159F621C65AE26000E4878 /* ItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50159F5D1C65AE26000E4878 /* ItemTableViewController.swift */; };
 		50159F631C65AE26000E4878 /* SongsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50159F5E1C65AE26000E4878 /* SongsTableViewController.swift */; };
 		50159F641C65AE26000E4878 /* UpNextTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50159F5F1C65AE26000E4878 /* UpNextTableViewController.swift */; };
 		505B5E351C55CDFB00235C1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E341C55CDFB00235C1C /* AppDelegate.swift */; };
@@ -51,7 +51,7 @@
 		5010EB4B1C6488EE0085D615 /* AppleLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppleLibrary.swift; path = Sources/AppleLibrary.swift; sourceTree = "<group>"; };
 		50159F5B1C65AE26000E4878 /* AlbumsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlbumsTableViewController.swift; path = Sources/AlbumsTableViewController.swift; sourceTree = "<group>"; };
 		50159F5C1C65AE26000E4878 /* ArtistsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistsTableViewController.swift; path = Sources/ArtistsTableViewController.swift; sourceTree = "<group>"; };
-		50159F5D1C65AE26000E4878 /* MyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyTableViewController.swift; path = Sources/MyTableViewController.swift; sourceTree = "<group>"; };
+		50159F5D1C65AE26000E4878 /* ItemTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemTableViewController.swift; path = Sources/ItemTableViewController.swift; sourceTree = "<group>"; };
 		50159F5E1C65AE26000E4878 /* SongsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongsTableViewController.swift; path = Sources/SongsTableViewController.swift; sourceTree = "<group>"; };
 		50159F5F1C65AE26000E4878 /* UpNextTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UpNextTableViewController.swift; path = Sources/UpNextTableViewController.swift; sourceTree = "<group>"; };
 		505B5E311C55CDFB00235C1C /* MusicRequests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicRequests.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,7 +114,7 @@
 			children = (
 				50159F5B1C65AE26000E4878 /* AlbumsTableViewController.swift */,
 				50159F5C1C65AE26000E4878 /* ArtistsTableViewController.swift */,
-				50159F5D1C65AE26000E4878 /* MyTableViewController.swift */,
+				50159F5D1C65AE26000E4878 /* ItemTableViewController.swift */,
 				50159F5E1C65AE26000E4878 /* SongsTableViewController.swift */,
 			);
 			name = Library;
@@ -351,7 +351,7 @@
 				505B5E351C55CDFB00235C1C /* AppDelegate.swift in Sources */,
 				5010EB4C1C6488EE0085D615 /* AppleLibrary.swift in Sources */,
 				505B5E561C55CEC900235C1C /* Library.swift in Sources */,
-				50159F621C65AE26000E4878 /* MyTableViewController.swift in Sources */,
+				50159F621C65AE26000E4878 /* ItemTableViewController.swift in Sources */,
 				505B5E651C55D16800235C1C /* Queue.swift in Sources */,
 				505B5E841C56EF0F00235C1C /* Song.swift in Sources */,
 				505B5E5E1C55D0B300235C1C /* NowPlaying.swift in Sources */,

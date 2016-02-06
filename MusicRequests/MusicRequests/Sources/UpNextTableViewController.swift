@@ -1,6 +1,6 @@
 //
 //  UpNextTableViewController.swift
-//  appName
+//  Music Requests
 //
 //  Created by Matthew Volk on 1/31/16.
 //  Copyright © 2016 Capps, De Baets, Radermacher, Volk. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UpNextTableViewController: MyTableViewController {
+class UpNextTableViewController: ItemTableViewController {
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     // #warning Incomplete implementation, return the number of rows

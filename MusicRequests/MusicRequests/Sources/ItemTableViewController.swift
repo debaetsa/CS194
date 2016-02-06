@@ -1,6 +1,6 @@
 //
-//  MyTableViewController.swift
-//  appName
+//  ItemTableViewController.swift
+//  MusicRequests
 //
 //  Created by Matthew Volk on 1/24/16.
 //  Copyright © 2016 Capps, De Baets, Radermacher, Volk. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyTableViewController: UITableViewController {
+class ItemTableViewController: UITableViewController {
 
   let library = TemporaryLibrary()
 

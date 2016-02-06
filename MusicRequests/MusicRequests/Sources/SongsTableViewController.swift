@@ -1,6 +1,6 @@
 //
 //  SongsTableViewController.swift
-//  appName
+//  MusicRequests
 //
 //  Created by Matthew Volk on 1/31/16.
 //  Copyright © 2016 Capps, De Baets, Radermacher, Volk. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SongsTableViewController: MyTableViewController {
+class SongsTableViewController: ItemTableViewController {
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return library.allSongs.count

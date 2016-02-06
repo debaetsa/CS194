@@ -1,6 +1,6 @@
 //
 //  AlbumsTableViewController.swift
-//  appName
+//  MusicRequests
 //
 //  Created by Matthew Volk on 1/31/16.
 //  Copyright © 2016 Capps, De Baets, Radermacher, Volk. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlbumsTableViewController: MyTableViewController {
+class AlbumsTableViewController: ItemTableViewController {
 
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
