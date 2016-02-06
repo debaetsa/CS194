@@ -121,7 +121,7 @@
                         <viewControllerLayoutGuide type="bottom" id="iim-Ip-hd2"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ecq-dl-GeI">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4xE-CI-zqC">
@@ -405,7 +405,7 @@
                             <constraint firstItem="ANh-WX-aLt" firstAttribute="top" secondItem="UY4-4a-v7s" secondAttribute="bottom" id="wTW-Ol-ai4"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Songs" image="music_note.png" id="IbI-r1-iIx"/>
+                    <tabBarItem key="tabBarItem" title="Songs" image="Songs" id="IbI-r1-iIx"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8eX-KH-qXQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -439,7 +439,7 @@
                             <constraint firstItem="IHE-wC-0b2" firstAttribute="top" secondItem="MD3-mI-NAl" secondAttribute="bottom" id="luq-HD-mkC"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Artists" image="artists.png" id="uVl-cs-X4U"/>
+                    <tabBarItem key="tabBarItem" title="Artists" image="Artists" id="uVl-cs-X4U"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJu-qo-I3D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -496,7 +496,7 @@
                             <constraint firstItem="Kdl-Dr-OKF" firstAttribute="top" secondItem="Sbj-sV-8fX" secondAttribute="bottom" id="tGt-V8-BDS"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Playlists" image="playlists.png" id="JJc-Ce-tAF"/>
+                    <tabBarItem key="tabBarItem" title="Playlists" image="Playlists" id="JJc-Ce-tAF"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tx4-hm-oE2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -531,7 +531,7 @@
                             <constraint firstItem="LnF-vp-Z8A" firstAttribute="top" secondItem="KF5-W8-XfA" secondAttribute="bottom" id="umC-uG-z33"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Albums" image="albums.png" id="FiC-uM-09c"/>
+                    <tabBarItem key="tabBarItem" title="Albums" image="Albums" id="FiC-uM-09c"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lNR-o9-F3r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -815,12 +815,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="albums.png" width="75" height="75"/>
-        <image name="artists.png" width="75" height="75"/>
-        <image name="music_note.png" width="75" height="75"/>
-        <image name="playlists.png" width="75" height="75"/>
+        <image name="Albums" width="75" height="75"/>
+        <image name="Artists" width="75" height="75"/>
+        <image name="Playlists" width="75" height="75"/>
+        <image name="Songs" width="75" height="75"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gH7-84-FJ5"/>
+        <segue reference="4No-SL-1cy"/>
     </inferredMetricsTieBreakers>
 </document>
