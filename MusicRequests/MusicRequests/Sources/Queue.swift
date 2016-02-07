@@ -10,8 +10,56 @@ import UIKit
 
 class Queue: NSObject {
 
+  //////////////////////
+  // PUBLIC CONSTANTS //
+  //////////////////////
+
+  /** The identifier for the Notification sent when NowPlaying changes. */
+  static let didChangeNowPlayingNotification = "Queue.didChangeNowPlaying"
+
+
+  //////////////////////
+  // PUBLIC VARIABLES //
+  //////////////////////
+
+  /** Stores the NowPlaying reference, which is available publicly. */
+  let nowPlaying: NowPlaying
+
+  /** Stores the list of QueueItems that are about to be played.
+
+  Items are removed as they start playing. */
+  var upcoming: [QueueItem] {
+    return upcomingQueueItems
+  }
+
+  /** Stores the list of QueueItems that have been played already.
+
+  Items are never removed from this list, though it probably makes sense to not
+  show them all in the UI.  Basically something along the lines of:
+
+    previousItemsToShow = MIN(15, history.count)
+
+  which will show at most 15 items from the history. */
+  var history: [QueueItem] {
+    return previousQueueItems
+  }
+
+  var current: QueueItem? {
+    return currentQueueItem
+  }
+
+
+  ///////////////////////
+  // PRIVATE CONSTANTS //
+  ///////////////////////
+
   /** Stores the minimum size for the upcoming queue. */
   private static let minimumUpcomingCount = 15;
+
+
+  ///////////////////////
+  // PRIVATE VARIABLES //
+  ///////////////////////
 
   /** Stores the times when songs were most recently played. */
   private var lastPlayed = [Song: NSDate]()
@@ -19,8 +67,19 @@ class Queue: NSObject {
   /** Stores the Library reference for randomly chosen songs. */
   private let library: Library
 
-  /** Stores the NowPlaying reference, which is available publicly. */
-  let nowPlaying: NowPlaying
+  /** These three variables store the queue.
+
+  Concatenating previousQueueItems + [currentQueueItem] + upcomingQueueItems
+  gives the playlist order of the songs.  This means that we pull songs from
+  the front of upcomingQueueItems, and we add previously played items to the
+  back of previousQueueItems.
+   
+  It is possible for currentQueueItem to be nil if we are not playing anything,
+  but it should always be set when the app is in progress. */
+  private var upcomingQueueItems = [QueueItem]()
+  private var currentQueueItem: QueueItem?
+  private var previousQueueItems = [QueueItem]()
+
 
   init(nowPlaying: NowPlaying, sourceLibrary: Library) {
     self.nowPlaying = nowPlaying
@@ -28,17 +87,7 @@ class Queue: NSObject {
 
     super.init()
 
-    // After initializing "self", we can set the generator for NowPlaying.
-    self.nowPlaying.generator = { [unowned self] in
-      if let nextSong = self.upcomingQueueItems.first {
-        self.upcomingQueueItems.removeAtIndex(0)
-        return nextSong
-      }
-
-      // We couldn't find anything, so say that there isn't a song.
-      return nil
-    }
-
+    self.nowPlaying.queue = self
     self.fillToMinimum()
   }
 
@@ -87,13 +136,26 @@ class Queue: NSObject {
     }
   }
 
-  private var upcomingQueueItems = [QueueItem]()
-  var upcoming: [QueueItem] {
-    return upcomingQueueItems
-  }
+  /** Advances to the next Song.
 
-  var history: [QueueItem] {
-    return []
-  }
+  This involves adding the current song to the list of previously-played songs,
+  updating the currently playing song, and then grabbing a new Song. */
+  func advanceToNextSong() {
+    // If there was something playing, move it to the history list.
+    if let previousSong = currentQueueItem {
+      previousQueueItems.append(previousSong)
+    }
 
+    // Otherwise, pick the next song to play, if there is one.  (Note that we
+    // should always have one to play since we pick random songs.)
+    let nextSong = upcomingQueueItems.first
+    currentQueueItem = nextSong
+    if nextSong != nil {
+      upcomingQueueItems.removeAtIndex(0)
+    }
+
+    // Post a notification informing the rest of application about the change.
+    let center = NSNotificationCenter.defaultCenter()
+    center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
+  }
 }

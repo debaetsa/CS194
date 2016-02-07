@@ -8,7 +8,7 @@
 
 import Foundation
 
-class QueueItem: NSObject {
+class QueueItem: NSObject, CustomDebugStringConvertible {
 
   private static var uniqueIdentifier = 0
   private static func generateUniqueIdentifier() -> Int {
@@ -33,6 +33,10 @@ class QueueItem: NSObject {
   /** Allows the rest of the application to access the vote count. */
   var currentRequestCount: Int {
     return votes
+  }
+
+  override var debugDescription: String {
+    return "QueueItem<name: \(song.name); votes: \(currentRequestCount)>"
   }
 
 }

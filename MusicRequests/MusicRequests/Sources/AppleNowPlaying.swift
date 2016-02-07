@@ -11,6 +11,10 @@ import MediaPlayer
 
 class AppleNowPlaying: NowPlaying {
 
+  ///////////////////////
+  // PRIVATE VARIABLES //
+  ///////////////////////
+
   let musicPlayer: MPMusicPlayerController
 
   override init() {
@@ -37,33 +41,37 @@ class AppleNowPlaying: NowPlaying {
   }
 
   func didChangeNowPlaying(note: NSNotification) -> Void {
-    print("Did change NowPlaying")
   }
 
   func didChangePlaybackState(note: NSNotification) -> Void {
-    print("Did change playback state: \(String(reflecting: musicPlayer.playbackState))")
-  }
+    if isPlaying {
+      // We're supposed to be playing…
+      if musicPlayer.playbackState == MPMusicPlaybackState.Paused {
+        // …but we're paused, which is what happens when the Song ends.
+        didFinishCurrentSong()
 
-  override var isPlaying: Bool {
-    return musicPlayer.playbackState == MPMusicPlaybackState.Playing
-  }
-
-  override func play() -> Void {
-    assert(!isPlaying)  // make sure that nothing is playing
-
-    // and then figure out what we need to play
-    if let toPlay = self.findQueueItemToPlay() {
-      musicPlayer.setQueueWithItemCollection(MPMediaItemCollection(items: [ (toPlay.song.userInfo as! MPMediaItem) ]))
-      musicPlayer.play()
-    } else {
-      print("Could not find a song to play.")
+        // After we do this, the player will transition to "Stop" and then
+        // "Playing", so we need to be aware of that.
+      }
     }
   }
 
-  func pause() -> Void {
-    assert(isPlaying)
+  override func playCurrentSong() {
+    if let toPlay = self.queue.current {
+      let mediaItem = toPlay.song.userInfo as! MPMediaItem
+      musicPlayer.setQueueWithItemCollection(MPMediaItemCollection(items: [ mediaItem ]))
 
-    musicPlayer.pause()
+      // VERYHELPFUL
+      // If you uncomment this line, it'll just play the last 20 seconds of
+      // each song.  This makes it much easier to test transitions.
+
+      // musicPlayer.currentPlaybackTime = mediaItem.playbackDuration - 20
+
+      musicPlayer.play()
+    } else {
+      // We couldn't find a Song to play, so mark it as having stopped.
+      playing = false
+    }
   }
 
 }

@@ -10,6 +10,26 @@ import UIKit
 
 class UpNextTableViewController: ItemTableViewController {
 
+  var listener: NSObjectProtocol?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    let center = NSNotificationCenter.defaultCenter()
+    listener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: nil, queue: nil, usingBlock: { (note) in
+      if let queue = (note.object as? Queue) {
+        print("New Song: \(queue.current); Next Up Is: \(queue.upcoming.first)")
+      }
+    })
+  }
+
+  deinit {
+    if let listener = self.listener {
+      let center = NSNotificationCenter.defaultCenter()
+      center.removeObserver(listener)
+    }
+  }
+
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     // #warning Incomplete implementation, return the number of rows
     return library.allSongs.count
