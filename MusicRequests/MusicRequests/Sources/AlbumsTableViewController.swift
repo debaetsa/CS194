@@ -26,6 +26,7 @@ class AlbumsTableViewController: ItemTableViewController {
 
     cell.textLabel?.text = currentAlbum.name
     cell.detailTextLabel?.text = "\(artistNames) • \(songCount.pluralize(("Song", "Songs")))"
+    cell.imageView?.image = UIImage(named: "hozier_album.png")!
 
     return cell
   }

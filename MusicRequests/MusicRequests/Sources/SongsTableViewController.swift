@@ -24,6 +24,8 @@ class SongsTableViewController: ItemTableViewController {
 
     cell.textLabel?.text = currentSong.name
     cell.detailTextLabel?.text = "\(artistNames) - \(songs[indexPath.row].album!.name)"
+    cell.imageView?.image = UIImage(named: "hozier_album.png")!
+
 
     return cell
   }
