@@ -23,23 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       library = AppleLibrary()
     #endif
 
-    for song in library!.allSongs {
-      print(song.name)
-    }
-    for album in library!.allAlbums {
-      print("Album: \(album.name)")
-      for details in album.allSongs {
-        print("\(details.disc)-\(details.track): \(details.song.name)")
-      }
-      print("")
-    }
-    for artist in library!.allArtists {
-      print(artist.name)
-      for album in artist.allAlbums {
-        print("Album: \(album.name)")
-      }
-      print("")
-    }
     return true
   }
 

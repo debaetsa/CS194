@@ -36,7 +36,6 @@ class Album: Item {
   var songs: [(disc: Int?, track: Int?, song: Song)] = []
 
   func addSong(song: Song, discNumber: Int?, trackNumber: Int?) -> Void {
-    print("Song: \(song.name), Disc: \(discNumber), Track: \(trackNumber)")
     songs.append((discNumber, trackNumber, song))
   }
 
