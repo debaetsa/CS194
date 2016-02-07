@@ -60,6 +60,13 @@ class AppleNowPlaying: NowPlaying {
     if let toPlay = self.queue.current {
       let mediaItem = toPlay.song.userInfo as! MPMediaItem
       musicPlayer.setQueueWithItemCollection(MPMediaItemCollection(items: [ mediaItem ]))
+
+      // VERYHELPFUL
+      // If you uncomment this line, it'll just play the last 20 seconds of
+      // each song.  This makes it much easier to test transitions.
+
+      // musicPlayer.currentPlaybackTime = mediaItem.playbackDuration - 20
+
       musicPlayer.play()
     } else {
       // We couldn't find a Song to play, so mark it as having stopped.
