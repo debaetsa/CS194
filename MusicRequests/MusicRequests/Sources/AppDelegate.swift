@@ -20,7 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
     #if (arch(i386) || arch(x86_64)) && os(iOS)
-      library = TemporaryLibrary()
+      let tempLibrary = TemporaryLibrary()
+      library = tempLibrary
+      nowPlaying = NowPlaying()
+      queue = Queue(nowPlaying: nowPlaying!, sourceLibrary: tempLibrary)
     #else
       let appleLibrary = AppleLibrary()
       library = appleLibrary
