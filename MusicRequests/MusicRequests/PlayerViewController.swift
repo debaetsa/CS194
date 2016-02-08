@@ -9,7 +9,7 @@
 import UIKit
 
 class PlayerViewController: PreviewController {
-//  let nowPlaying = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.nowPlaying)!
+  let nowPlaying = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.nowPlaying)!
   
   @IBOutlet weak var SongTitle: UILabel!
   @IBOutlet weak var ArtistAlbum: UILabel!
@@ -23,10 +23,10 @@ class PlayerViewController: PreviewController {
     let tag = sender.tag
     print ("tag: \(tag)")
     switch tag {
-    case 1: break //nowPlaying.play()
-    case 2: break // nowPlaying.next()
-    case 3: break // nowPlaying.last()
-    case 4: break //nowPlaying.scrub()
+    case 1: nowPlaying.play()
+    case 2: nowPlaying.next()
+    case 3: nowPlaying.last()
+    case 4: nowPlaying.scrub()
     default: break
     }
   }
