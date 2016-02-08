@@ -184,7 +184,7 @@
                                         <rect key="frame" x="0.0" y="49.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pc2-7F-pIX" id="36c-Ah-fhW">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TXG-UK-zAv">
@@ -233,7 +233,7 @@
                                         <rect key="frame" x="0.0" y="137.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8QH-Vx-QUe" id="o6N-nI-EX1">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kQx-kH-twj">
@@ -258,7 +258,7 @@
                                         <rect key="frame" x="0.0" y="181.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yI6-Ri-2xJ" id="LDv-hO-kIJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playlist Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rF7-HC-4Kl">
@@ -288,7 +288,7 @@
                                         <rect key="frame" x="0.0" y="225.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mi7-mM-WiY" id="pbU-Qq-f8L">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Hw-yI-9XU">
@@ -324,7 +324,7 @@
                                         <rect key="frame" x="0.0" y="302.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cjd-dd-i8h" id="t7C-BG-PJb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Matt's Party" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Z6-KQ-iGA">
@@ -340,7 +340,7 @@
                                         <rect key="frame" x="0.0" y="346.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="111-tK-42I" id="eCW-s2-CIQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="James's Party" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JGb-O4-yn4">
@@ -356,7 +356,7 @@
                                         <rect key="frame" x="0.0" y="390.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oxR-UA-llJ" id="ER0-nq-IJ0">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Max's Party" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uez-1T-5Za">
@@ -684,28 +684,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="285"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uh7-yA-1pH" userLabel="nextButton">
-                                <rect key="frame" x="540" y="165" width="40" height="40"/>
-                                <accessibility key="accessibilityConfiguration" identifier="nextButton"/>
-                                <state key="normal" image="forward_button"/>
-                                <connections>
-                                    <action selector="buttonIsPressed:" destination="OLY-Gl-acB" eventType="touchUpInside" id="bAn-jP-UMh"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-wx-g34">
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-wx-g34" userLabel="prevButton">
                                 <rect key="frame" x="20" y="165" width="40" height="40"/>
+                                <accessibility key="accessibilityConfiguration" label="prevButton"/>
                                 <state key="normal" image="rewind_button"/>
                                 <connections>
-                                    <action selector="buttonIsPressed:" destination="OLY-Gl-acB" eventType="touchUpInside" id="47m-Tv-HeI"/>
+                                    <action selector="backButtonIsPressed:" destination="OLY-Gl-acB" eventType="touchUpInside" id="TxU-zE-aDg"/>
                                 </connections>
                             </button>
-                            <slider opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="8od-Iw-aNU" userLabel="scrubButton">
+                            <slider opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="8od-Iw-aNU" userLabel="songScrubber">
                                 <rect key="frame" x="18" y="127" width="564" height="31"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" identifier="scrubButton"/>
+                                <accessibility key="accessibilityConfiguration" identifier="scrubButton" label="songScrubber"/>
                                 <color key="maximumTrackTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="buttonIsPressed:" destination="OLY-Gl-acB" eventType="valueChanged" id="1fX-1E-pov"/>
+                                    <action selector="scrubberIsUsed:" destination="OLY-Gl-acB" eventType="valueChanged" id="bPS-en-oso"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take Me to Church" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pDh-yk-FwN">
@@ -715,17 +708,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hozier - Hozier" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJa-J5-8F6">
-                                <rect key="frame" x="242" y="103" width="116" height="20.5"/>
+                                <rect key="frame" x="242" y="103" width="116" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMy-0n-Gye" userLabel="playButton">
                                 <rect key="frame" x="280" y="165" width="40" height="40"/>
-                                <accessibility key="accessibilityConfiguration" identifier="playButton"/>
+                                <accessibility key="accessibilityConfiguration" label="playButton"/>
                                 <state key="normal" image="play_button"/>
                                 <connections>
-                                    <action selector="buttonIsPressed:" destination="OLY-Gl-acB" eventType="touchUpInside" id="VB7-db-5oP"/>
+                                    <action selector="playButtonIsPressed:" destination="OLY-Gl-acB" eventType="touchUpInside" id="Cfq-wA-vzg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uh7-yA-1pH" userLabel="nextButton">
+                                <rect key="frame" x="540" y="165" width="40" height="40"/>
+                                <accessibility key="accessibilityConfiguration" label="nextButton"/>
+                                <state key="normal" image="forward_button"/>
+                                <connections>
+                                    <action selector="nextButtonIsPressed:" destination="OLY-Gl-acB" eventType="touchUpInside" id="06u-db-fdC"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -749,7 +750,6 @@
                     <connections>
                         <outlet property="ArtistAlbum" destination="dJa-J5-8F6" id="Cex-Tc-jfw"/>
                         <outlet property="SongTitle" destination="pDh-yk-FwN" id="7Rg-66-QxI"/>
-                        <outlet property="lastButton" destination="W5Y-wx-g34" id="jNe-V6-JWz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uFd-9O-dli" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -877,10 +877,10 @@
             </objects>
             <point key="canvasLocation" x="-1145" y="2334"/>
         </scene>
-        <!--View Controller-->
+        <!--Image Preivew Controller-->
         <scene sceneID="JIz-nx-1oS">
             <objects>
-                <viewController id="UBe-TQ-aHe" sceneMemberID="viewController">
+                <viewController id="UBe-TQ-aHe" customClass="ImagePreivewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2Y5-FI-2tw"/>
                         <viewControllerLayoutGuide type="bottom" id="OsT-YV-ZDX"/>

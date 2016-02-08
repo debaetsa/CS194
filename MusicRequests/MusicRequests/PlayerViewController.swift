@@ -19,16 +19,21 @@ class PlayerViewController: PreviewController {
     SongTitle.text = song
   }
   
-  @IBAction func buttonIsPressed(sender: AnyObject) {
-    let tag = sender.tag
-    print ("tag: \(tag)")
-    switch tag {
-    case 1: nowPlaying.play()
-    case 2: nowPlaying.next()
-    case 3: nowPlaying.last()
-    case 4: nowPlaying.scrub()
-    default: break
-    }
+  
+  @IBAction func backButtonIsPressed(sender: UIButton) {
+    nowPlaying.last()
   }
-
+  
+  @IBAction func playButtonIsPressed(sender: UIButton) {
+    nowPlaying.play()
+  }
+  
+  @IBAction func nextButtonIsPressed(sender: UIButton) {
+    nowPlaying.next()
+  }
+  
+  @IBAction func scrubberIsUsed(sender: AnyObject) {
+    nowPlaying.scrub()
+  }
+  
 }

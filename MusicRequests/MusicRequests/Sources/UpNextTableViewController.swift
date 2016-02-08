@@ -56,6 +56,7 @@ class UpNextTableViewController: ItemTableViewController {
     } else {
       cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
     }
+    
     let currentSong = songs[indexPath.row].song
 
     cell.textLabel?.text = "\(currentSong.name)"
