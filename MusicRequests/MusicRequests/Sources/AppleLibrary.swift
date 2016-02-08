@@ -31,7 +31,7 @@ class AppleLibrary: NSObject, Library {
 
     var playlists = [Playlist]()
     var artists = [String: Artist]()
-    var albums = [String: Album]()
+    var albums = [Album]()
     var genres = [String: Genre]()
     var idToSong = [MPMediaEntityPersistentID: Song]()
 
@@ -58,16 +58,14 @@ class AppleLibrary: NSObject, Library {
 
       var album: Album?
       if let albumName = item.albumTitle {
-        album = albums[albumName]
+        if let boundArtist = artist {
+          album = boundArtist.albumWithName(albumName)
+        }
         if album == nil {
-          album = Album(name: albumName, artist: artist)
-          albums[albumName] = album
-
-          // We just ran code that ensures that the album exists, so it's fine
-          // to unwrap the value.  If it is nil, it means that there is some
-          // sort of a problem that should be corrected.  However, it's
-          // possible that the artist will be nil, so we need to handle that.
-          artist?.addAlbum(album!)
+          // We couldn't find the album, or there wasn't an artist.
+          let boundAlbum = Album(name: albumName, artist: artist)
+          album = boundAlbum
+          albums.append(boundAlbum)
         }
       }
 
@@ -104,7 +102,7 @@ class AppleLibrary: NSObject, Library {
 
     allSongs = songs.sort(Item.sorter)
     allArtists = artists.values.sort(Item.sorter)
-    allAlbums = albums.values.sort(Item.sorter)
+    allAlbums = albums.sort(Item.sorter)
     allPlaylists = playlists.sort(Item.sorter)
     allGenres = genres.values.sort(Item.sorter)
 

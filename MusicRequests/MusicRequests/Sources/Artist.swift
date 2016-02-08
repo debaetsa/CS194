@@ -29,5 +29,14 @@ class Artist: Item {
       })
     }
   }
+
+  func albumWithName(name: String) -> Album? {
+    for album in albums {
+      if album.name == name {
+        return album
+      }
+    }
+    return nil
+  }
   
 }
