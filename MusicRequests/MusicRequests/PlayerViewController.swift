@@ -11,24 +11,41 @@ import UIKit
 class PlayerViewController: PreviewController {
   let nowPlaying = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.nowPlaying)!
   
-  @IBOutlet weak var SongTitle: UILabel!
-  @IBOutlet weak var ArtistAlbum: UILabel!
-  
+  @IBOutlet weak var songLabel: UILabel!
+  @IBOutlet weak var detailLabel: UILabel!
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    SongTitle.text = song
+    populateLabels()
   }
   
-  @IBAction func buttonIsPressed(sender: AnyObject) {
-    let tag = sender.tag
-    print ("tag: \(tag)")
-    switch tag {
-    case 1: nowPlaying.play()
-    case 2: nowPlaying.next()
-    case 3: nowPlaying.last()
-    case 4: nowPlaying.scrub()
-    default: break
+  func populateLabels() {
+    songLabel.text = song
+    
+    var detailComponents = [String]()
+    if artist != nil {
+      detailComponents.append(artist!)
     }
+    if album != nil {
+      detailComponents.append(album!)
+    }
+    detailLabel.text = detailComponents.joinWithSeparator(" • ")
   }
-
+  
+  @IBAction func backButtonIsPressed(sender: UIButton) {
+    nowPlaying.last()
+  }
+  
+  @IBAction func playButtonIsPressed(sender: UIButton) {
+    nowPlaying.play()
+  }
+  
+  @IBAction func nextButtonIsPressed(sender: UIButton) {
+    nowPlaying.next()
+  }
+  
+  @IBAction func scrubberIsUsed(sender: AnyObject) {
+    nowPlaying.scrub()
+  }
+  
 }

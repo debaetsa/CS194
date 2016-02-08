@@ -89,7 +89,7 @@ class UpNextTableViewController: ItemTableViewController {
     songTitle = clickedOnSong.name
     artistName = clickedOnSong.artist!.name
     albumName = clickedOnSong.album!.name
-
+    albumArt = clickedOnSong.album!.imageToShow
     performSegueWithIdentifier("ToPreview", sender: self)
   }
 }
