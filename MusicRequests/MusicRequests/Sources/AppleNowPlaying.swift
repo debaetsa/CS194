@@ -49,6 +49,7 @@ class AppleNowPlaying: NowPlaying {
   func didChangePlaybackState(note: NSNotification) -> Void {
     if isPlaying {
       // We're supposed to be playing…
+      // Not always, for example when the user hits pause on the control screen.
       if musicPlayer.playbackState == MPMusicPlaybackState.Paused {
         // …but we're paused, which is what happens when the Song ends.
         didFinishCurrentSong()

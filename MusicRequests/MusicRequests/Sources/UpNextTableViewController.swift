@@ -37,15 +37,20 @@ class UpNextTableViewController: ItemTableViewController {
 
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let songs = library.allSongs
+    //let songs = library.allSongs
+    var songs = queue.history
+    if queue.current != nil {
+      songs.append(queue.current!)
+    }
+    songs.appendContentsOf(queue.upcoming)
 
     var cell: UITableViewCell
-    if (indexPath.row == 4) {
+    if (indexPath.row == queue.history.count) {
       cell = tableView.dequeueReusableCellWithIdentifier("BigCell", forIndexPath: indexPath)
     } else {
       cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
     }
-    let currentSong = songs[indexPath.row]
+    let currentSong = songs[indexPath.row].song
 
     cell.textLabel?.text = "\(currentSong.name)"
 
@@ -66,7 +71,7 @@ class UpNextTableViewController: ItemTableViewController {
   override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     // "4" Hardcoded for now, will replace with currently_playing song next week
 
-    if(indexPath.row != 4) {
+    if(indexPath.row != queue.history.count) {
       return 50.0
     }
     return 100.0

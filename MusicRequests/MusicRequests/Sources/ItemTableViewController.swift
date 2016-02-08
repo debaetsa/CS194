@@ -21,6 +21,11 @@ class ItemTableViewController: UITableViewController {
   // of each song, we need to make sure that we don't import the data more than
   // once.
   let library = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.library)!
+  
+  //You'll also need a nowPlaying & queue object as well...
+  let nowPlaying = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.nowPlaying)!
+  
+  let queue = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.queue)!
 
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     return 1
