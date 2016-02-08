@@ -9,11 +9,12 @@
 import UIKit
 
 class SongsTableViewController: ItemTableViewController {
+  
+
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return library.allSongs.count
   }
-
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
@@ -29,4 +30,15 @@ class SongsTableViewController: ItemTableViewController {
 
     return cell
   }
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let clickedOnSong = library.allSongs[indexPath.row]
+    songTitle = clickedOnSong.name
+    artistName = clickedOnSong.artists.map({ $0.name }).joinWithSeparator(", ")
+    albumName = clickedOnSong.album!.name
+    
+    performSegueWithIdentifier("ToPreview", sender: self)
+  }
+
+  
 }

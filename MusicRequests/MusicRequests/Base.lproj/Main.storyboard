@@ -80,9 +80,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="mDB-BF-DVt" kind="show" id="1b5-pv-36E"/>
-                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BigCell" textLabel="hxA-2x-lUr" detailTextLabel="3H9-9Y-UJS" rowHeight="100" style="IBUITableViewCellStyleSubtitle" id="och-c3-Jlp">
                                 <rect key="frame" x="0.0" y="78" width="600" height="100"/>
@@ -107,9 +104,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="mDB-BF-DVt" kind="show" id="Y2v-T3-KUp"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -118,6 +112,9 @@
                             <outlet property="delegate" destination="iDw-oc-B5F" id="2ds-K4-uY7"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="mDB-BF-DVt" kind="show" identifier="ToPreview" id="zEt-kB-Ox1"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="elW-V5-Elo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -453,9 +450,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="mDB-BF-DVt" kind="show" id="kcL-98-wgj"/>
-                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BigCell" textLabel="dbK-nl-V0e" detailTextLabel="P7G-km-WMO" rowHeight="100" style="IBUITableViewCellStyleSubtitle" id="O0y-pd-zUN">
                                 <rect key="frame" x="0.0" y="142" width="600" height="100"/>
@@ -480,9 +474,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="mDB-BF-DVt" kind="show" id="AUL-FZ-9ww"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -529,9 +520,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="mDB-BF-DVt" kind="show" id="Qkr-je-34y"/>
-                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BigCell" textLabel="DfU-UB-yrZ" detailTextLabel="XyT-rf-g3f" rowHeight="100" style="IBUITableViewCellStyleSubtitle" id="XFG-wO-1fj">
                                 <rect key="frame" x="0.0" y="142" width="600" height="100"/>
@@ -556,9 +544,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="mDB-BF-DVt" kind="show" id="yZp-ft-Pc2"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -573,10 +558,10 @@
             </objects>
             <point key="canvasLocation" x="-2522" y="3110"/>
         </scene>
-        <!--View Controller-->
+        <!--Preview Controller-->
         <scene sceneID="yOs-Bi-U7h">
             <objects>
-                <viewController id="mDB-BF-DVt" sceneMemberID="viewController">
+                <viewController id="mDB-BF-DVt" customClass="PreviewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZYP-7w-Ghr"/>
                         <viewControllerLayoutGuide type="bottom" id="qrO-BO-DzT"/>
@@ -586,7 +571,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="916-ud-X5L" userLabel="AlbumArtViewer">
-                                <rect key="frame" x="0.0" y="20" width="600" height="560"/>
+                                <rect key="frame" x="9" y="20" width="582" height="542"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="916-ud-X5L" secondAttribute="height" multiplier="1:1" constant="40" id="B1T-eb-TSs"/>
                                 </constraints>
@@ -595,9 +580,9 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WDW-Hz-MIW">
-                                <rect key="frame" x="0.0" y="580" width="600" height="20"/>
+                                <rect key="frame" x="0.0" y="580" width="600" height="285"/>
                                 <connections>
-                                    <segue destination="OLY-Gl-acB" kind="embed" id="w8s-se-6aQ"/>
+                                    <segue destination="OLY-Gl-acB" kind="embed" identifier="playerViewSegue" id="w8s-se-6aQ"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -615,7 +600,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZSe-1n-KJy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3134" y="3887"/>
+            <point key="canvasLocation" x="1302" y="-555"/>
         </scene>
         <!--Library/Albums-->
         <scene sceneID="Z5Z-Aq-JpJ">
@@ -649,9 +634,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="mDB-BF-DVt" kind="show" id="Lft-OC-BOj"/>
-                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BigCell" textLabel="RnW-2B-qB1" detailTextLabel="IWg-5W-3ER" rowHeight="100" style="IBUITableViewCellStyleSubtitle" id="YMB-RP-cbT">
                                 <rect key="frame" x="0.0" y="142" width="600" height="100"/>
@@ -676,9 +658,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="mDB-BF-DVt" kind="show" id="ztJ-Lr-sdc"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -702,35 +681,35 @@
                         <viewControllerLayoutGuide type="bottom" id="tCW-gb-PgS"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GuM-oo-3W4">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="285"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMy-0n-Gye">
-                                <rect key="frame" x="280" y="33" width="40" height="40"/>
+                                <rect key="frame" x="280" y="165" width="40" height="40"/>
                                 <state key="normal" image="play_button"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uh7-yA-1pH">
-                                <rect key="frame" x="540" y="33" width="40" height="40"/>
+                                <rect key="frame" x="540" y="165" width="40" height="40"/>
                                 <state key="normal" image="forward_button"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-wx-g34">
-                                <rect key="frame" x="20" y="33" width="40" height="40"/>
+                                <rect key="frame" x="20" y="165" width="40" height="40"/>
                                 <state key="normal" image="rewind_button"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take Me to Church" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pDh-yk-FwN">
-                                <rect key="frame" x="200" y="-84" width="200" height="29"/>
+                                <rect key="frame" x="200" y="48" width="200" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hozier - Hozier" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJa-J5-8F6">
-                                <rect key="frame" x="242" y="-29" width="116" height="20.5"/>
+                                <rect key="frame" x="242" y="103" width="116" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="8od-Iw-aNU">
-                                <rect key="frame" x="18" y="-5" width="564" height="31"/>
+                                <rect key="frame" x="18" y="127" width="564" height="31"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="maximumTrackTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </slider>
@@ -752,10 +731,14 @@
                             <constraint firstItem="8od-Iw-aNU" firstAttribute="leading" secondItem="GuM-oo-3W4" secondAttribute="leadingMargin" id="wsU-1D-Udn"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="ArtistAlbum" destination="dJa-J5-8F6" id="Cex-Tc-jfw"/>
+                        <outlet property="SongTitle" destination="pDh-yk-FwN" id="7Rg-66-QxI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uFd-9O-dli" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3471" y="4310"/>
+            <point key="canvasLocation" x="721" y="373.5"/>
         </scene>
         <!--Library/Playlists-->
         <scene sceneID="ALZ-K6-Lhg">
@@ -789,9 +772,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="mDB-BF-DVt" kind="show" id="UmJ-F4-gsF"/>
-                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BigCell" textLabel="qf1-OP-myf" detailTextLabel="h8Z-FH-Iti" rowHeight="100" style="IBUITableViewCellStyleSubtitle" id="Zp9-9F-Ayg">
                                 <rect key="frame" x="0.0" y="142" width="600" height="100"/>
@@ -816,9 +796,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="mDB-BF-DVt" kind="show" id="dBT-N0-DrS"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -889,11 +866,11 @@
             <objects>
                 <viewController id="UBe-TQ-aHe" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YBg-ac-aE3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="560"/>
+                        <rect key="frame" x="0.0" y="0.0" width="582" height="542"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="hozier_album.png" translatesAutoresizingMaskIntoConstraints="NO" id="KO6-UE-1fG">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="560"/>
+                                <rect key="frame" x="0.0" y="0.0" width="582" height="542"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="KO6-UE-1fG" secondAttribute="height" multiplier="1:1" constant="40" id="wZR-tm-jys"/>
                                 </constraints>
@@ -909,7 +886,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Djn-Mr-uSQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2904" y="4657"/>
+            <point key="canvasLocation" x="1792" y="305"/>
         </scene>
     </scenes>
     <resources>
@@ -923,7 +900,6 @@
         <image name="rewind_button" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Y2v-T3-KUp"/>
         <segue reference="zBj-Gq-Snq"/>
     </inferredMetricsTieBreakers>
 </document>

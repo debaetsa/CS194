@@ -33,4 +33,13 @@ class ArtistsTableViewController: ItemTableViewController {
 
     return cell
   }
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let clickedOnArtist = library.allArtists[indexPath.row]
+    songTitle = clickedOnArtist.name
+    artistName = clickedOnArtist.artists.map({ $0.name }).joinWithSeparator(", ")
+    albumName = clickedOnArtist.album!.name
+    
+    performSegueWithIdentifier("ToPreview", sender: self)
+  }
 }
