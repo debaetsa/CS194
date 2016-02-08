@@ -34,12 +34,16 @@ class ArtistsTableViewController: ItemTableViewController {
     return cell
   }
   
-//  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//    let clickedOnArtist = library.allArtists[indexPath.row]
-//    songTitle = clickedOnArtist.name
-//    artistName = clickedOnArtist.artists.map({ $0.name }).joinWithSeparator(", ")
-//    albumName = clickedOnArtist.album!.name
-//    
-//    performSegueWithIdentifier("ToPreview", sender: self)
-//  }
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    artist = library.allArtists[indexPath.row]
+    performSegueWithIdentifier("ToArtistDetail", sender: self)
+  }
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    if (segue.identifier == "ToArtistDetail") {
+      // Create a new variable to store the instance of PreviewController
+      let destinationVC = segue.destinationViewController as! DetailedArtistTableViewController
+      destinationVC.currentArtist = artist
+    }
+  }
 }

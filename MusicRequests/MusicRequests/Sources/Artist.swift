@@ -29,6 +29,12 @@ class Artist: Item {
       })
     }
   }
+  
+  var albumCount: Int {
+    get {
+      return allAlbums.count
+    }
+  }
 
   func albumWithName(name: String) -> Album? {
     for album in albums {

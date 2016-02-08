@@ -15,6 +15,7 @@ class ItemTableViewController: UITableViewController {
   var albumName: String?
   var albumArt: UIImage?
   var album: Album?
+  var artist: Artist?
 
   // This will access the shared library for the entire application.  This
   // avoids instantiating an entire Library instance for each view controller
