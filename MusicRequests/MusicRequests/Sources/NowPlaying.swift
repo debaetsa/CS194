@@ -52,10 +52,7 @@ class NowPlaying: NSObject {
 
     playing = false
   }
-  
-  func pause() {
-  }
-  
+  g
   func next() {
   }
   
