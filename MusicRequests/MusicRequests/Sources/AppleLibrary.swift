@@ -29,9 +29,11 @@ class AppleLibrary: NSObject, Library {
 
     var songs = [Song]()  // store all the songs as they are imported
 
+    var playlists = [Playlist]()
     var artists = [String: Artist]()
     var albums = [String: Album]()
     var genres = [String: Genre]()
+    var idToSong = [MPMediaEntityPersistentID: Song]()
 
     for item in items {
       var genre: Genre?
@@ -69,13 +71,41 @@ class AppleLibrary: NSObject, Library {
         }
       }
 
-      songs.append(Song(name: item.title ?? "", artist: artist, album: album, genre: genre, discNumber: item.discNumber, trackNumber: item.albumTrackNumber, userInfo: item))
+      let song = Song(name: item.title ?? "", artist: artist, album: album, genre: genre, discNumber: item.discNumber, trackNumber: item.albumTrackNumber, userInfo: item)
+      songs.append(song)
+      idToSong[item.persistentID] = song
+    }
+
+    // After importing everything from the library, we can go through and
+    // associate them with the playlists on the device.
+    let playlistQuery = MPMediaQuery.playlistsQuery()
+    playlistQuery.groupingType = MPMediaGrouping.Playlist
+
+    let playlistItemCollections = playlistQuery.collections!
+
+
+    for collection in playlistItemCollections {
+      if let playlistName = (collection.valueForProperty(MPMediaPlaylistPropertyName) as? String) {
+        // We have a valid name for the Playlist, so create a Playlist.
+        let playlist = Playlist(name: playlistName)
+
+        for item in collection.items {
+          if let song = idToSong[item.persistentID] {
+            playlist.addSong(song)
+          } else {
+            print("Could not find Song for entry in playlist.")
+          }
+        }
+
+        // TODO: Maybe we want to skip empty playlists.
+        playlists.append(playlist)
+      }
     }
 
     allSongs = songs.sort(Item.sorter)
     allArtists = artists.values.sort(Item.sorter)
     allAlbums = albums.values.sort(Item.sorter)
-    allPlaylists = []
+    allPlaylists = playlists.sort(Item.sorter)
     allGenres = genres.values.sort(Item.sorter)
 
     for genre in allGenres {

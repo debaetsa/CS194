@@ -11,7 +11,14 @@ import UIKit
 class Playlist: Item {
 
   // A Playlist is a list of songs, and it is empty by default.
-  var songs: [Song] = []
+  private var songs: [Song] = []
+  var allSongs: [Song] {
+    return songs
+  }
+
+  func addSong(song: Song) {
+    songs.append(song)
+  }
 
 }
 
