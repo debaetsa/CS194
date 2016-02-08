@@ -32,4 +32,7 @@ class Item: NSObject {
     return first.name.localizedCompare(second.name) == NSComparisonResult.OrderedAscending
   }
 
+  func didFinishImporting() {
+  }
+
 }

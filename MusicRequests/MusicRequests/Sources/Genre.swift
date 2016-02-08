@@ -10,10 +10,17 @@ import UIKit
 
 class Genre: Item {
 
-  var songs: [Song] {
-    get {
-      return []
-    }
+  var songs = [Song]()
+  var allSongs: [Song] {
+    return songs
   }
-  
+
+  func addSong(song: Song) {
+    songs.append(song)
+  }
+
+  override func didFinishImporting() {
+    songs.sortInPlace(Item.sorter)
+  }
+
 }

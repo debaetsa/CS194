@@ -31,8 +31,18 @@ class AppleLibrary: NSObject, Library {
 
     var artists = [String: Artist]()
     var albums = [String: Album]()
+    var genres = [String: Genre]()
 
     for item in items {
+      var genre: Genre?
+      if let genreName = item.genre {
+        genre = genres[genreName]
+        if genre == nil {
+          genre = Genre(name: genreName)
+          genres[genreName] = genre
+        }
+      }
+
       var artist: Artist?
       if let artistName = item.artist {
         // The artist has a name, so we want to use it with this Song.
@@ -59,14 +69,18 @@ class AppleLibrary: NSObject, Library {
         }
       }
 
-      songs.append(Song(name: item.title ?? "", artist: artist, album: album, discNumber: item.discNumber, trackNumber: item.albumTrackNumber, userInfo: item))
+      songs.append(Song(name: item.title ?? "", artist: artist, album: album, genre: genre, discNumber: item.discNumber, trackNumber: item.albumTrackNumber, userInfo: item))
     }
 
     allSongs = songs.sort(Item.sorter)
     allArtists = artists.values.sort(Item.sorter)
     allAlbums = albums.values.sort(Item.sorter)
     allPlaylists = []
-    allGenres = []
+    allGenres = genres.values.sort(Item.sorter)
+
+    for genre in allGenres {
+      genre.didFinishImporting()
+    }
 
     // We have to set all of our local instance variables to some value before
     // we invoke the superclass's initialization method.
