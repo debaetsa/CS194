@@ -21,12 +21,18 @@ class SongsTableViewController: ItemTableViewController {
 
     let songs = library.allSongs
     let currentSong = songs[indexPath.row]
-    let artistNames = currentSong.artists.map({ $0.name }).joinWithSeparator(", ")
+
+    var detailComponents = [String]()
+    if let name = currentSong.artist?.name {
+      detailComponents.append(name)
+    }
+    if let name = currentSong.album?.name {
+      detailComponents.append(name)
+    }
+    cell.detailTextLabel?.text = detailComponents.joinWithSeparator(" • ")
 
     cell.textLabel?.text = currentSong.name
-    cell.detailTextLabel?.text = "\(artistNames) - \(songs[indexPath.row].album!.name)"
     cell.imageView?.image = UIImage(named: "NoAlbumArtwork")!
-
 
     return cell
   }
@@ -34,7 +40,7 @@ class SongsTableViewController: ItemTableViewController {
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     let clickedOnSong = library.allSongs[indexPath.row]
     songTitle = clickedOnSong.name
-    artistName = clickedOnSong.artists.map({ $0.name }).joinWithSeparator(", ")
+    artistName = clickedOnSong.artist!.name
     albumName = clickedOnSong.album!.name
     
     performSegueWithIdentifier("ToPreview", sender: self)

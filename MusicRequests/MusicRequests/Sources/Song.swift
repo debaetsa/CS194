@@ -17,6 +17,7 @@ class Song: Item {
   sources. */
   let userInfo: AnyObject?
 
+  let artistOverride: Artist?
   let album: Album?
   let genre: Genre?
 
@@ -25,6 +26,7 @@ class Song: Item {
     self.userInfo = userInfo
     self.album = album
     self.genre = genre
+    self.artistOverride = artist
 
     super.init(name: name, sortName: sortName)
 
@@ -71,10 +73,8 @@ class Song: Item {
     )
   }
 
-  var artists: NSSet {
-    get {
-      return NSSet()
-    }
+  var artist: Artist? {
+    return artistOverride ?? album?.artist
   }
 
 }
