@@ -50,12 +50,13 @@ class AppleLibrary: NSObject, Library {
         if album == nil {
           album = Album(name: albumName, artist: artist)
           albums[albumName] = album
-        }
 
-        // We just ran code that ensures that the album exists, so it's fine to
-        // unwrap the value.  If it is nil, it means that there is some sort of
-        // a problem that should be corrected.
-        artist?.addAlbum(album!)
+          // We just ran code that ensures that the album exists, so it's fine
+          // to unwrap the value.  If it is nil, it means that there is some
+          // sort of a problem that should be corrected.  However, it's
+          // possible that the artist will be nil, so we need to handle that.
+          artist?.addAlbum(album!)
+        }
       }
 
       songs.append(Song(name: item.title ?? "", artist: artist, album: album, discNumber: item.discNumber, trackNumber: item.albumTrackNumber, userInfo: item))
