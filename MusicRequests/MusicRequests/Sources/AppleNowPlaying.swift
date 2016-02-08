@@ -20,7 +20,10 @@ class AppleNowPlaying: NowPlaying {
   override init() {
     // Create the music player that we will use to play the songs.  We also
     // disable shuffle/repeat since we want songs played in the proper order.
-    musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+    // The Music player should be a systemMusicPlayer, not an applicationMusicPlayer
+    // applicationMusicPlayers would require the app to open while playing, which
+    // is not what we want.
+    musicPlayer = MPMusicPlayerController.systemMusicPlayer()
     musicPlayer.shuffleMode = MPMusicShuffleMode.Off
     musicPlayer.repeatMode = MPMusicRepeatMode.None
 
@@ -77,6 +80,7 @@ class AppleNowPlaying: NowPlaying {
   override func pause() -> Void {
     assert(isPlaying)
 
+    playing = false //this took me a while to figure out why every time I paused it kept playing again.
     musicPlayer.pause()
   }
 
