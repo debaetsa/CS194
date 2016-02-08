@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var library: Library?
   var queue: Queue?
+//  var nowPlaying: NowPlaying?
 
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -24,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let appleLibrary = AppleLibrary()
       library = appleLibrary
       queue = AppleQueue(sourceLibrary: appleLibrary)
+//      nowPlaying = NowPlaying()
     #endif
 
     return true

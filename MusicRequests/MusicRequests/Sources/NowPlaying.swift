@@ -42,5 +42,17 @@ class NowPlaying: NSObject {
 
   func play() {
   }
+  
+  func pause() {
+  }
+  
+  func next() {
+  }
+  
+  func last() {
+  }
+  
+  func scrub() {
+  }
 
 }

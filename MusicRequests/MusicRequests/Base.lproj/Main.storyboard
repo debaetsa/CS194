@@ -684,18 +684,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="285"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMy-0n-Gye">
-                                <rect key="frame" x="280" y="165" width="40" height="40"/>
-                                <state key="normal" image="play_button"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uh7-yA-1pH">
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uh7-yA-1pH" userLabel="nextButton">
                                 <rect key="frame" x="540" y="165" width="40" height="40"/>
+                                <accessibility key="accessibilityConfiguration" identifier="nextButton"/>
                                 <state key="normal" image="forward_button"/>
+                                <connections>
+                                    <action selector="buttonIsPressed:" destination="OLY-Gl-acB" eventType="touchUpInside" id="bAn-jP-UMh"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-wx-g34">
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-wx-g34">
                                 <rect key="frame" x="20" y="165" width="40" height="40"/>
                                 <state key="normal" image="rewind_button"/>
+                                <connections>
+                                    <action selector="buttonIsPressed:" destination="OLY-Gl-acB" eventType="touchUpInside" id="47m-Tv-HeI"/>
+                                </connections>
                             </button>
+                            <slider opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="8od-Iw-aNU" userLabel="scrubButton">
+                                <rect key="frame" x="18" y="127" width="564" height="31"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="scrubButton"/>
+                                <color key="maximumTrackTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="buttonIsPressed:" destination="OLY-Gl-acB" eventType="valueChanged" id="1fX-1E-pov"/>
+                                </connections>
+                            </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take Me to Church" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pDh-yk-FwN">
                                 <rect key="frame" x="200" y="48" width="200" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -708,11 +720,14 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="8od-Iw-aNU">
-                                <rect key="frame" x="18" y="127" width="564" height="31"/>
-                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="maximumTrackTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            </slider>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMy-0n-Gye" userLabel="playButton">
+                                <rect key="frame" x="280" y="165" width="40" height="40"/>
+                                <accessibility key="accessibilityConfiguration" identifier="playButton"/>
+                                <state key="normal" image="play_button"/>
+                                <connections>
+                                    <action selector="buttonIsPressed:" destination="OLY-Gl-acB" eventType="touchUpInside" id="VB7-db-5oP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -734,6 +749,7 @@
                     <connections>
                         <outlet property="ArtistAlbum" destination="dJa-J5-8F6" id="Cex-Tc-jfw"/>
                         <outlet property="SongTitle" destination="pDh-yk-FwN" id="7Rg-66-QxI"/>
+                        <outlet property="lastButton" destination="W5Y-wx-g34" id="jNe-V6-JWz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uFd-9O-dli" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -900,6 +916,6 @@
         <image name="rewind_button" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zBj-Gq-Snq"/>
+        <segue reference="gH7-84-FJ5"/>
     </inferredMetricsTieBreakers>
 </document>

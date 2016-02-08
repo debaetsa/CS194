@@ -29,7 +29,7 @@ class ItemTableViewController: UITableViewController {
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
     
     if (segue.identifier == "ToPreview") {
-      // Create a new variable to store the instance of PlayerViewController
+      // Create a new variable to store the instance of PreviewController
       let destinationVC = segue.destinationViewController as! PreviewController
       destinationVC.song = songTitle
       destinationVC.artist = artistName

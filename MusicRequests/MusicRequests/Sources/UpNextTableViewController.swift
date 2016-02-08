@@ -45,4 +45,13 @@ class UpNextTableViewController: ItemTableViewController {
     }
     return 100.0
   }
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let clickedOnSong = library.allSongs[indexPath.row]
+    songTitle = clickedOnSong.name
+    artistName = clickedOnSong.artists.map({ $0.name }).joinWithSeparator(", ")
+    albumName = clickedOnSong.album!.name
+    
+    performSegueWithIdentifier("ToPreview", sender: self)
+  }
 }
