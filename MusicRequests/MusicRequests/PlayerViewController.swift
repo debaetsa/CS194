@@ -20,14 +20,14 @@ class PlayerViewController: PreviewController {
   }
   
   func populateLabels() {
-    songLabel.text = song
+    songLabel.text = song!.name
     
     var detailComponents = [String]()
     if artist != nil {
-      detailComponents.append(artist!)
+      detailComponents.append(artist!.name)
     }
     if album != nil {
-      detailComponents.append(album!)
+      detailComponents.append(album!.name)
     }
     detailLabel.text = detailComponents.joinWithSeparator(" • ")
   }

@@ -10,10 +10,9 @@ import UIKit
 
 class PreviewController: UIViewController {
   
-  var artist: String?
-  var album: String?
-  var albumArt: UIImage?
-  var song: String?
+  var song: Song?
+  var artist: Artist?
+  var album: Album?
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
  
@@ -27,8 +26,7 @@ class PreviewController: UIViewController {
       destinationVC.album = album
     } else if (segue.identifier == "albumArtSegue") {
       let destinationVC = segue.destinationViewController as! ImagePreviewController
-      print ("Album art: \(albumArt)")
-      destinationVC.albumArt =  albumArt
+      destinationVC.albumArt =  album!.imageToShow
     }
   }
 

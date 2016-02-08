@@ -9,16 +9,17 @@
 import UIKit
 
 class DetailedArtistTableViewController: ItemTableViewController {
-
-  var currentArtist: Artist?
+  var album: Album?
+  var artist: Artist?
+  var song: Song?
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return currentArtist!.albumCount
+    return artist!.albumCount
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
-    let currentAlbum = currentArtist!.allAlbums[indexPath.row]
+    let currentAlbum = artist!.allAlbums[indexPath.row]
     let artistNames = currentAlbum.artists.map({ $0.name }).joinWithSeparator(", ")
     let songCount = currentAlbum.songs.count
     
@@ -30,16 +31,14 @@ class DetailedArtistTableViewController: ItemTableViewController {
   }
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    album = library.allAlbums[indexPath.row]
+    album = artist!.allAlbums[indexPath.row]
     performSegueWithIdentifier("ToAlbumDetail", sender: self)
   }
-  
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    
     if (segue.identifier == "ToAlbumDetail") {
       // Create a new variable to store the instance of PreviewController
       let destinationVC = segue.destinationViewController as! DetailedAlbumTableViewController
-      destinationVC.currentAlbum = album
+      destinationVC.album = album
     }
   }
 }

@@ -9,8 +9,10 @@
 import UIKit
 
 class ArtistsTableViewController: ItemTableViewController {
-
-
+  var album: Album?
+  var artist: Artist?
+  var song: Song?
+  
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return library.allArtists.count
   }
@@ -30,7 +32,6 @@ class ArtistsTableViewController: ItemTableViewController {
     cell.detailTextLabel?.text = "\(albumCount.pluralize(("Album", "Albums"))) • \(songCount.pluralize(("Song", "Songs")))"
     cell.imageView?.image = currentArtist.allAlbums[0].imageToShow
 
-
     return cell
   }
   
@@ -38,12 +39,11 @@ class ArtistsTableViewController: ItemTableViewController {
     artist = library.allArtists[indexPath.row]
     performSegueWithIdentifier("ToArtistDetail", sender: self)
   }
-  
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
     if (segue.identifier == "ToArtistDetail") {
       // Create a new variable to store the instance of PreviewController
       let destinationVC = segue.destinationViewController as! DetailedArtistTableViewController
-      destinationVC.currentArtist = artist
+      destinationVC.artist = artist
     }
   }
 }

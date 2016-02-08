@@ -9,13 +9,6 @@
 import UIKit
 
 class ItemTableViewController: UITableViewController {
-  
-  var songTitle: String?
-  var artistName: String?
-  var albumName: String?
-  var albumArt: UIImage?
-  var album: Album?
-  var artist: Artist?
 
   // This will access the shared library for the entire application.  This
   // avoids instantiating an entire Library instance for each view controller
@@ -33,17 +26,4 @@ class ItemTableViewController: UITableViewController {
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     return 1
   }
-  
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    
-    if (segue.identifier == "ToPreview") {
-      // Create a new variable to store the instance of PreviewController
-      let destinationVC = segue.destinationViewController as! PreviewController
-      destinationVC.song = songTitle
-      destinationVC.artist = artistName
-      destinationVC.album = albumName
-      destinationVC.albumArt = albumArt
-    }
-  }
-  
 }

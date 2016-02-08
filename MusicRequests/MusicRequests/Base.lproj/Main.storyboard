@@ -391,7 +391,6 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="8Uw-vh-JqV" kind="relationship" relationship="viewControllers" id="3wb-rc-nQm"/>
                         <segue destination="hWz-Jr-Mx4" kind="relationship" relationship="viewControllers" id="Qjz-H2-CTa"/>
                         <segue destination="Ey0-Hn-Kqu" kind="relationship" relationship="viewControllers" id="xtV-1k-tYl"/>
                         <segue destination="Yay-Ca-Uw3" kind="relationship" relationship="viewControllers" id="Tce-gm-19l"/>
@@ -770,7 +769,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="Playlists" title="Playlists Library" id="0Zt-Jy-9wo" userLabel="Library/Playlists" customClass="ItemTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="dSe-wr-lb3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>

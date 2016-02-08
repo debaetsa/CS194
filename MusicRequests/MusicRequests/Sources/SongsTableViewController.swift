@@ -9,6 +9,9 @@
 import UIKit
 
 class SongsTableViewController: ItemTableViewController {
+  var album: Album?
+  var artist: Artist?
+  var song: Song?
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return library.allSongs.count
@@ -34,16 +37,22 @@ class SongsTableViewController: ItemTableViewController {
 
     return cell
   }
-
+  
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     let clickedOnSong = library.allSongs[indexPath.row]
-    songTitle = clickedOnSong.name
-    artistName = clickedOnSong.artist!.name
-    albumName = clickedOnSong.album!.name
-    albumArt = clickedOnSong.album!.imageToShow
-    
+    song = clickedOnSong
+    artist = clickedOnSong.artist
+    album = clickedOnSong.album
     performSegueWithIdentifier("ToPreview", sender: self)
   }
-
   
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    if (segue.identifier == "ToPreview") {
+      // Create a new variable to store the instance of PreviewController
+      let destinationVC = segue.destinationViewController as! PreviewController
+      destinationVC.song = song
+      destinationVC.artist = artist
+      destinationVC.album = album
+    }
+  }
 }

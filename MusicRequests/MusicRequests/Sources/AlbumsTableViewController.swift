@@ -9,12 +9,13 @@
 import UIKit
 
 class AlbumsTableViewController: ItemTableViewController {
-
-
+  var album: Album?
+  var artist: Artist?
+  var song: Song?
+  
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return library.allAlbums.count
   }
-
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
@@ -31,19 +32,15 @@ class AlbumsTableViewController: ItemTableViewController {
     return cell
   }
   
-  
-  
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     album = library.allAlbums[indexPath.row]
     performSegueWithIdentifier("ToAlbumDetail", sender: self)
   }
-  
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    
     if (segue.identifier == "ToAlbumDetail") {
       // Create a new variable to store the instance of PreviewController
       let destinationVC = segue.destinationViewController as! DetailedAlbumTableViewController
-      destinationVC.currentAlbum = album
+      destinationVC.album = album
     }
   }
 }
