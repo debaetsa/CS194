@@ -20,11 +20,14 @@ class PreviewController: UIViewController {
     if (segue.identifier == "playerViewSegue") {
       // Create a new variable to store the instance of PlayerViewController
       let destinationVC = segue.destinationViewController as! PlayerViewController
+      print ("Song name: \(song)")
+
       destinationVC.song = song
       destinationVC.artist = artist
       destinationVC.album = album
     } else if (segue.identifier == "albumArtSegue") {
       let destinationVC = segue.destinationViewController as! ImagePreviewController
+      print ("Album art: \(albumArt)")
       destinationVC.albumArt =  albumArt
     }
   }

@@ -37,14 +37,16 @@ class SongsTableViewController: ItemTableViewController {
     return cell
   }
 
-//  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//    let clickedOnSong = library.allSongs[indexPath.row]
-//    songTitle = clickedOnSong.name
-//    artistName = clickedOnSong.artist!.name
-//    albumName = clickedOnSong.album!.name
-//    
-//    performSegueWithIdentifier("ToPreview", sender: self)
-//  }
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let clickedOnSong = library.allSongs[indexPath.row]
+    songTitle = clickedOnSong.name
+    artistName = clickedOnSong.artist!.name
+    albumName = clickedOnSong.album!.name
+    albumArt = clickedOnSong.album!.imageToShow
+    print("album art1: \(albumArt)")
+    
+    performSegueWithIdentifier("ToPreview", sender: self)
+  }
 
   
 }
