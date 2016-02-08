@@ -963,7 +963,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ye6-oT-39H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3312" y="4397"/>
+            <point key="canvasLocation" x="-728" y="5053"/>
         </scene>
         <!--PlayerViewController-->
         <scene sceneID="B3k-qg-sU6">
@@ -1005,7 +1005,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vlx-I8-w5S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3587" y="5057.5"/>
+            <point key="canvasLocation" x="-1003" y="5713.5"/>
         </scene>
         <!--Image Preview Controller-->
         <scene sceneID="O2p-cm-O9B">
@@ -1040,7 +1040,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IQt-KT-Orp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2948.5" y="5168.5"/>
+            <point key="canvasLocation" x="-364.5" y="5824.5"/>
         </scene>
         <!--Detailed Albums Library-->
         <scene sceneID="ban-Tf-HJE">
@@ -1082,11 +1082,14 @@
                             <outlet property="delegate" destination="jKz-xP-VDG" id="CL8-bk-6nU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Albums" id="yfq-Su-frN"/>
+                    <navigationItem key="navigationItem" title="Songs" id="yfq-Su-frN" userLabel="Songs"/>
+                    <connections>
+                        <segue destination="Wak-nk-v3z" kind="show" identifier="ToPreview" id="y39-Mh-dPe"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SdL-ba-6yU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1835" y="3974"/>
+            <point key="canvasLocation" x="-2041" y="5064"/>
         </scene>
         <!--Detailed Artists Library-->
         <scene sceneID="af4-V4-Xoc">
@@ -1129,10 +1132,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Albums" id="Jp2-gK-UOP"/>
+                    <connections>
+                        <segue destination="jKz-xP-VDG" kind="show" identifier="ToAlbumDetail" id="qJT-lF-pMe"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ex5-bU-MeJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2522" y="3990"/>
+            <point key="canvasLocation" x="-3226" y="5086"/>
         </scene>
     </scenes>
     <resources>
@@ -1145,6 +1151,8 @@
         <image name="rewind_button" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="y39-Mh-dPe"/>
+        <segue reference="qJT-lF-pMe"/>
         <segue reference="gH7-84-FJ5"/>
     </inferredMetricsTieBreakers>
 </document>

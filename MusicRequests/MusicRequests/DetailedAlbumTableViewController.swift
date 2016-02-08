@@ -22,10 +22,19 @@ class DetailedAlbumTableViewController: ItemTableViewController {
     let artistNames = currentAlbum!.artists.map({ $0.name }).joinWithSeparator(", ")
 
     cell.textLabel?.text = currentAlbum!.songs[indexPath.row].song.name
-    cell.detailTextLabel?.text = "\(artistNames) • \(currentAlbum!.name))"
+    cell.detailTextLabel?.text = "\(artistNames) • \(currentAlbum!.name)"
     cell.imageView?.image = currentAlbum!.imageToShow
     
     return cell
+  }
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let clickedOnSong = library.allSongs[indexPath.row]
+    songTitle = clickedOnSong.name
+    artistName = clickedOnSong.artist!.name
+    albumName = clickedOnSong.album!.name
+    albumArt = clickedOnSong.album!.imageToShow
+    performSegueWithIdentifier("ToPreview", sender: self)
   }
   
 }

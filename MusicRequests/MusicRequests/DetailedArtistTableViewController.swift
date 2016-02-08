@@ -28,4 +28,18 @@ class DetailedArtistTableViewController: ItemTableViewController {
     
     return cell
   }
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    album = library.allAlbums[indexPath.row]
+    performSegueWithIdentifier("ToAlbumDetail", sender: self)
+  }
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    
+    if (segue.identifier == "ToAlbumDetail") {
+      // Create a new variable to store the instance of PreviewController
+      let destinationVC = segue.destinationViewController as! DetailedAlbumTableViewController
+      destinationVC.currentAlbum = album
+    }
+  }
 }
