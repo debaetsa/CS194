@@ -28,7 +28,18 @@ class ArtistsTableViewController: ItemTableViewController {
     // "\()" unless something else is being added to it.  It's redundant.
     cell.textLabel?.text = currentArtist.name
     cell.detailTextLabel?.text = "\(albumCount.pluralize(("Album", "Albums"))) • \(songCount.pluralize(("Song", "Songs")))"
+    cell.imageView?.image = UIImage(named: "hozier_album.png")!
+
 
     return cell
   }
+  
+//  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//    let clickedOnArtist = library.allArtists[indexPath.row]
+//    songTitle = clickedOnArtist.name
+//    artistName = clickedOnArtist.artists.map({ $0.name }).joinWithSeparator(", ")
+//    albumName = clickedOnArtist.album!.name
+//    
+//    performSegueWithIdentifier("ToPreview", sender: self)
+//  }
 }

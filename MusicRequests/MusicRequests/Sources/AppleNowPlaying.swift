@@ -74,4 +74,10 @@ class AppleNowPlaying: NowPlaying {
     }
   }
 
+  override func pause() -> Void {
+    assert(isPlaying)
+
+    musicPlayer.pause()
+  }
+
 }

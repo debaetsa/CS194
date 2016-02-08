@@ -12,7 +12,7 @@ class Album: Item {
 
   // The artists associated with all songs on this album.
   var artists: [Artist] = []
-
+  
   var artist: Artist? {
     get {
       return artists.last
