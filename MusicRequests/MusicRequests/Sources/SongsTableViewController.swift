@@ -9,8 +9,6 @@
 import UIKit
 
 class SongsTableViewController: ItemTableViewController {
-  
-
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return library.allSongs.count
@@ -43,7 +41,6 @@ class SongsTableViewController: ItemTableViewController {
     artistName = clickedOnSong.artist!.name
     albumName = clickedOnSong.album!.name
     albumArt = clickedOnSong.album!.imageToShow
-    print("album art1: \(albumArt)")
     
     performSegueWithIdentifier("ToPreview", sender: self)
   }
