@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     #else
       let appleLibrary = AppleLibrary()
       library = appleLibrary
-      nowPlaying = NowPlaying()
+      nowPlaying = AppleNowPlaying()
       queue = AppleQueue(nowPlaying: nowPlaying!, sourceLibrary: appleLibrary)
     #endif
 
@@ -62,7 +62,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func applicationWillTerminate(application: UIApplication) {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
   }
-
-
 }
 

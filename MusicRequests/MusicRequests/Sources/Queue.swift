@@ -158,4 +158,21 @@ class Queue: NSObject {
     let center = NSNotificationCenter.defaultCenter()
     center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
   }
+  
+  /** Returns to the previous played song.
+  
+  */
+  func returnToPreviousSong() {
+    //if there was something playing, move it to the upcoming list.
+    if let nextSong = currentQueueItem {
+      upcomingQueueItems.insert(nextSong, atIndex: 0)
+    }
+    
+    //place the previous song in the current position.
+    currentQueueItem = previousQueueItems.removeLast()
+   
+    // Post a notification informing the rest of application about the change.
+    let center = NSNotificationCenter.defaultCenter()
+    center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
+  }
 }

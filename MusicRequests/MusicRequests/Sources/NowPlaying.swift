@@ -54,9 +54,17 @@ class NowPlaying: NSObject {
   }
   
   func next() {
+    queue.advanceToNextSong()
+    if playing {
+      playCurrentSong()
+    }
   }
   
   func last() {
+    queue.returnToPreviousSong()
+    if playing {
+      playCurrentSong()
+    }
   }
   
   func scrub() {
