@@ -37,7 +37,12 @@ class UpNextTableViewController: ItemTableViewController {
 
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    
     //let songs = library.allSongs
+    
+    /* Here I am just populating songs by accessing what is in the queue 
+       Comment this out and uncomment above (as well as two other lines indiciated
+       by comments) to return to the previous functionality*/
     var songs = queue.history
     if queue.current != nil {
       songs.append(queue.current!)
@@ -45,6 +50,7 @@ class UpNextTableViewController: ItemTableViewController {
     songs.appendContentsOf(queue.upcoming)
 
     var cell: UITableViewCell
+    //replace queue.history.count with 4 to return to previous functionality
     if (indexPath.row == queue.history.count) {
       cell = tableView.dequeueReusableCellWithIdentifier("BigCell", forIndexPath: indexPath)
     } else {
@@ -71,6 +77,7 @@ class UpNextTableViewController: ItemTableViewController {
   override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     // "4" Hardcoded for now, will replace with currently_playing song next week
 
+    //replace queue.history.count with 4 to return to previous functionality
     if(indexPath.row != queue.history.count) {
       return 50.0
     }
