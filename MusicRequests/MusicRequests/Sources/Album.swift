@@ -14,9 +14,7 @@ class Album: Item {
   var artists: [Artist] = []
   
   var artist: Artist? {
-    get {
-      return artists.last
-    }
+    return artists.last
   }
 
   init(name: String, sortName: String, artist: Artist?) {
