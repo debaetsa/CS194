@@ -28,7 +28,7 @@ class ArtistsTableViewController: ItemTableViewController {
     // "\()" unless something else is being added to it.  It's redundant.
     cell.textLabel?.text = currentArtist.name
     cell.detailTextLabel?.text = "\(albumCount.pluralize(("Album", "Albums"))) • \(songCount.pluralize(("Song", "Songs")))"
-    cell.imageView?.image = UIImage(named: "hozier_album.png")!
+    cell.imageView?.image = UIImage(named: "NoAlbumArtwork")!
 
 
     return cell

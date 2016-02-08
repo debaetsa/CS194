@@ -38,7 +38,6 @@
 		509C78931C67B50F005B7D53 /* AppleNowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C78921C67B50F005B7D53 /* AppleNowPlaying.swift */; };
 		50D2492B1C5D754E00A10E97 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492A1C5D754E00A10E97 /* Item.swift */; };
 		50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */; };
-		B3BD51B81C67FF020079299F /* hozier_album.png in Resources */ = {isa = PBXBuildFile; fileRef = B3BD51B71C67FF020079299F /* hozier_album.png */; };
 		B3BD51BC1C6802720079299F /* ImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BB1C6802720079299F /* ImagePreviewController.swift */; };
 		B3BD51BE1C680EBA0079299F /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BD1C680EBA0079299F /* PlayerViewController.swift */; };
 		B3BD51C01C682B860079299F /* PreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BF1C682B860079299F /* PreviewController.swift */; };
@@ -92,7 +91,6 @@
 		509C78921C67B50F005B7D53 /* AppleNowPlaying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppleNowPlaying.swift; path = Sources/AppleNowPlaying.swift; sourceTree = "<group>"; };
 		50D2492A1C5D754E00A10E97 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Item.swift; path = Sources/Item.swift; sourceTree = "<group>"; };
 		50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporaryLibrary.swift; path = Sources/TemporaryLibrary.swift; sourceTree = "<group>"; };
-		B3BD51B71C67FF020079299F /* hozier_album.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hozier_album.png; path = "../../../appName copy/appName/hozier_album.png"; sourceTree = "<group>"; };
 		B3BD51BB1C6802720079299F /* ImagePreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewController.swift; sourceTree = "<group>"; };
 		B3BD51BD1C680EBA0079299F /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		B3BD51BF1C682B860079299F /* PreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreviewController.swift; path = ../PreviewController.swift; sourceTree = "<group>"; };
@@ -242,7 +240,6 @@
 				505B5E781C56EF0F00235C1C /* Album.swift */,
 				505B5E7A1C56EF0F00235C1C /* Playlist.swift */,
 				50D2492A1C5D754E00A10E97 /* Item.swift */,
-				B3BD51B71C67FF020079299F /* hozier_album.png */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -346,7 +343,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3BD51B81C67FF020079299F /* hozier_album.png in Resources */,
 				505B5E3F1C55CDFB00235C1C /* LaunchScreen.storyboard in Resources */,
 				505B5E3C1C55CDFB00235C1C /* Assets.xcassets in Resources */,
 				505B5E3A1C55CDFB00235C1C /* Main.storyboard in Resources */,

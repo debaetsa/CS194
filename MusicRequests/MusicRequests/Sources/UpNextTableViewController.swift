@@ -52,7 +52,7 @@ class UpNextTableViewController: ItemTableViewController {
     let artistNames = currentSong.artists.map{String($0)}.joinWithSeparator(", ")
 
     cell.detailTextLabel?.text = "\(artistNames) - \(songs[indexPath.row].album!.name)"
-    cell.imageView?.image = UIImage(named: "hozier_album.png")!
+    cell.imageView?.image = UIImage(named: "NoAlbumArtwork")!
 
     return cell
   }
