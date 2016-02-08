@@ -11,14 +11,26 @@ import UIKit
 class PlayerViewController: PreviewController {
   let nowPlaying = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.nowPlaying)!
   
-  @IBOutlet weak var SongTitle: UILabel!
-  @IBOutlet weak var ArtistAlbum: UILabel!
-  
+  @IBOutlet weak var songLabel: UILabel!
+  @IBOutlet weak var detailLabel: UILabel!
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    SongTitle.text = song
+    populateLabels()
   }
   
+  func populateLabels() {
+    songLabel.text = song
+    
+    var detailComponents = [String]()
+    if artist != nil {
+      detailComponents.append(artist!)
+    }
+    if album != nil {
+      detailComponents.append(album!)
+    }
+    detailLabel.text = detailComponents.joinWithSeparator(" • ")
+  }
   
   @IBAction func backButtonIsPressed(sender: UIButton) {
     nowPlaying.last()
