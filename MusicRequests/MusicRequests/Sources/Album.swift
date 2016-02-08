@@ -17,6 +17,11 @@ class Album: Item {
     return artists.last
   }
 
+  var image: UIImage?
+  var imageToShow: UIImage {
+    return image ?? UIImage(named: "NoAlbumArtwork")!
+  }
+
   init(name: String, sortName: String, artist: Artist?) {
     super.init(name: name, sortName: sortName)
 

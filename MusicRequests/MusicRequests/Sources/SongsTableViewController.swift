@@ -32,7 +32,7 @@ class SongsTableViewController: ItemTableViewController {
     cell.detailTextLabel?.text = detailComponents.joinWithSeparator(" • ")
 
     cell.textLabel?.text = currentSong.name
-    cell.imageView?.image = UIImage(named: "NoAlbumArtwork")!
+    cell.imageView?.image = currentSong.album!.imageToShow
 
     return cell
   }

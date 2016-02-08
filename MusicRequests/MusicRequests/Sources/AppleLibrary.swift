@@ -69,6 +69,13 @@ class AppleLibrary: NSObject, Library {
         }
       }
 
+      if let boundAlbum = album {
+        if boundAlbum.image == nil {
+          boundAlbum.image = item.artwork?.imageWithSize(CGSize(width: 100, height: 100))
+          item.artwork
+        }
+      }
+
       let song = Song(name: item.title ?? "", artist: artist, album: album, genre: genre, discNumber: item.discNumber, trackNumber: item.albumTrackNumber, userInfo: item)
       songs.append(song)
       idToSong[item.persistentID] = song
