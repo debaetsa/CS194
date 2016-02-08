@@ -90,6 +90,8 @@ class UpNextTableViewController: ItemTableViewController {
     songTitle = clickedOnSong.name
     artistName = clickedOnSong.artist!.name
     albumName = clickedOnSong.album!.name
+    print("album: \(clickedOnSong.album!.imageToShow)")
+    albumArt = clickedOnSong.album!.imageToShow
     
     performSegueWithIdentifier("ToPreview", sender: self)
   }

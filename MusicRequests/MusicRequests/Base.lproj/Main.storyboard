@@ -576,7 +576,7 @@
                                     <constraint firstAttribute="width" secondItem="916-ud-X5L" secondAttribute="height" multiplier="1:1" constant="40" id="B1T-eb-TSs"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="UBe-TQ-aHe" kind="embed" id="5wS-nj-3ID"/>
+                                    <segue destination="UBe-TQ-aHe" kind="embed" identifier="albumArtSegue" id="5wS-nj-3ID"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WDW-Hz-MIW">
@@ -877,10 +877,10 @@
             </objects>
             <point key="canvasLocation" x="-1145" y="2334"/>
         </scene>
-        <!--Image Preivew Controller-->
+        <!--Image Preview Controller-->
         <scene sceneID="JIz-nx-1oS">
             <objects>
-                <viewController id="UBe-TQ-aHe" customClass="ImagePreivewController" sceneMemberID="viewController">
+                <viewController id="UBe-TQ-aHe" customClass="ImagePreviewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2Y5-FI-2tw"/>
                         <viewControllerLayoutGuide type="bottom" id="OsT-YV-ZDX"/>
@@ -889,7 +889,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="582" height="542"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="hozier_album.png" translatesAutoresizingMaskIntoConstraints="NO" id="KO6-UE-1fG">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KO6-UE-1fG">
                                 <rect key="frame" x="0.0" y="0.0" width="582" height="542"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="KO6-UE-1fG" secondAttribute="height" multiplier="1:1" constant="40" id="wZR-tm-jys"/>
@@ -898,9 +898,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="KO6-UE-1fG" firstAttribute="leading" secondItem="YBg-ac-aE3" secondAttribute="leadingMargin" constant="-20" id="35R-bt-TIQ"/>
+                            <constraint firstItem="OsT-YV-ZDX" firstAttribute="top" secondItem="KO6-UE-1fG" secondAttribute="bottom" id="Aww-1o-ZNb"/>
                             <constraint firstItem="KO6-UE-1fG" firstAttribute="leading" secondItem="YBg-ac-aE3" secondAttribute="leadingMargin" constant="-20" id="BAx-E3-kap"/>
                             <constraint firstItem="KO6-UE-1fG" firstAttribute="top" secondItem="YBg-ac-aE3" secondAttribute="top" id="GT4-eW-0ui"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KO6-UE-1fG" secondAttribute="trailing" constant="-20" id="R52-yx-0Cz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KO6-UE-1fG" secondAttribute="trailing" constant="-20" id="UB7-Ah-dUv"/>
+                            <constraint firstItem="KO6-UE-1fG" firstAttribute="top" secondItem="2Y5-FI-2tw" secondAttribute="bottom" id="jt6-R9-xhz"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -915,7 +919,6 @@
         <image name="Playlists" width="25" height="25"/>
         <image name="Songs" width="25" height="25"/>
         <image name="forward_button" width="40" height="40"/>
-        <image name="hozier_album.png" width="397" height="402"/>
         <image name="play_button" width="40" height="40"/>
         <image name="rewind_button" width="40" height="40"/>
     </resources>
