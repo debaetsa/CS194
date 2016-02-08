@@ -12,15 +12,21 @@ class UpNextTableViewController: ItemTableViewController {
 
   var listener: NSObjectProtocol?
 
+  var items = [QueueItem]()
+  var currentIndex: Int?
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    self.updateData()  // load the initial data
+
     let center = NSNotificationCenter.defaultCenter()
-    listener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: nil, queue: nil, usingBlock: { (note) in
-      if let queue = (note.object as? Queue) {
-        print("New Song: \(queue.current); Next Up Is: \(queue.upcoming.first)")
+    listener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: nil, queue: nil, usingBlock: {
+      [unowned self] (note) in
+      self.updateData()
+      self.tableView.reloadData()
       }
-    })
+    )
   }
 
   deinit {
@@ -30,66 +36,60 @@ class UpNextTableViewController: ItemTableViewController {
     }
   }
 
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // #warning Incomplete implementation, return the number of rows
-    return library.allSongs.count
+  private func updateData() {
+    items.removeAll()
+    items.appendContentsOf(queue.history)
+    if let current = queue.current {
+      currentIndex = items.count
+      items.append(current)
+    } else {
+      currentIndex = nil  // there is not a playing item
+    }
+    items.appendContentsOf(queue.upcoming)
   }
 
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return items.count
+  }
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    
-    //let songs = library.allSongs
-    
-    /* Here I am just populating songs by accessing what is in the queue 
-       Comment this out and uncomment above (as well as two other lines indiciated
-       by comments) to return to the previous functionality*/
-    var songs = queue.history
-    if queue.current != nil {
-      songs.append(queue.current!)
-    }
-    songs.appendContentsOf(queue.upcoming)
-
     var cell: UITableViewCell
-    //replace queue.history.count with 4 to return to previous functionality
-    if (indexPath.row == queue.history.count) {
+
+    let isPlayingRow = (indexPath.row == currentIndex)
+
+    if (isPlayingRow) {
       cell = tableView.dequeueReusableCellWithIdentifier("BigCell", forIndexPath: indexPath)
     } else {
       cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
     }
-    let currentSong = songs[indexPath.row].song
 
-    cell.textLabel?.text = "\(currentSong.name)"
+    let song = items[indexPath.row].song
 
     var detailComponents = [String]()
-    if let name = currentSong.artist?.name {
+    if let name = song.artist?.name {
       detailComponents.append(name)
     }
-    if let name = currentSong.album?.name {
+    if let name = song.album?.name {
       detailComponents.append(name)
     }
-    cell.detailTextLabel?.text = detailComponents.joinWithSeparator(" • ")
 
-    cell.imageView?.image = currentSong.album!.imageToShow
+    cell.textLabel?.text = song.name
+    cell.detailTextLabel?.text = detailComponents.joinWithSeparator(" • ")
+    cell.imageView?.image = song.album!.imageToShow
 
     return cell
   }
 
   override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    // "4" Hardcoded for now, will replace with currently_playing song next week
-
-    //replace queue.history.count with 4 to return to previous functionality
-    if(indexPath.row != queue.history.count) {
-      return 50.0
-    }
-    return 100.0
+    return (indexPath.row == currentIndex) ? 100 : 50
   }
-  
+
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     let clickedOnSong = library.allSongs[indexPath.row]
     songTitle = clickedOnSong.name
     artistName = clickedOnSong.artist!.name
     albumName = clickedOnSong.album!.name
-    
+
     performSegueWithIdentifier("ToPreview", sender: self)
   }
 }
