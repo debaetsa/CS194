@@ -40,6 +40,7 @@
 		50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */; };
 		B3BD51B81C67FF020079299F /* hozier_album.png in Resources */ = {isa = PBXBuildFile; fileRef = B3BD51B71C67FF020079299F /* hozier_album.png */; };
 		B3BD51BC1C6802720079299F /* ImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BB1C6802720079299F /* ImagePreviewController.swift */; };
+		B3BD51BE1C680EBA0079299F /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BD1C680EBA0079299F /* PlayerViewController.swift */; };
 		BDE3E5391C584651006C1850 /* MusicRequestsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E491C55CDFB00235C1C /* MusicRequestsTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -92,6 +93,7 @@
 		50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporaryLibrary.swift; path = Sources/TemporaryLibrary.swift; sourceTree = "<group>"; };
 		B3BD51B71C67FF020079299F /* hozier_album.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hozier_album.png; path = "../../../appName copy/appName/hozier_album.png"; sourceTree = "<group>"; };
 		B3BD51BB1C6802720079299F /* ImagePreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewController.swift; sourceTree = "<group>"; };
+		B3BD51BD1C680EBA0079299F /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +206,7 @@
 				505B5E5D1C55D0B300235C1C /* NowPlaying.swift */,
 				505B5E641C55D16800235C1C /* Queue.swift */,
 				507B3A781C66B91100E4D27F /* QueueItem.swift */,
+				B3BD51BD1C680EBA0079299F /* PlayerViewController.swift */,
 			);
 			name = Playing;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				507B3A791C66B91100E4D27F /* QueueItem.swift in Sources */,
 				505B5E821C56EF0F00235C1C /* Genre.swift in Sources */,
 				505B5E861C56EF0F00235C1C /* Album.swift in Sources */,
+				B3BD51BE1C680EBA0079299F /* PlayerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

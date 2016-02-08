@@ -567,20 +567,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="916-ud-X5L">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="916-ud-X5L" userLabel="AlbumArtViewer">
                                 <rect key="frame" x="0.0" y="20" width="600" height="560"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="916-ud-X5L" secondAttribute="height" multiplier="1:1" constant="40" id="cSb-wG-TGz"/>
+                                    <constraint firstAttribute="width" secondItem="916-ud-X5L" secondAttribute="height" multiplier="1:1" constant="40" id="B1T-eb-TSs"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="UBe-TQ-aHe" kind="embed" id="5wS-nj-3ID"/>
                                 </connections>
                             </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDW-Hz-MIW">
+                                <rect key="frame" x="0.0" y="580" width="600" height="20"/>
+                                <connections>
+                                    <segue destination="OLY-Gl-acB" kind="embed" id="w8s-se-6aQ"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="WDW-Hz-MIW" firstAttribute="top" secondItem="916-ud-X5L" secondAttribute="bottom" id="50q-c0-vDe"/>
+                            <constraint firstItem="WDW-Hz-MIW" firstAttribute="centerX" secondItem="cao-c2-dlE" secondAttribute="centerX" id="9RV-ny-4RE"/>
                             <constraint firstItem="916-ud-X5L" firstAttribute="top" secondItem="ZYP-7w-Ghr" secondAttribute="bottom" id="FkO-fI-ZwF"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="916-ud-X5L" secondAttribute="trailing" priority="999" constant="-20" id="h93-j3-Xtc"/>
+                            <constraint firstItem="WDW-Hz-MIW" firstAttribute="leading" secondItem="cao-c2-dlE" secondAttribute="leadingMargin" constant="-20" id="Li4-Qf-a3o"/>
+                            <constraint firstItem="916-ud-X5L" firstAttribute="centerX" secondItem="cao-c2-dlE" secondAttribute="centerX" id="SPF-WG-dhh"/>
+                            <constraint firstItem="qrO-BO-DzT" firstAttribute="top" secondItem="WDW-Hz-MIW" secondAttribute="bottom" id="SZh-HV-A4i" userLabel="Bottom Layout Guide.top = Container View.bottom"/>
                             <constraint firstItem="916-ud-X5L" firstAttribute="leading" secondItem="cao-c2-dlE" secondAttribute="leadingMargin" priority="999" constant="-20" id="pU4-CE-cY6"/>
                         </constraints>
                     </view>
@@ -658,6 +668,70 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="34T-pY-rMO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1835" y="3110"/>
+        </scene>
+        <!--PlayerViewController-->
+        <scene sceneID="s4o-lh-QuU">
+            <objects>
+                <viewController title="PlayerViewController" id="OLY-Gl-acB" customClass="PlayerViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JW4-Tj-cNr"/>
+                        <viewControllerLayoutGuide type="bottom" id="tCW-gb-PgS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GuM-oo-3W4">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMy-0n-Gye">
+                                <rect key="frame" x="280" y="32" width="40" height="40"/>
+                                <state key="normal" image="play_button"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uh7-yA-1pH">
+                                <rect key="frame" x="540" y="32" width="40" height="40"/>
+                                <state key="normal" image="forward_button"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-wx-g34">
+                                <rect key="frame" x="20" y="32" width="40" height="40"/>
+                                <state key="normal" image="rewind_button"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Take Me to Church" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pDh-yk-FwN">
+                                <rect key="frame" x="200" y="-85" width="200" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Hozier - Hozier" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJa-J5-8F6">
+                                <rect key="frame" x="242" y="-30" width="116" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="8od-Iw-aNU">
+                                <rect key="frame" x="18" y="-6" width="564" height="31"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="maximumTrackTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </slider>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="uh7-yA-1pH" firstAttribute="top" secondItem="8od-Iw-aNU" secondAttribute="bottom" constant="8" id="Amd-qN-W3K"/>
+                            <constraint firstItem="W5Y-wx-g34" firstAttribute="top" secondItem="8od-Iw-aNU" secondAttribute="bottom" constant="8" id="CRD-kg-pXd"/>
+                            <constraint firstItem="dJa-J5-8F6" firstAttribute="centerX" secondItem="GuM-oo-3W4" secondAttribute="centerX" id="J84-Z4-91s"/>
+                            <constraint firstItem="8od-Iw-aNU" firstAttribute="leading" secondItem="W5Y-wx-g34" secondAttribute="leading" id="MLi-fj-u4U"/>
+                            <constraint firstItem="pDh-yk-FwN" firstAttribute="centerX" secondItem="GuM-oo-3W4" secondAttribute="centerX" id="OQI-b9-Eqv"/>
+                            <constraint firstItem="8od-Iw-aNU" firstAttribute="centerY" secondItem="GuM-oo-3W4" secondAttribute="centerY" id="Rki-F0-EBo"/>
+                            <constraint firstItem="8od-Iw-aNU" firstAttribute="top" secondItem="dJa-J5-8F6" secondAttribute="bottom" constant="3" id="VkK-5U-eFy"/>
+                            <constraint firstItem="cMy-0n-Gye" firstAttribute="top" secondItem="8od-Iw-aNU" secondAttribute="bottom" constant="8" id="bTO-2s-waz"/>
+                            <constraint firstItem="dJa-J5-8F6" firstAttribute="top" secondItem="pDh-yk-FwN" secondAttribute="bottom" constant="26" id="bbu-c3-7OI"/>
+                            <constraint firstItem="8od-Iw-aNU" firstAttribute="trailing" secondItem="uh7-yA-1pH" secondAttribute="trailing" id="f17-6H-zNx"/>
+                            <constraint firstItem="8od-Iw-aNU" firstAttribute="centerX" secondItem="GuM-oo-3W4" secondAttribute="centerX" id="rc3-0m-2xz"/>
+                            <constraint firstItem="cMy-0n-Gye" firstAttribute="centerX" secondItem="GuM-oo-3W4" secondAttribute="centerX" id="rnT-Xa-bc6"/>
+                            <constraint firstItem="8od-Iw-aNU" firstAttribute="leading" secondItem="GuM-oo-3W4" secondAttribute="leadingMargin" id="wsU-1D-Udn"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uFd-9O-dli" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2067" y="3952.5"/>
         </scene>
         <!--Library/Playlists-->
         <scene sceneID="ALZ-K6-Lhg">
@@ -813,9 +887,12 @@
         <image name="Artists" width="25" height="25"/>
         <image name="Playlists" width="25" height="25"/>
         <image name="Songs" width="25" height="25"/>
+        <image name="forward_button" width="40" height="40"/>
         <image name="hozier_album.png" width="397" height="402"/>
+        <image name="play_button" width="40" height="40"/>
+        <image name="rewind_button" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gH7-84-FJ5"/>
+        <segue reference="zBj-Gq-Snq"/>
     </inferredMetricsTieBreakers>
 </document>
