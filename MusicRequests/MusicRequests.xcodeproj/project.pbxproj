@@ -36,12 +36,12 @@
 		509C788F1C67B29A005B7D53 /* AppleQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C788E1C67B29A005B7D53 /* AppleQueue.swift */; };
 		509C78911C67B2B3005B7D53 /* TemporaryQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C78901C67B2B3005B7D53 /* TemporaryQueue.swift */; };
 		509C78931C67B50F005B7D53 /* AppleNowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C78921C67B50F005B7D53 /* AppleNowPlaying.swift */; };
+		50B7F3DC1C6A6CC1006F3CE7 /* ItemPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7F3DB1C6A6CC1006F3CE7 /* ItemPresentation.swift */; };
 		50D2492B1C5D754E00A10E97 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492A1C5D754E00A10E97 /* Item.swift */; };
 		50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */; };
 		B3572B221C694E62007A8BD3 /* DetailedAlbumTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3572B211C694E62007A8BD3 /* DetailedAlbumTableViewController.swift */; };
-		B3B0F2E71C69376C0073E016 /* ImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B0F2E61C69376C0073E016 /* ImagePreviewController.swift */; };
-		B3BD51BE1C680EBA0079299F /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BD1C680EBA0079299F /* PlayerViewController.swift */; };
-		B3BD51C01C682B860079299F /* PreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BF1C682B860079299F /* PreviewController.swift */; };
+		B3BD51BE1C680EBA0079299F /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */; };
+		B3BD51C01C682B860079299F /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BF1C682B860079299F /* SongViewController.swift */; };
 		B3F56B9D1C69526500A16F95 /* DetailedArtistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F56B9C1C69526500A16F95 /* DetailedArtistTableViewController.swift */; };
 		BDE3E5391C584651006C1850 /* MusicRequestsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E491C55CDFB00235C1C /* MusicRequestsTests.swift */; };
 /* End PBXBuildFile section */
@@ -91,12 +91,12 @@
 		509C788E1C67B29A005B7D53 /* AppleQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppleQueue.swift; path = Sources/AppleQueue.swift; sourceTree = "<group>"; };
 		509C78901C67B2B3005B7D53 /* TemporaryQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporaryQueue.swift; path = Sources/TemporaryQueue.swift; sourceTree = "<group>"; };
 		509C78921C67B50F005B7D53 /* AppleNowPlaying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppleNowPlaying.swift; path = Sources/AppleNowPlaying.swift; sourceTree = "<group>"; };
+		50B7F3DB1C6A6CC1006F3CE7 /* ItemPresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemPresentation.swift; path = Sources/ItemPresentation.swift; sourceTree = "<group>"; };
 		50D2492A1C5D754E00A10E97 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Item.swift; path = Sources/Item.swift; sourceTree = "<group>"; };
 		50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporaryLibrary.swift; path = Sources/TemporaryLibrary.swift; sourceTree = "<group>"; };
 		B3572B211C694E62007A8BD3 /* DetailedAlbumTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedAlbumTableViewController.swift; sourceTree = "<group>"; };
-		B3B0F2E61C69376C0073E016 /* ImagePreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewController.swift; sourceTree = "<group>"; };
-		B3BD51BD1C680EBA0079299F /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
-		B3BD51BF1C682B860079299F /* PreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreviewController.swift; path = ../PreviewController.swift; sourceTree = "<group>"; };
+		B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlayingViewController.swift; sourceTree = "<group>"; };
+		B3BD51BF1C682B860079299F /* SongViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongViewController.swift; path = ../SongViewController.swift; sourceTree = "<group>"; };
 		B3F56B9C1C69526500A16F95 /* DetailedArtistTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedArtistTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,6 +123,7 @@
 			children = (
 				505B5E381C55CDFB00235C1C /* Main.storyboard */,
 				505B5E3B1C55CDFB00235C1C /* Assets.xcassets */,
+				50B7F3DB1C6A6CC1006F3CE7 /* ItemPresentation.swift */,
 				50159F651C65AE2C000E4878 /* Up Next */,
 				50159F5A1C65AE11000E4878 /* Library */,
 			);
@@ -210,9 +211,8 @@
 				505B5E5D1C55D0B300235C1C /* NowPlaying.swift */,
 				505B5E641C55D16800235C1C /* Queue.swift */,
 				507B3A781C66B91100E4D27F /* QueueItem.swift */,
-				B3BD51BD1C680EBA0079299F /* PlayerViewController.swift */,
-				B3B0F2E61C69376C0073E016 /* ImagePreviewController.swift */,
-				B3BD51BF1C682B860079299F /* PreviewController.swift */,
+				B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */,
+				B3BD51BF1C682B860079299F /* SongViewController.swift */,
 			);
 			name = Playing;
 			sourceTree = "<group>";
@@ -386,7 +386,7 @@
 				505B5E691C55D19D00235C1C /* LocalSession.swift in Sources */,
 				505B5E581C55CEE100235C1C /* FilteredLibrary.swift in Sources */,
 				50159F641C65AE26000E4878 /* UpNextTableViewController.swift in Sources */,
-				B3BD51C01C682B860079299F /* PreviewController.swift in Sources */,
+				B3BD51C01C682B860079299F /* SongViewController.swift in Sources */,
 				509C78911C67B2B3005B7D53 /* TemporaryQueue.swift in Sources */,
 				50159F671C65B3C7000E4878 /* Pluralize.swift in Sources */,
 				50159F631C65AE26000E4878 /* SongsTableViewController.swift in Sources */,
@@ -401,7 +401,7 @@
 				505B5E561C55CEC900235C1C /* Library.swift in Sources */,
 				B3572B221C694E62007A8BD3 /* DetailedAlbumTableViewController.swift in Sources */,
 				50159F621C65AE26000E4878 /* ItemTableViewController.swift in Sources */,
-				B3B0F2E71C69376C0073E016 /* ImagePreviewController.swift in Sources */,
+				50B7F3DC1C6A6CC1006F3CE7 /* ItemPresentation.swift in Sources */,
 				505B5E651C55D16800235C1C /* Queue.swift in Sources */,
 				505B5E841C56EF0F00235C1C /* Song.swift in Sources */,
 				505B5E5E1C55D0B300235C1C /* NowPlaying.swift in Sources */,
@@ -409,7 +409,7 @@
 				507B3A791C66B91100E4D27F /* QueueItem.swift in Sources */,
 				505B5E821C56EF0F00235C1C /* Genre.swift in Sources */,
 				505B5E861C56EF0F00235C1C /* Album.swift in Sources */,
-				B3BD51BE1C680EBA0079299F /* PlayerViewController.swift in Sources */,
+				B3BD51BE1C680EBA0079299F /* NowPlayingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

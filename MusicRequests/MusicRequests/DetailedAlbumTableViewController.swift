@@ -9,39 +9,42 @@
 import UIKit
 
 class DetailedAlbumTableViewController: ItemTableViewController {
+
+  var items: [Track]!
   var album: Album?
-  var artist: Artist?
-  var song: Song?
-  
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return album!.songs.count
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    // cache the list of items that we are going to show
+    items = album?.songs
   }
-  
-  
+
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return items.count
+  }
+
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
-    let artistNames = album!.artists.map({ $0.name }).joinWithSeparator(", ")
 
-    cell.textLabel?.text = album!.songs[indexPath.row].song.name
-    cell.detailTextLabel?.text = "\(artistNames) • \(album!.name)"
-    cell.imageView?.image = album!.imageToShow
-    
+    let song = items[indexPath.row].song
+    cell.textLabel?.text = song.name
+    cell.detailTextLabel?.text = song.artistAlbumString
+    cell.imageView?.image = album?.imageToShow
+
     return cell
   }
-  
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    let clickedOnSong = album!.allSongs[indexPath.row].song
-    song = clickedOnSong
-    artist = clickedOnSong.artist
-    performSegueWithIdentifier("ToPreview", sender: self)
-  }
+
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    if (segue.identifier == "ToPreview") {
-      // Create a new variable to store the instance of PreviewController
-      let destinationVC = segue.destinationViewController as! PreviewController
-      destinationVC.song = song
-      destinationVC.artist = artist
-      destinationVC.album = album
+    if segue.identifier == "preview" {
+      // find the NSIndexPath, crashing if we are unable to find it
+      let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
+
+      // we need to cast the destination controller; it's a bad error if we can't
+      let destination = segue.destinationViewController as! SongViewController
+
+      // set the data to show
+      destination.song = items[indexPath.row].song
     }
   }
 }

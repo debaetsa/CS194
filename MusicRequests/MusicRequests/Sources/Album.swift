@@ -8,6 +8,8 @@
 
 import UIKit
 
+typealias Track = (disc: Int?, track: Int?, song: Song)
+
 class Album: Item {
 
   // The artists associated with all songs on this album.
@@ -36,7 +38,7 @@ class Album: Item {
   }
 
   // Stores (disc, track, song) tuples.
-  var songs: [(disc: Int?, track: Int?, song: Song)] = []
+  var songs: [Track] = []
 
   func addSong(song: Song, discNumber: Int?, trackNumber: Int?) -> Void {
     songs.append((discNumber, trackNumber, song))

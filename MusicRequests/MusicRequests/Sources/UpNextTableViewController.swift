@@ -10,9 +10,6 @@ import UIKit
 
 class UpNextTableViewController: ItemTableViewController {
 
-  var album: Album?
-  var artist: Artist?
-  var song: Song?
   var listener: NSObjectProtocol?
 
   var items = [QueueItem]()
@@ -67,17 +64,8 @@ class UpNextTableViewController: ItemTableViewController {
     }
 
     let song = items[indexPath.row].song
-
-    var detailComponents = [String]()
-    if let name = song.artist?.name {
-      detailComponents.append(name)
-    }
-    if let name = song.album?.name {
-      detailComponents.append(name)
-    }
-
     cell.textLabel?.text = song.name
-    cell.detailTextLabel?.text = detailComponents.joinWithSeparator(" • ")
+    cell.detailTextLabel?.text = song.artistAlbumString
     cell.imageView?.image = song.album!.imageToShow
 
     return cell
@@ -87,22 +75,8 @@ class UpNextTableViewController: ItemTableViewController {
     return (indexPath.row == currentIndex) ? 100 : 50
   }
 
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    let clickedOnSong = library.allSongs[indexPath.row]
-    song = clickedOnSong
-    artist = clickedOnSong.artist
-    album = clickedOnSong.album
-    performSegueWithIdentifier("ToPreview", sender: self)
-  }
-  
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    if (segue.identifier == "ToPreview") {
-      // Create a new variable to store the instance of PreviewController
-      let destinationVC = segue.destinationViewController as! PreviewController
-      destinationVC.song = song
-      destinationVC.artist = artist
-      destinationVC.album = album
-    }
+  override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    return (indexPath.row == currentIndex) ? indexPath : nil
   }
 
   @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
