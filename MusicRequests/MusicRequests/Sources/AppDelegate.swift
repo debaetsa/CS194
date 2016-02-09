@@ -31,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       queue = AppleQueue(nowPlaying: nowPlaying!, sourceLibrary: appleLibrary)
     #endif
 
+    nowPlaying?.next()
+
     // VERYHELPFUL
     // Uncomment the following block to automatically start playing two seconds
     // after the application launches.
