@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="278-yo-HIU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Dfl-c5-LVm">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -7,58 +7,33 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="uea-VK-KIu">
+        <!--Navigation Controller-->
+        <scene sceneID="lTY-HJ-ap6">
             <objects>
-                <viewController id="gLC-Pd-uSR" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="RW8-3S-kMk"/>
-                        <viewControllerLayoutGuide type="bottom" id="5XB-Xc-lu4"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="7C8-nK-ftQ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="veC-Ma-UEE">
-                                <rect key="frame" x="0.0" y="58" width="600" height="542"/>
-                                <connections>
-                                    <segue destination="iDw-oc-B5F" kind="embed" id="nJX-hh-B5p"/>
-                                </connections>
-                            </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="03y-R3-JeI">
-                                <rect key="frame" x="26" y="20" width="34" height="30"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="278-yo-HIU" kind="show" id="gH7-84-FJ5"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="03y-R3-JeI" firstAttribute="leading" secondItem="7C8-nK-ftQ" secondAttribute="leadingMargin" constant="6" id="7Ne-CF-fUo"/>
-                            <constraint firstItem="5XB-Xc-lu4" firstAttribute="top" secondItem="veC-Ma-UEE" secondAttribute="bottom" id="WBu-Ro-geH"/>
-                            <constraint firstItem="veC-Ma-UEE" firstAttribute="top" secondItem="7C8-nK-ftQ" secondAttribute="top" constant="58" id="aCW-ua-Hx6"/>
-                            <constraint firstItem="veC-Ma-UEE" firstAttribute="top" secondItem="03y-R3-JeI" secondAttribute="bottom" constant="8" id="gUC-0o-PPU"/>
-                            <constraint firstAttribute="trailing" secondItem="veC-Ma-UEE" secondAttribute="trailing" id="mp1-sb-HqP"/>
-                            <constraint firstItem="veC-Ma-UEE" firstAttribute="leading" secondItem="7C8-nK-ftQ" secondAttribute="leading" id="uf7-6D-uA1"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JTu-ud-A5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="Dfl-c5-LVm" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zV3-Qi-0b6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="iDw-oc-B5F" kind="relationship" relationship="rootViewController" id="gY5-F6-b7y"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wb7-mi-VrW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-877" y="-555"/>
+            <point key="canvasLocation" x="-2943" y="185"/>
         </scene>
         <!--Test-->
         <scene sceneID="H66-PI-Vd6">
             <objects>
                 <tableViewController storyboardIdentifier="Test" title="Test" id="iDw-oc-B5F" customClass="UpNextTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="kvf-ec-RgY">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="542"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SmallCell" textLabel="iWW-i4-qAZ" detailTextLabel="H5F-Wo-qTt" rowHeight="50" style="IBUITableViewCellStyleSubtitle" id="UYd-86-ysz">
-                                <rect key="frame" x="0.0" y="28" width="600" height="50"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UYd-86-ysz" id="b1t-zo-RzQ">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="49"/>
@@ -82,7 +57,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BigCell" textLabel="hxA-2x-lUr" detailTextLabel="3H9-9Y-UJS" rowHeight="100" style="IBUITableViewCellStyleSubtitle" id="och-c3-Jlp">
-                                <rect key="frame" x="0.0" y="78" width="600" height="100"/>
+                                <rect key="frame" x="0.0" y="142" width="600" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="och-c3-Jlp" id="MM0-LO-cBl">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="99"/>
@@ -112,54 +87,41 @@
                             <outlet property="delegate" destination="iDw-oc-B5F" id="2ds-K4-uY7"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Music Requests" id="8Oy-4U-Wrn">
+                        <barButtonItem key="leftBarButtonItem" title="Source" id="fdq-D9-woY">
+                            <connections>
+                                <segue destination="rAk-2t-h0h" kind="presentation" modalTransitionStyle="coverVertical" id="KQQ-gv-JPo"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Library" id="l9I-Od-fK9">
+                            <connections>
+                                <segue destination="3vd-1D-etH" kind="presentation" modalTransitionStyle="coverVertical" id="zL6-He-7wK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="mDB-BF-DVt" kind="show" identifier="ToPreview" id="zEt-kB-Ox1"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="elW-V5-Elo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7" y="-455"/>
+            <point key="canvasLocation" x="-2208" y="185"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="9ix-Lp-Z4n">
+        <!--Navigation Controller-->
+        <scene sceneID="KSf-o1-jq6">
             <objects>
-                <viewController id="278-yo-HIU" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="rgA-a3-GNw"/>
-                        <viewControllerLayoutGuide type="bottom" id="iim-Ip-hd2"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ecq-dl-GeI">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4xE-CI-zqC">
-                                <rect key="frame" x="20" y="96" width="85" height="30"/>
-                                <state key="normal" title="Library View"/>
-                                <connections>
-                                    <segue destination="3vd-1D-etH" kind="show" id="T7u-8W-Gvf"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fKW-T4-g3D">
-                                <rect key="frame" x="20" y="20" width="93" height="30"/>
-                                <state key="normal" title="Up Next View"/>
-                                <connections>
-                                    <segue destination="gLC-Pd-uSR" kind="show" id="9g6-Ij-Q89"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QeX-xW-gJL">
-                                <rect key="frame" x="19" y="58" width="86" height="30"/>
-                                <state key="normal" title="Source View"/>
-                                <connections>
-                                    <segue destination="w67-fo-vCv" kind="show" id="7vE-Br-d7E"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IXS-ec-Dda" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="rAk-2t-h0h" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="IGh-T3-IHQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="w67-fo-vCv" kind="relationship" relationship="rootViewController" id="Y27-iV-1xW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3sA-8z-sRb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2209" y="404"/>
+            <point key="canvasLocation" x="-689" y="-1290"/>
         </scene>
         <!--Source View-->
         <scene sceneID="2iH-jc-7vH">
@@ -169,19 +131,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="feb-VB-ARF">
-                            <rect key="frame" x="0.0" y="437" width="600" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Back"/>
-                            <connections>
-                                <segue destination="278-yo-HIU" kind="show" id="zBj-Gq-Snq"/>
-                            </connections>
-                        </button>
                         <sections>
                             <tableViewSection headerTitle="Local" id="GVS-sJ-4QL">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Pc2-7F-pIX">
-                                        <rect key="frame" x="0.0" y="50" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="114" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pc2-7F-pIX" id="36c-Ah-fhW">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -206,7 +160,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="fpA-Gl-uYy" detailTextLabel="7Dx-7F-Igz" style="IBUITableViewCellStyleValue1" id="zMl-Kq-Zc9">
-                                        <rect key="frame" x="0.0" y="94" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="158" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zMl-Kq-Zc9" id="YFH-9E-VCd">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -230,7 +184,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="8QH-Vx-QUe">
-                                        <rect key="frame" x="0.0" y="138" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="202" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8QH-Vx-QUe" id="o6N-nI-EX1">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -255,7 +209,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="yI6-Ri-2xJ">
-                                        <rect key="frame" x="0.0" y="182" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="246" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yI6-Ri-2xJ" id="LDv-hO-kIJ">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -285,7 +239,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="mi7-mM-WiY">
-                                        <rect key="frame" x="0.0" y="226" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="290" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mi7-mM-WiY" id="pbU-Qq-f8L">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -321,7 +275,7 @@
                             <tableViewSection headerTitle="Remote" id="5Oc-W9-VbF">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Cjd-dd-i8h">
-                                        <rect key="frame" x="0.0" y="304" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="368" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cjd-dd-i8h" id="t7C-BG-PJb">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -337,7 +291,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="111-tK-42I">
-                                        <rect key="frame" x="0.0" y="348" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="412" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="111-tK-42I" id="eCW-s2-CIQ">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -353,7 +307,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="oxR-UA-llJ">
-                                        <rect key="frame" x="0.0" y="392" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="456" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oxR-UA-llJ" id="ER0-nq-IJ0">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -376,10 +330,18 @@
                             <outlet property="delegate" destination="w67-fo-vCv" id="hdg-lz-wPI"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Sources" id="w5m-oZ-MRy">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="F3h-xY-dLo">
+                            <connections>
+                                <segue destination="ODz-A7-0rQ" kind="unwind" unwindAction="unwindAction:" id="Dt8-kc-rgS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tay-ez-kvP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ODz-A7-0rQ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-904" y="283"/>
+            <point key="canvasLocation" x="200" y="-1290"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="BSN-NR-24c">
@@ -415,7 +377,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uzl-Q7-9a5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3216" y="2334"/>
+            <point key="canvasLocation" x="-1160" y="2322"/>
         </scene>
         <!--Library/Songs-->
         <scene sceneID="pkS-Rt-AHb">
@@ -481,14 +443,21 @@
                             <outlet property="delegate" destination="v1S-5T-ImP" id="26g-fh-4YU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Songs" id="RHb-b5-N84"/>
+                    <navigationItem key="navigationItem" title="Songs" id="RHb-b5-N84">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="0wo-3e-bEb">
+                            <connections>
+                                <segue destination="dRG-iN-uKM" kind="unwind" unwindAction="unwindAction:" id="Cfw-4e-DOa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="Wak-nk-v3z" kind="show" identifier="ToPreview" id="KdD-T1-7VA"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7nu-UU-RTw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="dRG-iN-uKM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-3216" y="3110"/>
+            <point key="canvasLocation" x="-1160" y="3098"/>
         </scene>
         <!--Library/Artists-->
         <scene sceneID="gia-2J-mgS">
@@ -554,14 +523,21 @@
                             <outlet property="delegate" destination="6HP-Vg-yo3" id="f1A-4v-yaX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Artists" id="ePg-cG-or3"/>
+                    <navigationItem key="navigationItem" title="Artists" id="ePg-cG-or3">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="tTF-eS-Kcr">
+                            <connections>
+                                <segue destination="GQz-ve-aOD" kind="unwind" unwindAction="unwindAction:" id="pwF-i0-SK8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="qSr-pb-aIm" kind="show" identifier="ToArtistDetail" id="0rC-5x-Uh3"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytV-4n-2CO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="GQz-ve-aOD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-2522" y="3110"/>
+            <point key="canvasLocation" x="-3018" y="3098"/>
         </scene>
         <!--Preview Controller-->
         <scene sceneID="yOs-Bi-U7h">
@@ -572,10 +548,10 @@
                         <viewControllerLayoutGuide type="bottom" id="qrO-BO-DzT"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cao-c2-dlE">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="542"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="916-ud-X5L" userLabel="AlbumArtViewer">
+                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="916-ud-X5L" userLabel="AlbumArtViewer">
                                 <rect key="frame" x="9" y="0.0" width="582" height="542"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="916-ud-X5L" secondAttribute="height" multiplier="1:1" constant="40" id="B1T-eb-TSs"/>
@@ -585,7 +561,7 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDW-Hz-MIW">
-                                <rect key="frame" x="0.0" y="542" width="600" height="0.0"/>
+                                <rect key="frame" x="0.0" y="580" width="600" height="20"/>
                                 <connections>
                                     <segue destination="OLY-Gl-acB" kind="embed" identifier="playerViewSegue" id="w8s-se-6aQ"/>
                                 </connections>
@@ -605,7 +581,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZSe-1n-KJy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1302" y="-555"/>
+            <point key="canvasLocation" x="-689" y="185"/>
         </scene>
         <!--Library/Albums-->
         <scene sceneID="Z5Z-Aq-JpJ">
@@ -671,14 +647,21 @@
                             <outlet property="delegate" destination="b27-j9-jh3" id="yP8-3F-mCu"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Albums" id="r2g-Md-q7c"/>
+                    <navigationItem key="navigationItem" title="Albums" id="r2g-Md-q7c">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="ESg-KH-q1A">
+                            <connections>
+                                <segue destination="Kx6-hL-WwI" kind="unwind" unwindAction="unwindAction:" id="aBp-vC-zas"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="jKz-xP-VDG" kind="show" identifier="ToAlbumDetail" id="SZD-ah-ccg"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="34T-pY-rMO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Kx6-hL-WwI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1835" y="3110"/>
+            <point key="canvasLocation" x="-2097" y="3098"/>
         </scene>
         <!--PlayerViewController-->
         <scene sceneID="s4o-lh-QuU">
@@ -689,7 +672,7 @@
                         <viewControllerLayoutGuide type="bottom" id="tCW-gb-PgS"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GuM-oo-3W4">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-wx-g34" userLabel="prevButton">
@@ -710,7 +693,7 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take Me to Church" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pDh-yk-FwN">
-                                <rect key="frame" x="200" y="-94" width="200" height="29"/>
+                                <rect key="frame" x="200" y="-84" width="200" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -724,7 +707,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uh7-yA-1pH" userLabel="nextButton">
-                                <rect key="frame" x="540" y="22" width="40" height="40"/>
+                                <rect key="frame" x="540" y="22" width="40" height="50"/>
                                 <accessibility key="accessibilityConfiguration" label="nextButton"/>
                                 <state key="normal" image="forward_button"/>
                                 <connections>
@@ -732,7 +715,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Hozier - Hozier" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJa-J5-8F6">
-                                <rect key="frame" x="242" y="-39" width="116" height="20"/>
+                                <rect key="frame" x="242" y="-29" width="116" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -755,6 +738,8 @@
                             <constraint firstItem="8od-Iw-aNU" firstAttribute="leading" secondItem="GuM-oo-3W4" secondAttribute="leadingMargin" id="wsU-1D-Udn"/>
                         </constraints>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="20"/>
                     <connections>
                         <outlet property="detailLabel" destination="dJa-J5-8F6" id="LEp-Wg-caH"/>
                         <outlet property="songLabel" destination="pDh-yk-FwN" id="abk-JG-rbl"/>
@@ -762,7 +747,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uFd-9O-dli" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="721" y="373.5"/>
+            <point key="canvasLocation" x="288" y="396"/>
         </scene>
         <!--Library/Playlists-->
         <scene sceneID="ALZ-K6-Lhg">
@@ -832,7 +817,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wgY-rn-hOZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1145" y="3110"/>
+            <point key="canvasLocation" x="-201" y="3098"/>
         </scene>
         <!--Library/Artists/Navigation-->
         <scene sceneID="2BF-9L-Kd9">
@@ -849,7 +834,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aBA-GM-phz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2528" y="2334"/>
+            <point key="canvasLocation" x="-3024" y="2322"/>
         </scene>
         <!--Library/Albums/Navigation-->
         <scene sceneID="kkD-BP-MWc">
@@ -866,7 +851,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vNn-Gb-Jot" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1835" y="2334"/>
+            <point key="canvasLocation" x="-2097" y="2322"/>
         </scene>
         <!--Library/Playlists/Navigation-->
         <scene sceneID="Xdd-sq-7h9">
@@ -883,7 +868,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3S0-yf-8mX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1145" y="2334"/>
+            <point key="canvasLocation" x="-201" y="2322"/>
         </scene>
         <!--Image Preview Controller-->
         <scene sceneID="JIz-nx-1oS">
@@ -918,7 +903,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Djn-Mr-uSQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1792" y="305"/>
+            <point key="canvasLocation" x="279" y="15"/>
         </scene>
         <!--Preview Controller-->
         <scene sceneID="k9z-63-9ez">
@@ -962,7 +947,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ye6-oT-39H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-728" y="5053"/>
+            <point key="canvasLocation" x="-1160" y="3926"/>
         </scene>
         <!--PlayerViewController-->
         <scene sceneID="B3k-qg-sU6">
@@ -1004,7 +989,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vlx-I8-w5S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1003" y="5713.5"/>
+            <point key="canvasLocation" x="-1479" y="4605.5"/>
         </scene>
         <!--Image Preview Controller-->
         <scene sceneID="O2p-cm-O9B">
@@ -1039,7 +1024,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IQt-KT-Orp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-364.5" y="5824.5"/>
+            <point key="canvasLocation" x="-840.5" y="4716.5"/>
         </scene>
         <!--Detailed Albums Library-->
         <scene sceneID="ban-Tf-HJE">
@@ -1081,14 +1066,21 @@
                             <outlet property="delegate" destination="jKz-xP-VDG" id="CL8-bk-6nU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Songs" id="yfq-Su-frN" userLabel="Songs"/>
+                    <navigationItem key="navigationItem" title="Songs" id="yfq-Su-frN" userLabel="Songs">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="li1-Y1-2S5">
+                            <connections>
+                                <segue destination="zIO-Po-D0w" kind="unwind" unwindAction="unwindAction:" id="sgF-Wc-xBP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="Wak-nk-v3z" kind="show" identifier="ToPreview" id="y39-Mh-dPe"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SdL-ba-6yU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="zIO-Po-D0w" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-2041" y="5064"/>
+            <point key="canvasLocation" x="-2097" y="3938"/>
         </scene>
         <!--Detailed Artists Library-->
         <scene sceneID="af4-V4-Xoc">
@@ -1130,14 +1122,21 @@
                             <outlet property="delegate" destination="qSr-pb-aIm" id="YNN-zM-8Ak"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Albums" id="Jp2-gK-UOP"/>
+                    <navigationItem key="navigationItem" title="Albums" id="Jp2-gK-UOP">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="3A0-MG-900">
+                            <connections>
+                                <segue destination="9BE-hS-PMu" kind="unwind" unwindAction="unwindAction:" id="lbE-96-tGa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="jKz-xP-VDG" kind="show" identifier="ToAlbumDetail" id="qJT-lF-pMe"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ex5-bU-MeJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="9BE-hS-PMu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-3226" y="5086"/>
+            <point key="canvasLocation" x="-3018" y="3938"/>
         </scene>
     </scenes>
     <resources>
@@ -1150,8 +1149,7 @@
         <image name="rewind_button" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="y39-Mh-dPe"/>
         <segue reference="qJT-lF-pMe"/>
-        <segue reference="gH7-84-FJ5"/>
+        <segue reference="y39-Mh-dPe"/>
     </inferredMetricsTieBreakers>
 </document>

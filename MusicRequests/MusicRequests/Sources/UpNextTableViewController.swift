@@ -104,4 +104,8 @@ class UpNextTableViewController: ItemTableViewController {
       destinationVC.album = album
     }
   }
+
+  @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
+    self.dismissViewControllerAnimated(true, completion: nil)
+  }
 }
