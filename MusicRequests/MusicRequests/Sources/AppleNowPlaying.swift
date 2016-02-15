@@ -20,10 +20,10 @@ class AppleNowPlaying: NowPlaying {
   override init() {
     // Create the music player that we will use to play the songs.  We also
     // disable shuffle/repeat since we want songs played in the proper order.
-    // The Music player should be a systemMusicPlayer, not an applicationMusicPlayer
-    // applicationMusicPlayers would require the app to open while playing, which
-    // is not what we want.
-    musicPlayer = MPMusicPlayerController.systemMusicPlayer()
+    // We MUST use the applicationMusicPlayer since we want the application to
+    // continue running while in the background.  We also don't want to mess
+    // with what is playing in the "Music" application -- that's annoying.
+    musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
     musicPlayer.shuffleMode = MPMusicShuffleMode.Off
     musicPlayer.repeatMode = MPMusicRepeatMode.None
 
