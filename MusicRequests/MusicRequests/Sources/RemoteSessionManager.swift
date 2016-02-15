@@ -12,29 +12,47 @@ class RemoteSessionManager: NSObject, NSNetServiceBrowserDelegate {
 
   private let netServiceBrowser: NSNetServiceBrowser
 
+  private var remoteSessions = [RemoteSession]()
+  var sessions: [RemoteSession] {
+    return remoteSessions
+  }
+
   override init() {
     netServiceBrowser = NSNetServiceBrowser()
 
     super.init()
 
     netServiceBrowser.delegate = self
-    netServiceBrowser.searchForServicesOfType(Session.netServiceType, inDomain: "")
+    netServiceBrowser.searchForServicesOfType(RemoteSession.netServiceType, inDomain: "")
   }
 
   func netServiceBrowserWillSearch(browser: NSNetServiceBrowser) {
-    print("will search")
   }
 
   func netServiceBrowserDidStopSearch(browser: NSNetServiceBrowser) {
-    print("will stop searching")
   }
 
   func netServiceBrowser(browser: NSNetServiceBrowser, didFindService service: NSNetService, moreComing: Bool) {
-    print("didFindService: \(service)")
+
+    remoteSessions.append(RemoteSession(netService: service))
+
+    if !moreComing {
+      // Send out a notification since we have received some of the services.
+    }
   }
 
   func netServiceBrowser(browser: NSNetServiceBrowser, didRemoveService service: NSNetService, moreComing: Bool) {
-    print("didRemoveService: \(service)")
+
+    var serviceIndex: Int?
+    for (index, session) in remoteSessions.enumerate() {
+      if session.netService === service {
+        serviceIndex = index
+        break
+      }
+    }
+    if let indexToRemove = serviceIndex {
+      remoteSessions.removeAtIndex(indexToRemove)
+    }
   }
 
   func netServiceBrowser(browser: NSNetServiceBrowser, didNotSearch errorDict: [String : NSNumber]) {
