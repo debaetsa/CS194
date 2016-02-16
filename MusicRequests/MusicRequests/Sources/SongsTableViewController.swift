@@ -47,14 +47,16 @@ class SongsTableViewController: ItemTableViewController {
     let upvote = UITableViewRowAction(style: .Normal, title: "+") { action, index in
       let currentSong = self.library.allSongs[indexPath.row];
       currentSong.votes! += 1;
+      self.queue.refreshUpcoming()
       print("Upvoted song: \(currentSong.name): \(currentSong.votes!)");
     }
     upvote.backgroundColor = UIColor.blueColor()
     
     let downvote = UITableViewRowAction(style: .Normal, title: "-") { action, index in
-        let currentSong = self.library.allSongs[indexPath.row];
-        currentSong.votes! -= 1;
-        print("Upvoted song: \(currentSong.name): \(currentSong.votes!)");
+      let currentSong = self.library.allSongs[indexPath.row];
+      currentSong.votes! -= 1;
+      self.queue.refreshUpcoming()
+      print("Upvoted song: \(currentSong.name): \(currentSong.votes!)");
     }
     downvote.backgroundColor = UIColor.redColor()
     
