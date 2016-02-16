@@ -136,6 +136,14 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
     return nil
   }
 
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    guard indexPath.section == Section.Remote.rawValue else {
+      return
+    }
+
+    remoteSessions.sessions[indexPath.row].💩()
+  }
+
   /*
   // Override to support conditional editing of the table view.
   override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
