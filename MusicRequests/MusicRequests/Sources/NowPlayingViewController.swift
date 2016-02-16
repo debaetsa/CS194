@@ -38,7 +38,13 @@ class NowPlayingViewController: SongViewController {
   }
 
   @IBAction func pressedPlayButton(sender: UIButton) {
-    nowPlaying.play()
+    if (nowPlaying.isPlaying) {
+      nowPlaying.pause()
+      sender.setImage(UIImage(named: "play_button"), forState: UIControlState.Normal)
+    } else {
+      nowPlaying.play()
+      sender.setImage(UIImage(named: "pause_button"), forState: UIControlState.Normal)
+    }
   }
 
   @IBAction func pressedPreviousButton(sender: UIButton) {
