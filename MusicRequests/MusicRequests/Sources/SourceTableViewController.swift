@@ -122,6 +122,11 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
         let session = remoteSessions.sessions[indexPath.row]
         cell.textLabel?.text = session.name
 
+        let currentSession = AppDelegate.sharedDelegate.currentSession
+        cell.accessoryType = (session === currentSession)
+          ? UITableViewCellAccessoryType.Checkmark
+          : UITableViewCellAccessoryType.None
+
         return cell
       }
     }
@@ -141,7 +146,12 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
       return
     }
 
-    remoteSessions.sessions[indexPath.row].💩()
+    let session = remoteSessions.sessions[indexPath.row]
+    session.💩()
+    AppDelegate.sharedDelegate.currentSession = session
+
+    // clear the row after it gets selected
+    tableView.deselectRowAtIndexPath(indexPath, animated: true)
   }
 
   /*

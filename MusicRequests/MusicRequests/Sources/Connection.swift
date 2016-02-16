@@ -19,12 +19,17 @@ class Connection: NSObject, NSStreamDelegate {
 
   // keep track of the bytes that we need to send to each client
   var bytesToSend: NSMutableData
+  var bytesToProcess: NSMutableData
+
+  // called to allow the received data to be processed
+  var onReceivedData: ((SendableIdentifier, NSData) -> Void)?
 
   init(ipAddress: String, port: Int, input: NSInputStream, output: NSOutputStream) {
     self.inputStream = input
     self.outputStream = output
     self.address = (ipAddress, port)
     self.bytesToSend = NSMutableData()
+    self.bytesToProcess = NSMutableData()
 
     super.init()
 
@@ -85,32 +90,95 @@ class Connection: NSObject, NSStreamDelegate {
 
   // MARK: - Read Handling
 
+  // we only process on the main thread, so we can easily reuse this structure
+  private static let bufferLength = 1024
+  private static let buffer = UnsafeMutablePointer<UInt8>.alloc(bufferLength)
+
   private func readAvailableData() {
     guard inputStream.hasBytesAvailable else {
       print("Ignoring read attempt since there are no bytes to read.")
       return
     }
 
-    let size = 32
-    let buffer = UnsafeMutablePointer<UInt8>.alloc(size)
-    let read = inputStream.read(buffer, maxLength: size)
+    let read = inputStream.read(Connection.buffer, maxLength: Connection.bufferLength)
     if read > 0 {
-      let message = String(bytesNoCopy: UnsafeMutablePointer(buffer), length: read, encoding: NSUTF8StringEncoding, freeWhenDone: false)
-      print("\(address) received message: \(String(message))")
+      // put it in a data object
+      let data = NSData(
+        bytesNoCopy: UnsafeMutablePointer(Connection.buffer),
+        length: read,
+        freeWhenDone: false
+      )
+
+      // and add it to the data that needs to be processed
+      bytesToProcess.appendData(data)
     }
-    buffer.destroy()
-    buffer.dealloc(size)
+    Connection.buffer.destroy()  // get rid of what we put in there since it doesn't matter
+    processAvailableItems()
+  }
+
+  private func processAvailableItems() {
+    while true {
+      let length = bytesToProcess.length
+      guard length > 0 else {
+        return  // there are no bytes to process, so stop processing
+      }
+
+      var itemType: SendableIdentifier = .Item
+      var itemLength: UInt32 = 0
+
+      // make sure we have enough to extract these types
+      let minimumDataLength = sizeofValue(itemType) + sizeofValue(itemLength)
+      guard length >= minimumDataLength else {
+        return  // we can't find the type and length, so wait for more data
+      }
+
+      // figure out the length of received data
+      withUnsafeMutablePointer(&itemLength) {
+        bytesToProcess.getBytes(UnsafeMutablePointer($0), range: NSMakeRange(sizeofValue(itemType), sizeofValue(itemLength)))
+      }
+      itemLength = UInt32(bigEndian: itemLength)
+
+      // now make sure we have received enough to extract this entire item
+      guard length >= (Int(itemLength) + minimumDataLength) else {
+        return  // need to wait for more data
+      }
+
+      // figure out the item type so that we can dispatch to the loader
+      withUnsafeMutablePointer(&itemType) {
+        bytesToProcess.getBytes(UnsafeMutablePointer($0), range: NSMakeRange(0, sizeofValue(itemType)))
+      }
+
+      // extract it, print it, and then remove it
+      let data = bytesToProcess.subdataWithRange(NSMakeRange(minimumDataLength, Int(itemLength)))
+
+      // pass that object as appropriate
+      if let callback = onReceivedData {
+        callback(itemType, data)
+      }
+
+      bytesToProcess.replaceBytesInRange(NSMakeRange(0, minimumDataLength + Int(itemLength)), withBytes: nil, length: 0)
+    }
   }
 
   // MARK: - Write Handling
 
-  func sendMessage(message: String) {
-    if let data = message.dataUsingEncoding(NSUTF8StringEncoding) {
-      bytesToSend.appendData(data)
-      sendAvailableData()  // send data if there is space
-    } else {
-      print("Ignoring message since it could not be converted to UTF8.")
+  func sendItem(item: Sendable) {
+    // write the identifier
+    var identifier = item.sendableIdentifier
+    withUnsafePointer(&identifier) {
+      bytesToSend.appendBytes(UnsafePointer($0), length: sizeofValue(identifier))
     }
+
+    let data = item.sendableData  // get the data so that we can write its length
+
+    var length = UInt32(data.length).bigEndian
+    withUnsafePointer(&length) {
+      bytesToSend.appendBytes(UnsafePointer($0), length: sizeofValue(length))
+    }
+
+    // and then the actual data for the item
+    bytesToSend.appendData(data)
+    sendAvailableData()
   }
 
   private func sendAvailableData() {

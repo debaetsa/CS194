@@ -182,9 +182,23 @@ class LocalSession: Session, NSNetServiceDelegate {
     let port = Int(UInt16(bigEndian: from.sin_port))
     let address = String.fromCString(UnsafePointer(inet_ntoa(from.sin_addr)))!
 
-    let client = Connection(ipAddress: address, port: port, input: readStream, output: writeStream)
-    clients.append(client)
-    client.sendMessage("Hello World\n")
+    addClient(Connection(ipAddress: address, port: port, input: readStream, output: writeStream))
+  }
+
+  private func addClient(connection: Connection) {
+    // add them to the list
+    clients.append(connection)
+
+    // and then send them the contents of the entire library
+    for artist in sourceLibrary.allArtists {
+      connection.sendItem(artist)
+    }
+    for album in sourceLibrary.allAlbums {
+      connection.sendItem(album)
+    }
+    for song in sourceLibrary.allSongs {
+      connection.sendItem(song)
+    }
   }
 
   override var library: Library! {

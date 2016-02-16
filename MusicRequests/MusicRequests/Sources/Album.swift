@@ -58,6 +58,15 @@ class Album: Item {
     songs.append((discNumber, trackNumber, song))
   }
 
+  func trackForSong(song: Song) -> Track? {
+    for track in songs {
+      if track.song === song {
+        return track
+      }
+    }
+    return nil
+  }
+
   var allSongs: [(disc: Int?, track: Int?, song: Song)] {
     get {
       return songs.sort({ (first, second) -> Bool in
@@ -106,6 +115,35 @@ class Album: Item {
 
         return false
       })
+    }
+  }
+
+  // MARK: - Sending
+
+  override var tag: Tag {
+    return .Album
+  }
+
+  override func buildSendableData(mutableData: NSMutableData) {
+    // add the basic data
+    super.buildSendableData(mutableData)
+
+    // and then append the extra information that we need here (the Artist)
+    mutableData.appendCustomInteger(self.artist?.identifier ?? UInt32(0))
+  }
+
+  override init(data: NSData, lookup: [UInt32: Item]) {
+    super.init(data: data, lookup: lookup)
+
+    var offset = self.currentDataIndex
+    let maybeArtistId = data.getNextInteger(&offset)
+    self.currentDataIndex = offset
+
+    if let artistId = maybeArtistId, let item = lookup[artistId], let artist = item as? Artist {
+      artists.append(artist)
+      artist.addAlbum(self)
+    } else {
+      print("Could not find artist.")
     }
   }
 

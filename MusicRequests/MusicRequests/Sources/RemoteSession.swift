@@ -19,16 +19,24 @@ class RemoteSession: Session, NSNetServiceDelegate {
   /** Stores the current connection to this particular server. */
   var connection: Connection?
 
+  /** Stores the data objects received into the Library. */
+  var remoteLibrary: RemoteLibrary
+
   init(netService: NSNetService) {
     self.netService = netService
     self.name = netService.name
+    self.remoteLibrary = RemoteLibrary()
 
     // TODO: Create a Queue() specifically for this remote session.  Just know
     // that it will probably not be populated until it is actually accessed.
-    super.init(queue: Queue(library: TemporaryLibrary()))
+    super.init(queue: Queue(library: remoteLibrary))
 
     // set the delegate after the super.init() call
     self.netService.delegate = self
+  }
+
+  override var library: Library! {
+    return remoteLibrary
   }
 
   func 💩() {
@@ -50,7 +58,19 @@ class RemoteSession: Session, NSNetServiceDelegate {
     }
 
     // we should have been able to open the connection
-    self.connection = Connection(ipAddress: "", port: 0, input: inputStream, output: outputStream)
+    let connection = Connection(ipAddress: "", port: 0, input: inputStream, output: outputStream)
+    connection.onReceivedData = didReceiveData
+    self.connection = connection
+  }
+
+  func didReceiveData(type: SendableIdentifier, data: NSData) {
+    switch type {
+    case .Item:
+      remoteLibrary.addItemFromData(data)
+
+    default:
+      print("Ignoring: \(data)")
+    }
   }
 
   func netServiceWillResolve(sender: NSNetService) {

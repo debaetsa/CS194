@@ -44,5 +44,11 @@ class Artist: Item {
     }
     return nil
   }
+
+  // MARK: - Sending
+
+  override var tag: Tag {
+    return .Artist
+  }
   
 }
