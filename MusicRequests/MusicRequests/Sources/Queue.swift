@@ -121,15 +121,15 @@ class Queue: NSObject {
   were randomly generated, then it will have no impact. */
   private func fillToMinimum() -> Void {
     let count = upcomingQueueItems.count
-    let maybeSongs = library.rankSongs()
+    let maybeSongs = library.rankSongsByVotes(0)
     var counter = 0
     for _ in count ..< Queue.minimumUpcomingCount {
 //      let maybeSong = library.pickRandomSong()
-      let song = maybeSongs[++counter]
+      let song = maybeSongs[counter]
       if (counter >= library.allSongs.count) {
         return
       }
-      
+      counter++;
 //      guard let song = maybeSong else {
 //        // If we didn't get a result back, we have to stop adding songs.
 //        return
@@ -182,8 +182,38 @@ class Queue: NSObject {
     center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
   }
   
+  /** Refreshes the queue to take into account new votes.
+
+   * A couple things I don't like about this: 
+   * (1) Right now, I have to keep a parallel set of queuedSongs to avoid an ugly
+   * O(n^2) iteration over upcomingQueueItems to prevent duplication of songs. I
+   * think we can get rid of the QueueItem class entirely if you're okay with it.
+   * 
+   * (2) This keeps the queue at minimum upcoming count for now--we should talk 
+   * through exactly what we want the queue to do later.
+   */
   func refreshUpcoming() {
-    upcomingQueueItems = [];
-    fillToMinimum();
+
+    var queuedSongs = Set<Song>()
+    for item in upcomingQueueItems {
+      queuedSongs.insert(item.song)
+    }
+    let minVotes = upcomingQueueItems[upcomingQueueItems.count - 1].song.votes!
+    let toAddSongs = library.rankSongsByVotes(minVotes)
+
+    for song in toAddSongs {
+      if !queuedSongs.contains(song) {
+        upcomingQueueItems.append(QueueItem(song: song))
+        queuedSongs.insert(song)
+      }
+    }
+    upcomingQueueItems = upcomingQueueItems.sort({ (first, second) -> Bool in
+      if (first.song.votes! > second.song.votes!) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    upcomingQueueItems = Array(upcomingQueueItems[0..<Queue.minimumUpcomingCount])
   }
 }

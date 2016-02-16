@@ -89,4 +89,27 @@ class UpNextTableViewController: ItemTableViewController {
   @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
     self.dismissViewControllerAnimated(true, completion: nil)
   }
+  
+  override func tableView(tableView: UITableView,
+    editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+      let upvote = UITableViewRowAction(style: .Normal, title: "+") { action, index in
+      let currentSong = self.items[indexPath.row].song;
+        currentSong.votes! += 1;
+        self.updateData();
+        self.tableView.reloadData()
+        print("Upvoted song: \(currentSong.name): \(currentSong.votes!)");
+      }
+      upvote.backgroundColor = UIColor.blueColor()
+      
+      let downvote = UITableViewRowAction(style: .Normal, title: "-") { action, index in
+        let currentSong = self.items[indexPath.row].song;
+        currentSong.votes! -= 1;
+        self.updateData();
+        self.tableView.reloadData()
+        print("Upvoted song: \(currentSong.name): \(currentSong.votes!)");
+      }
+      downvote.backgroundColor = UIColor.redColor()
+      
+      return [downvote, upvote]
+  }
 }

@@ -22,8 +22,8 @@ protocol Library {
 
   func pickRandomSong() -> Song?
   
-  func rankSongs() ->[Song]
-
+  func rankSongsByVotes(minVotes: Int) -> [Song]
+  
 }
 
 /** Define an extension to the protocol.
@@ -45,9 +45,11 @@ extension Library {
     return songs[index]
   }
   
-  func rankSongs() -> [Song] {
-    return allSongs.sort({ (first, second) -> Bool in
-//      if first.votes!= <= second.votes!
+  func rankSongsByVotes(minVotes: Int) -> [Song] {
+    let filteredSongs = allSongs.filter({
+      $0.votes >= minVotes
+    })
+    return filteredSongs.sort({ (first, second) -> Bool in
       if (first.votes! > second.votes!) {
         return true;
       } else if (first.votes! < second.votes!) {
