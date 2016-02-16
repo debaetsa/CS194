@@ -20,11 +20,12 @@ class Album: Item {
   }
 
   var image: UIImage?
+  var date: NSDate?
   var imageToShow: UIImage {
     return image ?? UIImage(named: "NoAlbumArtwork")!
   }
 
-  init(name: String, sortName: String, artist: Artist?) {
+  init(name: String, sortName: String, artist: Artist?, date: NSDate?) {
     super.init(name: name, sortName: sortName)
 
     if let toAppend = artist {
@@ -33,8 +34,8 @@ class Album: Item {
     }
   }
 
-  convenience init(name: String, artist: Artist?) {
-    self.init(name: name, sortName: name, artist: artist)
+  convenience init(name: String, artist: Artist?, date: NSDate?) {
+    self.init(name: name, sortName: name, artist: artist, date: date)
   }
 
   // Stores (disc, track, song) tuples.

@@ -25,7 +25,7 @@ class Artist: Item {
   var allAlbums: [Album] {
     get {
       return albums.sort({ (first, second) -> Bool in
-        first.sortName.caseInsensitiveCompare(second.sortName) == NSComparisonResult.OrderedAscending
+        first.date?.compare(second.date!) == NSComparisonResult.OrderedAscending
       })
     }
   }

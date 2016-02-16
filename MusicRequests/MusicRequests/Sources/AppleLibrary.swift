@@ -63,7 +63,7 @@ class AppleLibrary: NSObject, Library {
         }
         if album == nil {
           // We couldn't find the album, or there wasn't an artist.
-          let boundAlbum = Album(name: albumName, artist: artist)
+          let boundAlbum = Album(name: albumName, artist: artist, date: item.releaseDate)
           album = boundAlbum
           albums.append(boundAlbum)
         }
