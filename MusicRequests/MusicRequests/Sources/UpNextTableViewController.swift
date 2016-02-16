@@ -29,6 +29,11 @@ class UpNextTableViewController: ItemTableViewController {
     )
   }
 
+  override func viewDidAppear(animated: Bool) {
+    self.updateData()
+    self.tableView.reloadData()
+  }
+  
   deinit {
     if let listener = self.listener {
       let center = NSNotificationCenter.defaultCenter()
@@ -37,6 +42,7 @@ class UpNextTableViewController: ItemTableViewController {
   }
 
   private func updateData() {
+    print("UpdateData() called.")
     items.removeAll()
     items.appendContentsOf(queue.history)
     if let current = queue.current {
@@ -45,6 +51,7 @@ class UpNextTableViewController: ItemTableViewController {
     } else {
       currentIndex = nil  // there is not a playing item
     }
+    queue.refreshUpcoming()
     items.appendContentsOf(queue.upcoming)
   }
 
@@ -65,7 +72,7 @@ class UpNextTableViewController: ItemTableViewController {
 
     let song = items[indexPath.row].song
     cell.textLabel?.text = song.name
-    cell.detailTextLabel?.text = song.artistAlbumString
+    cell.detailTextLabel?.text = "\(song.artistAlbumString), Votes: \(song.votes!)"
     cell.imageView?.image = song.album!.imageToShow
 
     return cell

@@ -20,6 +20,7 @@ class Song: Item {
   let artistOverride: Artist?
   let album: Album?
   let genre: Genre?
+  var votes: Int?
 
   init(name: String, sortName: String, artist: Artist?, album: Album?, genre: Genre?, discNumber: Int?, trackNumber: Int?, userInfo: AnyObject?) {
 
@@ -27,6 +28,7 @@ class Song: Item {
     self.album = album
     self.genre = genre
     self.artistOverride = artist
+    self.votes = 0
 
     super.init(name: name, sortName: sortName)
 

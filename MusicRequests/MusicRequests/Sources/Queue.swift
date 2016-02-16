@@ -121,13 +121,19 @@ class Queue: NSObject {
   were randomly generated, then it will have no impact. */
   private func fillToMinimum() -> Void {
     let count = upcomingQueueItems.count
+    let maybeSongs = library.rankSongs()
+    var counter = 0
     for _ in count ..< Queue.minimumUpcomingCount {
-      let maybeSong = library.pickRandomSong()
-
-      guard let song = maybeSong else {
-        // If we didn't get a result back, we have to stop adding songs.
+//      let maybeSong = library.pickRandomSong()
+      let song = maybeSongs[++counter]
+      if (counter >= library.allSongs.count) {
         return
       }
+      
+//      guard let song = maybeSong else {
+//        // If we didn't get a result back, we have to stop adding songs.
+//        return
+//      }
 
       // TODO: Fix this issue.
       // Using this approach will technically allow multiple copies of a song
@@ -174,5 +180,10 @@ class Queue: NSObject {
     // Post a notification informing the rest of application about the change.
     let center = NSNotificationCenter.defaultCenter()
     center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
+  }
+  
+  func refreshUpcoming() {
+    upcomingQueueItems = [];
+    fillToMinimum();
   }
 }
