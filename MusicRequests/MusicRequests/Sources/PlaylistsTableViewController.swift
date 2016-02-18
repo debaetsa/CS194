@@ -23,6 +23,7 @@ class PlaylistsTableViewController: ItemTableViewController {
     let currentPlaylist = playlists[indexPath.row]
 
     cell.textLabel?.text = currentPlaylist.name
+    cell.detailTextLabel?.text = "\(currentPlaylist.allSongs.count.pluralize(("Song", "Songs")))"
 
     return cell
   }

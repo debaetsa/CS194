@@ -3,22 +3,15 @@
 //  MusicRequests
 //
 //  Created by James Matthew Capps on 2/18/16.
-//
+//  Copyright © 2016 Capps, De Baets, Radermacher, Volk. All rights reserved.
 //
 
 import UIKit
 
 class GenresTableViewController: ItemTableViewController {
 
-  /*
-  // MARK: - Navigation
-
-  // In a storyboard-based application, you will often want to do a little preparation before navigation
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-  // Get the new view controller using segue.destinationViewController.
-  // Pass the selected object to the new view controller.
-  }
-  */
+  var genre: Genre?
+  var genreName: String?
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return library.allGenres.count
@@ -31,18 +24,23 @@ class GenresTableViewController: ItemTableViewController {
     let currentGenre = genres[indexPath.row]
 
     cell.textLabel?.text = currentGenre.name
-    //cell.detailTextLabel?.text = currentPlaylist.artistAlbumString
-    //cell.imageView?.image = currentPlaylist.album!.imageToShow
+    cell.detailTextLabel?.text = "\(currentGenre.allSongs.count.pluralize(("Song", "Songs")))"
 
     return cell
   }
 
-  //  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-  //    if segue.identifier == "preview" {
-  //      let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
-  //      let destination = segue.destinationViewController as! SongViewController
-  //      destination.song = library.allSongs[indexPath.row]
-  //    }
-  //  }
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    genre = library.allGenres[indexPath.row]
+    genreName = genre!.name
+    performSegueWithIdentifier("ToGenreDetail", sender: self)
+  }
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    if (segue.identifier == "ToGenreDetail") {
+      // Create a new variable to store the instance of PreviewController
+      let destinationVC = segue.destinationViewController as! DetailedGenreTableViewController
+      destinationVC.genre = genre
+      destinationVC.genreName = genreName
+    }
+  }
 
 }
