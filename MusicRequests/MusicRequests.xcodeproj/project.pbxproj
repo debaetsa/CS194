@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A14D8D51C75C5CC00CD1200 /* DetailedPlaylistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A14D8D41C75C5CC00CD1200 /* DetailedPlaylistTableViewController.swift */; };
 		1A533B981C75B8AD00B41D7F /* GenresTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A533B971C75B8AD00B41D7F /* GenresTableViewController.swift */; };
 		1ABBE7CD1C7541AB007C02D7 /* PlaylistsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABBE7CC1C7541AB007C02D7 /* PlaylistsTableViewController.swift */; };
 		5010EB4C1C6488EE0085D615 /* AppleLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5010EB4B1C6488EE0085D615 /* AppleLibrary.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A14D8D41C75C5CC00CD1200 /* DetailedPlaylistTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailedPlaylistTableViewController.swift; path = Sources/DetailedPlaylistTableViewController.swift; sourceTree = "<group>"; };
 		1A533B971C75B8AD00B41D7F /* GenresTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenresTableViewController.swift; path = Sources/GenresTableViewController.swift; sourceTree = "<group>"; };
 		1ABBE7CC1C7541AB007C02D7 /* PlaylistsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistsTableViewController.swift; path = Sources/PlaylistsTableViewController.swift; sourceTree = "<group>"; };
 		5010EB4B1C6488EE0085D615 /* AppleLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppleLibrary.swift; path = Sources/AppleLibrary.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 			children = (
 				B3572B211C694E62007A8BD3 /* DetailedAlbumTableViewController.swift */,
 				B3F56B9C1C69526500A16F95 /* DetailedArtistTableViewController.swift */,
+				1A14D8D41C75C5CC00CD1200 /* DetailedPlaylistTableViewController.swift */,
 			);
 			name = "Detail Views";
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				50159F611C65AE26000E4878 /* ArtistsTableViewController.swift in Sources */,
 				50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */,
 				5010EB4C1C6488EE0085D615 /* AppleLibrary.swift in Sources */,
+				1A14D8D51C75C5CC00CD1200 /* DetailedPlaylistTableViewController.swift in Sources */,
 				B3F56B9D1C69526500A16F95 /* DetailedArtistTableViewController.swift in Sources */,
 				505B5E561C55CEC900235C1C /* Library.swift in Sources */,
 				B3572B221C694E62007A8BD3 /* DetailedAlbumTableViewController.swift in Sources */,

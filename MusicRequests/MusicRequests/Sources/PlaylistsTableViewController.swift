@@ -9,16 +9,7 @@
 import UIKit
 
 class PlaylistsTableViewController: ItemTableViewController {
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+  var playlist: Playlist?
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return library.allPlaylists.count
@@ -31,18 +22,19 @@ class PlaylistsTableViewController: ItemTableViewController {
     let currentPlaylist = playlists[indexPath.row]
 
     cell.textLabel?.text = currentPlaylist.name
-    //cell.detailTextLabel?.text = currentPlaylist.artistAlbumString
-    //cell.imageView?.image = currentPlaylist.album!.imageToShow
 
     return cell
   }
 
-  //  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-  //    if segue.identifier == "preview" {
-  //      let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
-  //      let destination = segue.destinationViewController as! SongViewController
-  //      destination.song = library.allSongs[indexPath.row]
-  //    }
-  //  }
-
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    playlist = library.allPlaylists[indexPath.row]
+    performSegueWithIdentifier("ToPlaylistDetail", sender: self)
+  }
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    if (segue.identifier == "ToPlaylistDetail") {
+      // Create a new variable to store the instance of PreviewController
+      let destinationVC = segue.destinationViewController as! DetailedPlaylistTableViewController
+      destinationVC.playlist = playlist
+    }
+  }
 }
