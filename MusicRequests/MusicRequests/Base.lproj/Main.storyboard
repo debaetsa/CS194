@@ -355,9 +355,16 @@
                             <outlet property="delegate" destination="v1S-5T-ImP" id="26g-fh-4YU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Songs" id="RHb-b5-N84"/>
+                    <navigationItem key="navigationItem" title="Songs" id="RHb-b5-N84">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="blD-PZ-ZNG">
+                            <connections>
+                                <segue destination="bvR-V8-lCi" kind="unwind" unwindAction="unwindAction:" id="gpa-2f-zm8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7nu-UU-RTw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="bvR-V8-lCi" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-1160" y="3098"/>
         </scene>
@@ -401,12 +408,19 @@
                             <outlet property="delegate" destination="6HP-Vg-yo3" id="f1A-4v-yaX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Artists" id="ePg-cG-or3"/>
+                    <navigationItem key="navigationItem" title="Artists" id="ePg-cG-or3">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="AjD-X6-hB2">
+                            <connections>
+                                <segue destination="GrL-Y1-KNz" kind="unwind" unwindAction="unwindAction:" id="DYU-Ul-cfq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="qSr-pb-aIm" kind="show" identifier="ToArtistDetail" id="0rC-5x-Uh3"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytV-4n-2CO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="GrL-Y1-KNz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-3018" y="3098"/>
         </scene>
@@ -450,12 +464,19 @@
                             <outlet property="delegate" destination="b27-j9-jh3" id="yP8-3F-mCu"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Albums" id="r2g-Md-q7c"/>
+                    <navigationItem key="navigationItem" title="Albums" id="r2g-Md-q7c">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="gAj-tw-t93">
+                            <connections>
+                                <segue destination="R94-4s-hyN" kind="unwind" unwindAction="unwindAction:" id="Ady-8l-PJc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="jKz-xP-VDG" kind="show" identifier="ToAlbumDetail" id="SZD-ah-ccg"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="34T-pY-rMO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="R94-4s-hyN" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-2097" y="3098"/>
         </scene>
@@ -492,12 +513,19 @@
                             <outlet property="delegate" destination="0Zt-Jy-9wo" id="VN8-VT-8fk"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Playlists" id="Gpg-xW-PIX"/>
+                    <navigationItem key="navigationItem" title="Playlists" id="Gpg-xW-PIX">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="bbo-4W-4bu">
+                            <connections>
+                                <segue destination="81P-yr-vcR" kind="unwind" unwindAction="unwindAction:" id="BLj-cJ-Pzh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="SH5-fW-q1x" kind="show" identifier="ToPlaylistDetail" id="v9Y-cP-YmX"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wgY-rn-hOZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="81P-yr-vcR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-355" y="3098"/>
         </scene>
@@ -584,9 +612,16 @@
                             <outlet property="delegate" destination="fA3-hQ-AvJ" id="TJU-H2-ckD"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Genres" id="0xZ-CF-NJw"/>
+                    <navigationItem key="navigationItem" title="Genres" id="0xZ-CF-NJw">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="aOa-gb-NhJ">
+                            <connections>
+                                <segue destination="XhC-SN-LWW" kind="unwind" unwindAction="unwindAction:" id="23n-QI-wMt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qnF-pn-QrK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="XhC-SN-LWW" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="353" y="3098"/>
         </scene>
@@ -698,14 +733,14 @@
                                             <rect key="frame" x="15" y="5" width="32" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aEA-PJ-r2r">
                                             <rect key="frame" x="15" y="25" width="41" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
