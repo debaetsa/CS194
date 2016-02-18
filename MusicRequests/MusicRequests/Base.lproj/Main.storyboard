@@ -277,6 +277,7 @@
         <scene sceneID="BSN-NR-24c">
             <objects>
                 <tabBarController id="3vd-1D-etH" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="YlB-sg-Rw9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -578,7 +579,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="aP7-BL-Ubh" style="IBUITableViewCellStyleDefault" id="aEh-ZK-NSk">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SmallCell" textLabel="aP7-BL-Ubh" style="IBUITableViewCellStyleDefault" id="aEh-ZK-NSk">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aEh-ZK-NSk" id="26z-Gt-xjE">
@@ -825,7 +826,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vus-fB-jZL">
                                 <rect key="frame" x="16" y="587" width="343" height="70"/>
                                 <subviews>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BO4-zH-8tV" userLabel="playButton">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BO4-zH-8tV" userLabel="playButton">
                                         <rect key="frame" x="168" y="15" width="40" height="40"/>
                                         <accessibility key="accessibilityConfiguration" label="playButton"/>
                                         <constraints>
@@ -837,7 +838,7 @@
                                             <action selector="pressedPlayButton:" destination="NiG-oO-CD2" eventType="touchUpInside" id="4HN-PH-eGm"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L1T-8o-MSA" userLabel="prevButton">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L1T-8o-MSA" userLabel="prevButton">
                                         <rect key="frame" x="93" y="15" width="40" height="40"/>
                                         <accessibility key="accessibilityConfiguration" label="prevButton"/>
                                         <constraints>
@@ -849,7 +850,7 @@
                                             <action selector="pressedPreviousButton:" destination="NiG-oO-CD2" eventType="touchUpInside" id="rZ3-5F-oA2"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpU-gd-eAb" userLabel="nextButton">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpU-gd-eAb" userLabel="nextButton">
                                         <rect key="frame" x="243" y="10" width="40" height="50"/>
                                         <accessibility key="accessibilityConfiguration" label="nextButton"/>
                                         <constraints>
