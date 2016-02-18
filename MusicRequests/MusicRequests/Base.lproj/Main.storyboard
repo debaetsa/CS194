@@ -772,7 +772,10 @@
                             <outlet property="delegate" destination="jKz-xP-VDG" id="CL8-bk-6nU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Songs" id="yfq-Su-frN" userLabel="Songs"/>
+                    <navigationItem key="navigationItem" id="yfq-Su-frN" userLabel="Songs"/>
+                    <connections>
+                        <outlet property="NavBar" destination="yfq-Su-frN" id="I8j-OO-dtd"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SdL-ba-6yU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -818,8 +821,9 @@
                             <outlet property="delegate" destination="qSr-pb-aIm" id="YNN-zM-8Ak"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Albums" id="Jp2-gK-UOP"/>
+                    <navigationItem key="navigationItem" id="Jp2-gK-UOP"/>
                     <connections>
+                        <outlet property="NavBar" destination="Jp2-gK-UOP" id="qAz-Yr-O1M"/>
                         <segue destination="jKz-xP-VDG" kind="show" identifier="ToAlbumDetail" id="qJT-lF-pMe"/>
                     </connections>
                 </tableViewController>
@@ -962,6 +966,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qJT-lF-pMe"/>
-        <segue reference="MSX-pe-O4u"/>
+        <segue reference="4s9-jp-2hS"/>
     </inferredMetricsTieBreakers>
 </document>

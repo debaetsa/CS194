@@ -12,10 +12,13 @@ class DetailedAlbumTableViewController: ItemTableViewController {
 
   var items: [Track]!
   var album: Album?
+  var albumName: String?
+  @IBOutlet weak var NavBar: UINavigationItem!
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    NavBar.title = albumName
     // cache the list of items that we are going to show
     items = album?.songs
   }

@@ -12,6 +12,7 @@ class ArtistsTableViewController: ItemTableViewController {
   var album: Album?
   var artist: Artist?
   var song: Song?
+  var artistName: String?
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return library.allArtists.count
@@ -37,6 +38,7 @@ class ArtistsTableViewController: ItemTableViewController {
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     artist = library.allArtists[indexPath.row]
+    artistName = artist!.name
     performSegueWithIdentifier("ToArtistDetail", sender: self)
   }
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
@@ -44,6 +46,7 @@ class ArtistsTableViewController: ItemTableViewController {
       // Create a new variable to store the instance of PreviewController
       let destinationVC = segue.destinationViewController as! DetailedArtistTableViewController
       destinationVC.artist = artist
+      destinationVC.artistName = artistName
     }
   }
 }
