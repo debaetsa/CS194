@@ -11,6 +11,14 @@ import UIKit
 class DetailedPlaylistTableViewController: ItemTableViewController {
 
   var playlist: Playlist?
+  var playlistName: String?
+  @IBOutlet weak var NavBar: UINavigationItem!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    NavBar.title = playlistName
+  }
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return playlist!.allSongs.count

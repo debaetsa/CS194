@@ -10,6 +10,7 @@ import UIKit
 
 class PlaylistsTableViewController: ItemTableViewController {
   var playlist: Playlist?
+  var playlistName: String?
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return library.allPlaylists.count
@@ -28,6 +29,7 @@ class PlaylistsTableViewController: ItemTableViewController {
 
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     playlist = library.allPlaylists[indexPath.row]
+    playlistName = playlist!.name
     performSegueWithIdentifier("ToPlaylistDetail", sender: self)
   }
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
@@ -35,6 +37,7 @@ class PlaylistsTableViewController: ItemTableViewController {
       // Create a new variable to store the instance of PreviewController
       let destinationVC = segue.destinationViewController as! DetailedPlaylistTableViewController
       destinationVC.playlist = playlist
+      destinationVC.playlistName = playlistName
     }
   }
 }

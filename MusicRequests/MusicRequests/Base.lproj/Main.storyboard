@@ -720,7 +720,10 @@
                             <outlet property="delegate" destination="SH5-fW-q1x" id="dvi-zd-hxB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Songs" id="UF7-hf-RYm"/>
+                    <navigationItem key="navigationItem" id="UF7-hf-RYm"/>
+                    <connections>
+                        <outlet property="NavBar" destination="UF7-hf-RYm" id="EOT-Fy-K80"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="47Q-vx-LTK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
