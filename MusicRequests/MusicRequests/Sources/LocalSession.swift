@@ -15,13 +15,23 @@ class LocalSession: Session, NSNetServiceDelegate {
    If "false", then the app can be used in a "local playback only" mode. */
   var broadcast: Bool = false {
     didSet {
-      netService.stop()  // stop anything that's in progress
+      if broadcast == oldValue {
+        return  // the value didn't change so there is nothing to do
+      }
+
+      netService = nil
+      destroyListeningSocket()
 
       if broadcast {
         // start a new session if we need to broadcast something
-        netService = LocalSession.createNetServiceForName(name, port: port)
-        netService.delegate = self
-        netService.publish()
+        let port = initializeListeningSocket()
+        print("Created listening socket on port \(port).")
+
+        // and then create the object that will make it available
+        let service = LocalSession.createNetServiceForName(name, port: port)
+        service.delegate = self
+        service.publish()
+        netService = service
       }
     }
   }
@@ -42,6 +52,13 @@ class LocalSession: Session, NSNetServiceDelegate {
    library out of that playlist. */
   var sourceLibrary: Library
 
+  /** This is where we return the relevant library for this object.
+
+   It is used by the application when showing the "Library" view. */
+  override var library: Library! {
+    return sourceLibrary
+  }
+
   /** This is the name of the session being broadcast.
 
    If the value is set to the empty string, then the default name of the device
@@ -57,111 +74,30 @@ class LocalSession: Session, NSNetServiceDelegate {
    ask someone to enter a password, they should actually enter something. */
   var password: String = ""
 
+  /** Stores all the clients who are currently connected. */
+  private var clients = [Connection]()
+
   /** Stores the broadcasted NSNetService.
 
   It needs to be mutable so that it can be changed if the name is updated. */
-  private var netService: NSNetService
+  private var netService: NSNetService?
 
-  /** Stores the socket that is accepting connections for this device. */
-  private var socket: CFSocket! = nil
-
-  /** Stores the port where the service is being offered.
-
-   This is given to Bonjour to allow the discovery mechanism to connect to the
-   library that is being broadcast. */
-  private var port: UInt16!
-
-  /** Stores all the clients who are currently connected. */
-  private var clients = [Connection]()
+  /** Stores the socket that is accepting connections for this device.
+   
+   We create and destroy the socket as broadcasting is enabled/disabled in
+   order to save the battery as much as possible. */
+  private var socket: CFSocket?
 
   init(library: Library, queue: Queue) {
     self.fullLibrary = library
     self.sourceLibrary = library
-    self.netService = LocalSession.createNetServiceForName("", port: 0)
 
     super.init(queue: queue)
-
-    createListeningSocket()  // start listening regardless
   }
 
-  var someObject = NSObject()
-
-  func createListeningSocket() {
-    var socket: CFSocket?  // must be optional to allow getting the address
-
-    var context = CFSocketContext()
-    let pointerToSelf = UnsafeMutablePointer<LocalSession>.alloc(1)
-    pointerToSelf.initialize(self)
-    context.info = UnsafeMutablePointer(pointerToSelf)
-
-    withUnsafePointer(&context, { (pointer: UnsafePointer<CFSocketContext>) -> Void in
-      socket = CFSocketCreate(
-        nil,
-        PF_INET,
-        SOCK_STREAM,
-        IPPROTO_TCP,
-        CFSocketCallBackType.AcceptCallBack.rawValue,
-        { (socket: CFSocket!, type: CFSocketCallBackType, remoteAddress: CFData!, data: UnsafePointer<Void>, userInfo: UnsafeMutablePointer<Void>) in
-          // make sure that this is actually a new connection request
-          guard type == CFSocketCallBackType.AcceptCallBack else {
-            print("Ignoring callback of type \(type).")
-            return
-          }
-
-          // "data" is a CFSocketNativeHandle, meaning a file descriptor
-          let acceptedSocketHandle = UnsafePointer<CFSocketNativeHandle>(data).memory
-
-          // "remoteAddress" is a struct sockaddr for the connection
-          var acceptedRemoteAddress = sockaddr_in()
-          let minimumDataLength = sizeofValue(acceptedRemoteAddress)
-          guard let dataForAddress = remoteAddress else {
-            print("Did not receive an address for the remote connection.")
-            return
-          }
-          let dataLength = Int(CFDataGetLength(dataForAddress))
-          guard dataLength >= minimumDataLength else {
-            print("Did not receive enough bytes to build an address.")
-            return
-          }
-          // store the bytes in the struct so that we can access them
-          withUnsafeMutablePointer(&acceptedRemoteAddress) {
-            CFDataGetBytes(dataForAddress, CFRange(location: CFIndex(0), length: CFIndex(dataLength)), UnsafeMutablePointer($0))
-          }
-
-          // get the corresponding LocalSession and forward the message
-          let localSession = UnsafePointer<LocalSession>(userInfo).memory
-          localSession.receivedNewConnection(acceptedRemoteAddress, withNativeSocketHandle: acceptedSocketHandle)
-        },
-        pointer
-      )
-    })
-    self.socket = socket!  // the socket must exist
-
-    var addr = sockaddr_in()
-    addr.sin_len = UInt8(sizeof(sockaddr_in))
-    addr.sin_family = sa_family_t(AF_INET)
-    addr.sin_port = in_port_t(0).bigEndian
-    addr.sin_addr = in_addr(s_addr: in_addr_t(0).bigEndian)
-
-    CFSocketSetAddress(socket, withUnsafePointer(&addr, {
-      CFDataCreate(nil, UnsafePointer($0), CFIndex(addr.sin_len))
-    }))
-    CFRunLoopAddSource(CFRunLoopGetCurrent(), CFSocketCreateRunLoopSource(nil, socket, CFIndex(0)), kCFRunLoopDefaultMode)
-
-    // now that we've bound the socket to a port, figure out the address
-    let address = CFSocketCopyAddress(socket)
-    withUnsafeMutablePointer(&addr, {
-      CFDataGetBytes(address, CFRange(location: CFIndex(0), length: CFIndex(addr.sin_len)), UnsafeMutablePointer($0))
-    })
-
-    // get the port from the sockaddr_in struct
-    port = UInt16(bigEndian: addr.sin_port)
-    print("The port is \(port).")
-  }
+  // MARK: - Clients
 
   func receivedNewConnection(from: sockaddr_in, withNativeSocketHandle handle: CFSocketNativeHandle) {
-    print("Got a new connection.")
-
     // the results will be passed back via these variables
     var unmanagedReadStream: Unmanaged<CFReadStream>?
     var unmanagedWriteStream: Unmanaged<CFWriteStream>?
@@ -201,24 +137,138 @@ class LocalSession: Session, NSNetServiceDelegate {
     }
   }
 
-  override var library: Library! {
-    return sourceLibrary
+  // MARK: - Socket
+
+  func destroyListeningSocket() {
+    if let socket = self.socket {
+      CFSocketInvalidate(socket)
+      self.socket = nil  // get rid of the reference after clearing it
+    }
   }
+
+  struct ContextUserInfo {
+    var retainCount: Int = 0
+    var localSession: LocalSession
+  }
+
+  /** Creates the listening socket and returns the port.
+
+  Will return nil if a port couldn't be created. */
+  func initializeListeningSocket() -> UInt16 {
+    assert(socket == nil)  // there must not be a socket when we initialize it
+
+    // create the self pointer used to get back to this object from the socket
+    let selfPointer = UnsafeMutablePointer<ContextUserInfo>.alloc(1)
+    selfPointer.initialize(ContextUserInfo(retainCount: 0, localSession: self))
+
+    var context = CFSocketContext()
+    context.version = CFIndex(0)
+    context.info = UnsafeMutablePointer(selfPointer)
+
+    context.retain = {
+      // retain
+      let contextPointer = UnsafeMutablePointer<ContextUserInfo>($0)
+      ++contextPointer.memory.retainCount
+      print("Retain Count: ^ \(contextPointer.memory.retainCount)")
+      return $0
+    }
+    context.release = {
+      // release
+      let contextPointer = UnsafeMutablePointer<ContextUserInfo>($0)
+      --contextPointer.memory.retainCount
+      print("Retain Count: _ \(contextPointer.memory.retainCount)")
+
+      if contextPointer.memory.retainCount == 0 {
+        contextPointer.destroy()
+        contextPointer.dealloc(1)  // free the memory
+      }
+    }
+
+    // create the socket
+    withUnsafePointer(&context, { (contextPointer) -> Void in
+      socket = CFSocketCreate(
+        nil,
+        PF_INET,
+        SOCK_STREAM,
+        IPPROTO_TCP,
+        CFSocketCallBackType.AcceptCallBack.rawValue,
+        { (socket: CFSocket!, type: CFSocketCallBackType, remoteAddress: CFData!, data: UnsafePointer<Void>, userInfo: UnsafeMutablePointer<Void>) in
+          // make sure that this is actually a new connection request
+          guard type == CFSocketCallBackType.AcceptCallBack else {
+            print("Ignoring callback of type \(type).")
+            return
+          }
+
+          // "data" is a CFSocketNativeHandle, meaning a file descriptor
+          let acceptedSocketHandle = UnsafePointer<CFSocketNativeHandle>(data).memory
+
+          // "remoteAddress" is a struct sockaddr for the connection
+          var acceptedRemoteAddress = sockaddr_in()
+          let minimumDataLength = sizeofValue(acceptedRemoteAddress)
+          guard let dataForAddress = remoteAddress else {
+            print("Did not receive an address for the remote connection.")
+            return
+          }
+          let dataLength = Int(CFDataGetLength(dataForAddress))
+          guard dataLength >= minimumDataLength else {
+            print("Did not receive enough bytes to build an address.")
+            return
+          }
+          // store the bytes in the struct so that we can access them
+          withUnsafeMutablePointer(&acceptedRemoteAddress) {
+            CFDataGetBytes(dataForAddress, CFRange(location: CFIndex(0), length: CFIndex(dataLength)), UnsafeMutablePointer($0))
+          }
+
+          // get the corresponding LocalSession and forward the message
+          let localSession = UnsafePointer<ContextUserInfo>(userInfo).memory.localSession
+          localSession.receivedNewConnection(acceptedRemoteAddress, withNativeSocketHandle: acceptedSocketHandle)
+        },
+        contextPointer
+      )
+    })
+
+    // prepare the structure used for binding the address
+    var addr = sockaddr_in()
+    addr.sin_len = UInt8(sizeofValue(addr))
+    addr.sin_family = sa_family_t(AF_INET)
+    addr.sin_port = in_port_t(0).bigEndian  // let the system choose a port
+    addr.sin_addr = in_addr(s_addr: in_addr_t(0).bigEndian)
+
+    // start responding to connection requests
+    CFSocketSetAddress(socket, withUnsafePointer(&addr, {
+      CFDataCreate(nil, UnsafePointer($0), CFIndex(addr.sin_len))
+    }))
+    CFRunLoopAddSource(CFRunLoopGetCurrent(), CFSocketCreateRunLoopSource(nil, socket, CFIndex(0)), kCFRunLoopDefaultMode)
+
+    // now that we've bound the socket to a port, figure out the address
+    let addressData = CFSocketCopyAddress(socket)
+    withUnsafeMutablePointer(&addr, {
+      CFDataGetBytes(addressData, CFRange(location: CFIndex(0), length: CFIndex(addr.sin_len)), UnsafeMutablePointer($0))
+    })
+
+    return UInt16(bigEndian: addr.sin_port)
+  }
+
+  // MARK: - NSNetService
 
   static func createNetServiceForName(name: String, port: UInt16) -> NSNetService {
     return NSNetService(domain: "", type: netServiceType, name: name, port: Int32(port))
   }
 
   func netServiceWillPublish(sender: NSNetService) {
-    print("Will publish: \(sender)")
+    print("w.Start NSNetService: \(sender)")
   }
 
   func netServiceDidPublish(sender: NSNetService) {
-    print("Published NSNetService: \(sender)")
+    print("Started NSNetService: \(sender)")
+  }
+
+  func netServiceDidStop(sender: NSNetService) {
+    print("Stopped NSNetService: \(sender.name)")
   }
 
   func netService(sender: NSNetService, didNotPublish errorDict: [String : NSNumber]) {
-    print("Could not publish: \(sender): \(errorDict)")
+    print("Error   NSNetService: \(sender)")
   }
 
 }

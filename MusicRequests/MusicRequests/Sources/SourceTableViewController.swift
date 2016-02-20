@@ -147,7 +147,7 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
     }
 
     let session = remoteSessions.sessions[indexPath.row]
-    session.💩()
+    session.connect()
     AppDelegate.sharedDelegate.currentSession = session
 
     // clear the row after it gets selected

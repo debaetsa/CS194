@@ -39,7 +39,14 @@ class RemoteSession: Session, NSNetServiceDelegate {
     return remoteLibrary
   }
 
-  func 💩() {
+
+  /** Attempts to connect to the service.
+
+   Returns true if everything went well so far, but note that it's still
+   possible for the connection to fail at a later point. */
+  func connect() -> Bool {
+    // TODO: Maybe this should throw an error instead of returning a Bool.
+
     var maybeInputStream: NSInputStream?
     var maybeOutputStream: NSOutputStream?
 
@@ -49,18 +56,21 @@ class RemoteSession: Session, NSNetServiceDelegate {
 
     guard result else {
       print("Could not create the streams for the connection.")
-      return
+      return false
     }
 
     guard let inputStream = maybeInputStream, outputStream = maybeOutputStream else {
       print("Did not get actual stream objects.")
-      return
+      return false
     }
 
     // we should have been able to open the connection
     let connection = Connection(ipAddress: "", port: 0, input: inputStream, output: outputStream)
     connection.onReceivedData = didReceiveData
     self.connection = connection
+
+    // and then let the caller know that this has mostly worked
+    return true
   }
 
   func didReceiveData(type: SendableIdentifier, data: NSData) {

@@ -45,7 +45,7 @@ class Item: NSObject, Sendable {
   // MARK: - Sending
 
   enum Tag: UInt8 {
-    case Item = 0
+    case General = 0
     case Artist
     case Album
     case Song
@@ -55,7 +55,7 @@ class Item: NSObject, Sendable {
 
   /** This is which type of Item is being sent. */
   var tag: Tag {
-    return .Item
+    return .General
   }
 
   // mark this as an "Item" when being sent
@@ -64,76 +64,58 @@ class Item: NSObject, Sendable {
   }
 
   func buildSendableData(mutableData: NSMutableData) {
-    // first, write the type for this item
-    var tag = self.tag
-    withUnsafePointer(&tag) {
-      mutableData.appendBytes(UnsafePointer($0), length: sizeofValue(tag))
-    }
-
-    // next, write the identifier for this Item
-    var identifier = self.identifier.bigEndian
-    withUnsafePointer(&identifier) {
-      mutableData.appendBytes(UnsafePointer($0), length: sizeofValue(identifier))
-    }
-
-    // finally, write the strings for this item
-    mutableData.appendCustomString(name)
-    mutableData.appendCustomString(sortName)
+    mutableData.appendByte(self.tag.rawValue)  // the type of object
+    mutableData.appendCustomInteger(self.identifier)  // the ID for the object
+    mutableData.appendCustomString(name)  // the name
+    mutableData.appendCustomString(sortName)  // and the sortName
   }
 
-  // and serialize the data in some reasonable manner
+  /** Serialize the data by calling the function.
+
+   This allows the data to be constructed in a single mutable object rather
+   than continually constructing immutable objects (or by using evil casts). */
   var sendableData: NSData {
     let data = NSMutableData()
     buildSendableData(data)
     return data
   }
 
-  var currentDataIndex = 0
+  required init?(data: NSData, lookup: [UInt32: Item], inout offset: Int) {
+    var failed = false
 
-  init(data: NSData, lookup: [UInt32: Item]) {
-    var offset = 1
-    self.identifier = data.getNextInteger(&offset)!
-    self.name = data.getNextString(&offset)!
-    self.sortName = data.getNextString(&offset)!
-    self.currentDataIndex = offset
+    var identifier = UInt32(0)
+    if let boundIdentifier = data.getNextInteger(&offset) {
+      identifier = boundIdentifier
+    } else {
+      failed = true
+    }
+    self.identifier = identifier
+
+    var name = ""
+    if !failed {
+      if let boundName = data.getNextString(&offset) {
+        name = boundName
+      } else {
+        failed = true
+      }
+    }
+    self.name = name
+
+    var sortName = ""
+    if !failed {
+      if let boundSortName = data.getNextString(&offset) {
+        sortName = boundSortName
+      } else {
+        failed = true
+      }
+    }
+    self.sortName = sortName
 
     super.init()
+
+    guard !failed else {
+      return nil
+    }
   }
 
-}
-
-extension NSData {
-  func getNextInteger(inout offset: Int) -> UInt32? {
-    var value = UInt32(0)  // so that we can put it somewhere
-
-    let length = self.length
-    guard length >= (offset + sizeofValue(value)) else {
-      return nil  // not enough to load an integer
-    }
-
-    // actually grab the integer
-    withUnsafeMutablePointer(&value) {
-      getBytes(UnsafeMutablePointer($0), range: NSMakeRange(offset, sizeofValue(value)))
-    }
-    value = UInt32(bigEndian: value)
-
-    // then increment the offset
-    offset += sizeofValue(value)
-
-    return value
-  }
-
-  func getNextString(inout offset: Int) -> String? {
-    guard let stringLength = getNextInteger(&offset) else {
-      return nil  // we couldn't get the length, so we can't get the data
-    }
-
-    guard self.length >= (offset + Int(stringLength)) else {
-      return nil  // we don't have enough bytes to read the string, so fail
-    }
-
-    let result = String(data: subdataWithRange(NSMakeRange(offset, Int(stringLength))), encoding: NSUTF8StringEncoding)
-    offset += Int(stringLength)
-    return result
-  }
 }

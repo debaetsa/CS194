@@ -91,35 +91,34 @@ class Song: Item {
     mutableData.appendCustomInteger(self.album?.identifier ?? UInt32(0))
 
     // and then tell it which track we are on that album
-    if let track = self.album?.trackForSong(self) {
-      mutableData.appendCustomInteger(UInt32(track.disc ?? 0))
-      mutableData.appendCustomInteger(UInt32(track.track ?? 0))
-    } else {
-      mutableData.appendCustomInteger(UInt32(0))
-      mutableData.appendCustomInteger(UInt32(0))
-    }
+    let track = self.album?.trackForSong(self)
+    mutableData.appendCustomInteger(UInt32(track?.disc ?? 0))
+    mutableData.appendCustomInteger(UInt32(track?.track ?? 0))
   }
 
-  override init(data: NSData, lookup: [UInt32: Item]) {
+  required init?(data: NSData, lookup: [UInt32: Item], inout offset: Int) {
     self.userInfo = nil
     self.artistOverride = nil
     self.genre = nil
 
-    super.init(data: data, lookup: lookup)
+    super.init(data: data, lookup: lookup, offset: &offset)
 
-    var offset = self.currentDataIndex
-    let maybeAlbumId = data.getNextInteger(&offset)
-    let maybeDiscNumber = data.getNextInteger(&offset)
-    let maybeSongNumber = data.getNextInteger(&offset)
-    self.currentDataIndex = offset
+    guard let albumId = data.getNextInteger(&offset) else {
+      return nil
+    }
+    guard let discNumber = data.getNextInteger(&offset) else {
+      return nil
+    }
+    guard let songNumber = data.getNextInteger(&offset) else {
+      return nil
+    }
 
-    if let albumId = maybeAlbumId, let item = lookup[albumId], let album = item as? Album {
-      album.addSong(self, discNumber: Int(maybeDiscNumber ?? 0), trackNumber: Int(maybeSongNumber ?? 0))
+    if let item = lookup[albumId], let album = item as? Album {
+      album.addSong(self, discNumber: Int(discNumber), trackNumber: Int(songNumber))
       self.album = album
     } else {
-      print("Could not find an album.")
+      print("Could not look up an album for the song \(name).")
     }
-    // now try to add this song to the album
   }
 
 }

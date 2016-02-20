@@ -38,35 +38,39 @@ class RemoteLibrary: Library {
     return genres
   }
 
-  func addItemFromData(data: NSData) {
-    let length = data.length
-    guard length >= 1 else {
-      print("Ignoring item because there is no data.")
-      return
+  func tryToAddItem<T: Item>(data: NSData, inout withOffset offset: Int, inout toArray array: [T]) -> T? {
+    let maybeItem = T(data: data, lookup: identifierToItem, offset: &offset)
+    if let item = maybeItem {
+      array.append(item)
+    } else {
+      print("Could not parse item of type \(T.description())")
     }
+    return maybeItem
+  }
 
-    var type = Item.Tag.Item  // use a default value
-    withUnsafeMutablePointer(&type) {
-      data.getBytes(UnsafeMutablePointer($0), length: sizeofValue(type))
+  func addItemFromData(data: NSData) -> Bool {
+    var offset = 0
+
+    guard let rawValue = data.getNextByte(&offset) else {
+      print("Could not read a byte.")
+      return false
+    }
+    guard let type = Item.Tag(rawValue: rawValue) else {
+      print("Not a valid type: \(rawValue)")
+      return false
     }
 
     var maybeItem: Item?
 
     switch type {
     case .Artist:
-      let artist = Artist(data: data, lookup: identifierToItem)
-      maybeItem = artist
-      artists.append(artist)
+      maybeItem = tryToAddItem(data, withOffset: &offset, toArray: &artists)
 
     case .Album:
-      let album = Album(data: data, lookup: identifierToItem)
-      maybeItem = album
-      albums.append(album)
+      maybeItem = tryToAddItem(data, withOffset: &offset, toArray: &albums)
 
     case .Song:
-      let song = Song(data: data, lookup: identifierToItem)
-      maybeItem = song
-      songs.append(song)
+      maybeItem = tryToAddItem(data, withOffset: &offset, toArray: &songs)
 
     default:
       print("Ignoring item of type \(type).")
@@ -75,6 +79,8 @@ class RemoteLibrary: Library {
     if let item = maybeItem {
       identifierToItem[item.identifier] = item
     }
+
+    return true
   }
 
 }

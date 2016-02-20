@@ -11,6 +11,7 @@ import Foundation
 enum SendableIdentifier: UInt8 {
   case Item = 0
   case QueueItem
+  case Request
 }
 
 /** Applied to objects that can be serialized and sent over the network. */
@@ -24,7 +25,79 @@ protocol Sendable {
 
 }
 
+
+/////////////////////
+// Data Extensions //
+/////////////////////
+
+// These extensions make it much easier to read and write integers and strings
+// to the data objects.  This is how information is serialized in the app.
+
+extension NSData {
+  func getNextByte(inout offset: Int) -> UInt8? {
+    var value = UInt8(0)
+
+    let length = self.length
+    guard length >= (offset + sizeofValue(value)) else {
+      return nil  // we don't have a byte to load
+    }
+
+    withUnsafeMutablePointer(&value) {
+      getBytes(UnsafeMutablePointer($0), range: NSMakeRange(offset, sizeofValue(value)))
+    }
+
+    offset += sizeofValue(value)
+
+    return value
+  }
+
+  func getNextInteger(inout offset: Int) -> UInt32? {
+    var value = UInt32(0)  // so that we can put it somewhere
+
+    let length = self.length
+    guard length >= (offset + sizeofValue(value)) else {
+      return nil  // not enough to load an integer
+    }
+
+    // actually grab the integer
+    withUnsafeMutablePointer(&value) {
+      getBytes(UnsafeMutablePointer($0), range: NSMakeRange(offset, sizeofValue(value)))
+    }
+    value = UInt32(bigEndian: value)
+
+    // then increment the offset
+    offset += sizeofValue(value)
+
+    return value
+  }
+
+  func getNextString(inout offset: Int) -> String? {
+    guard let decodedStringLength = getNextInteger(&offset) else {
+      return nil  // we couldn't get the length, so we can't get the data
+    }
+    let stringLength = Int(decodedStringLength)  // cast it to an Int
+
+    guard length >= (offset + stringLength) else {
+      return nil  // we don't have enough bytes to read the string, so fail
+    }
+
+    let result = String(
+      data: subdataWithRange(NSMakeRange(offset, stringLength)),
+      encoding: NSUTF8StringEncoding
+    )
+    offset += Int(stringLength)
+    return result
+  }
+}
+
 extension NSMutableData {
+  func appendByte(byte: UInt8) {
+    var transformed = byte
+    withUnsafePointer(&transformed) {
+      appendBytes($0, length: sizeofValue(transformed))
+    }
+  }
+
   func appendCustomInteger(value: UInt32) {
     var transformed = value.bigEndian
     withUnsafePointer(&transformed) {
@@ -43,10 +116,7 @@ extension NSMutableData {
     }
 
     // append the length to the data
-    length = length.bigEndian
-    withUnsafePointer(&length) {
-      appendBytes(UnsafePointer($0), length: sizeofValue(length))
-    }
+    appendCustomInteger(length)
 
     // and then append the actual bytes if they exist
     if let data = maybeData {
