@@ -10,6 +10,9 @@ import UIKit
 
 class SongViewController: UIViewController {
 
+  // the screen we came from
+  var previousScreen: String?
+
   // set the outlets for updating the information
   @IBOutlet weak var labelSongName: UILabel!
   @IBOutlet weak var labelSongDetails: UILabel!
@@ -21,6 +24,11 @@ class SongViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    let edgePanRecognizer = UIScreenEdgePanGestureRecognizer()
+    edgePanRecognizer.addTarget(self, action: "edgePanned:")
+    edgePanRecognizer.edges = .Left
+    view.addGestureRecognizer(edgePanRecognizer)
+
     reloadSong()
   }
 
@@ -28,6 +36,10 @@ class SongViewController: UIViewController {
     labelSongName.text = song?.name
     labelSongDetails.text = song?.artistAlbumString
     imageViewAlbumArt.image = song?.album?.imageToShow
+  }
+
+  func edgePanned(sender: UIScreenEdgePanGestureRecognizer) {
+    performSegueWithIdentifier("unwindToPrevious", sender: self)
   }
 
 }

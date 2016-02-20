@@ -50,4 +50,5 @@ class DetailedAlbumTableViewController: ItemTableViewController {
       destination.song = items[indexPath.row].song
     }
   }
+
 }

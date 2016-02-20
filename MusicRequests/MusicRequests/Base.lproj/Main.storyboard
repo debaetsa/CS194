@@ -724,9 +724,14 @@
                         <outlet property="imageViewAlbumArt" destination="c1G-4e-q0E" id="ulS-VS-YMb"/>
                         <outlet property="labelSongDetails" destination="33q-bf-ZQa" id="q7B-Rb-Yns"/>
                         <outlet property="labelSongName" destination="ydf-Ru-P8F" id="9y4-xd-8IB"/>
+                        <segue destination="Imt-tH-udJ" kind="unwind" identifier="unwindToPrevious" unwindAction="unwindAction:" id="j2F-sK-Rg6"/>
+                        <segue destination="Imt-tH-udJ" kind="unwind" identifier="unwindToPrevious" unwindAction="unwindGenre:" id="BMc-LL-4lh"/>
+                        <segue destination="Imt-tH-udJ" kind="unwind" identifier="unwindToPrevious" unwindAction="unwindAction:" id="7KX-az-Svd"/>
+                        <segue destination="Imt-tH-udJ" kind="unwind" identifier="unwindToPrevious" unwindAction="unwindAction:" id="h46-gh-yap"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e7h-tJ-Ubv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Imt-tH-udJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-1159.5" y="3937.5"/>
         </scene>
@@ -1032,6 +1037,7 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Qpz-cD-QJ1" firstAttribute="leading" secondItem="I9e-yf-7Nf" secondAttribute="leadingMargin" id="0dx-aQ-qVZ"/>
                             <constraint firstItem="Qpz-cD-QJ1" firstAttribute="top" secondItem="X6n-j1-ChJ" secondAttribute="bottom" constant="10" id="0eA-Uf-n45"/>
@@ -1050,9 +1056,11 @@
                         <outlet property="imageViewAlbumArt" destination="X6n-j1-ChJ" id="Ew6-c0-W1Y"/>
                         <outlet property="labelSongDetails" destination="tPF-Hh-WCJ" id="6g7-Of-LpI"/>
                         <outlet property="labelSongName" destination="d6l-fC-4eS" id="Rp8-2r-LFb"/>
+                        <segue destination="BTO-GL-Rgm" kind="unwind" identifier="unwindToPrevious" unwindAction="unwindAction:" id="PFA-Qz-xgL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Chw-xG-brC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="BTO-GL-Rgm" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-825.5" y="218.5"/>
         </scene>
@@ -1069,6 +1077,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="SZD-ah-ccg"/>
-        <segue reference="EXJ-3q-7hn"/>
+        <segue reference="4s9-jp-2hS"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -52,4 +52,5 @@ class DetailedArtistTableViewController: ItemTableViewController {
       destinationVC.albumName = albumName
     }
   }
+
 }
