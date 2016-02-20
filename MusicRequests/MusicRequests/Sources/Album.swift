@@ -29,8 +29,7 @@ class Album: Item {
     super.init(name: name, sortName: sortName)
 
     if let toAppend = artist {
-      artists.append(toAppend)
-      toAppend.addAlbum(self)
+      addArtist(toAppend)
     }
   }
   
@@ -38,8 +37,7 @@ class Album: Item {
     super.init(name: name, sortName: sortName)
     
     if let toAppend = artist {
-      artists.append(toAppend)
-      toAppend.addAlbum(self)
+      addArtist(toAppend)
     }
   }
   
@@ -51,11 +49,25 @@ class Album: Item {
     self.init(name: name, sortName: name, artist: artist, date: date)
   }
 
+  private func addArtist(artist: Artist) {
+    artists.append(artist)
+    artist.addAlbum(self)
+  }
+
   // Stores (disc, track, song) tuples.
   var songs: [Track] = []
 
   func addSong(song: Song, discNumber: Int?, trackNumber: Int?) -> Void {
     songs.append((discNumber, trackNumber, song))
+  }
+
+  func trackForSong(song: Song) -> Track? {
+    for track in songs {
+      if track.song === song {
+        return track
+      }
+    }
+    return nil
   }
 
   var allSongs: [(disc: Int?, track: Int?, song: Song)] {
@@ -106,6 +118,33 @@ class Album: Item {
 
         return false
       })
+    }
+  }
+
+  // MARK: - Sending
+
+  override var tag: Tag {
+    return .Album
+  }
+
+  override func buildSendableData(mutableData: NSMutableData) {
+    super.buildSendableData(mutableData)
+
+    // and then append the extra information that we need here (the Artist)
+    mutableData.appendCustomInteger(self.artist?.identifier ?? UInt32(0))
+  }
+
+  required init?(data: NSData, lookup: [UInt32: Item], inout offset: Int) {
+    super.init(data: data, lookup: lookup, offset: &offset)
+
+    guard let artistId = data.getNextInteger(&offset) else {
+      return nil
+    }
+
+    if let item = lookup[artistId], let artist = item as? Artist {
+      addArtist(artist)
+    } else {
+      print("Failed to look up artist for album \(name).")
     }
   }
 

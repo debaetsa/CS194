@@ -10,7 +10,7 @@ import UIKit
 
 class NowPlayingViewController: SongViewController {
 
-  let nowPlaying = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.nowPlaying)!
+  let nowPlaying = AppDelegate.sharedDelegate.nowPlaying
   var listener: NSObjectProtocol?
 
   override func viewDidLoad() {

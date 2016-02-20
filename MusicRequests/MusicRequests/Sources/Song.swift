@@ -18,7 +18,7 @@ class Song: Item {
   let userInfo: AnyObject?
 
   let artistOverride: Artist?
-  let album: Album?
+  var album: Album?
   let genre: Genre?
 
   init(name: String, sortName: String, artist: Artist?, album: Album?, genre: Genre?, discNumber: Int?, trackNumber: Int?, userInfo: AnyObject?) {
@@ -75,6 +75,50 @@ class Song: Item {
 
   var artist: Artist? {
     return artistOverride ?? album?.artist
+  }
+
+  // MARK: - Sending
+
+  override var tag: Tag {
+    return .Song
+  }
+
+  override func buildSendableData(mutableData: NSMutableData) {
+    // add the basic data
+    super.buildSendableData(mutableData)
+
+    // add the ID for the album
+    mutableData.appendCustomInteger(self.album?.identifier ?? UInt32(0))
+
+    // and then tell it which track we are on that album
+    let track = self.album?.trackForSong(self)
+    mutableData.appendCustomInteger(UInt32(track?.disc ?? 0))
+    mutableData.appendCustomInteger(UInt32(track?.track ?? 0))
+  }
+
+  required init?(data: NSData, lookup: [UInt32: Item], inout offset: Int) {
+    self.userInfo = nil
+    self.artistOverride = nil
+    self.genre = nil
+
+    super.init(data: data, lookup: lookup, offset: &offset)
+
+    guard let albumId = data.getNextInteger(&offset) else {
+      return nil
+    }
+    guard let discNumber = data.getNextInteger(&offset) else {
+      return nil
+    }
+    guard let songNumber = data.getNextInteger(&offset) else {
+      return nil
+    }
+
+    if let item = lookup[albumId], let album = item as? Album {
+      album.addSong(self, discNumber: Int(discNumber), trackNumber: Int(songNumber))
+      self.album = album
+    } else {
+      print("Could not look up an album for the song \(name).")
+    }
   }
 
 }

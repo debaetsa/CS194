@@ -23,7 +23,7 @@ class ItemTableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let delegate = (UIApplication.sharedApplication().delegate as? AppDelegate)!
+    let delegate = AppDelegate.sharedDelegate
     library = delegate.library
     queue = delegate.queue
   }
