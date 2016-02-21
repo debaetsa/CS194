@@ -163,21 +163,22 @@ class Connection: NSObject, NSStreamDelegate {
   // MARK: - Write Handling
 
   func sendItem(item: Sendable) {
+    sendItem(item, withCachedData: nil)
+  }
+
+  /** Sends the Sendable, but uses the cached data.
+
+   This is intended to avoid running the same code repeatedly when sending the
+   same thing to every client. */
+  func sendItem(item: Sendable, withCachedData cachedData: NSData?) {
     // write the identifier
-    var identifier = item.sendableIdentifier
-    withUnsafePointer(&identifier) {
-      bytesToSend.appendBytes(UnsafePointer($0), length: sizeofValue(identifier))
-    }
+    bytesToSend.appendByte(item.sendableIdentifier.rawValue)
 
-    let data = item.sendableData  // get the data so that we can write its length
-
-    var length = UInt32(data.length).bigEndian
-    withUnsafePointer(&length) {
-      bytesToSend.appendBytes(UnsafePointer($0), length: sizeofValue(length))
-    }
-
-    // and then the actual data for the item
+    // then write the data length and actual data
+    let data = cachedData ?? item.sendableData
+    bytesToSend.appendCustomInteger(UInt32(data.length))
     bytesToSend.appendData(data)
+
     sendAvailableData()
   }
 

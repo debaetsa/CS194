@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Queue: NSObject {
+class Queue: NSObject, Sendable {
 
   //////////////////////
   // PUBLIC CONSTANTS //
@@ -179,5 +179,43 @@ class Queue: NSObject {
     // Post a notification informing the rest of application about the change.
     let center = NSNotificationCenter.defaultCenter()
     center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
+  }
+
+  // MARK: - Sending
+
+  // DATA FORMAT
+  //
+  // +----------------+
+  // | HISTORY COUNT  |
+  // +----------------+
+  // | CURRENT COUNT  |  (probably 1 or 0)
+  // +----------------+
+  // | UPCOMING COUNT |
+  // +----------------+
+  // | HIST/CUR/UPCOM |
+  // +----------------+
+
+  var sendableData: NSData {
+    let data = NSMutableData()
+
+    data.appendByte(UInt8(previousQueueItems.count))
+    data.appendByte(UInt8(currentQueueItem != nil ? 1 : 0))
+    data.appendByte(UInt8(upcomingQueueItems.count))
+
+    for item in previousQueueItems {
+      data.appendCustomInteger(item.song.identifier)
+    }
+    if let item = currentQueueItem {
+      data.appendCustomInteger(item.song.identifier)
+    }
+    for item in upcomingQueueItems {
+      data.appendCustomInteger(item.song.identifier)
+    }
+
+    return data
+  }
+
+  var sendableIdentifier: SendableIdentifier {
+    return .Queue
   }
 }

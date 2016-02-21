@@ -19,7 +19,7 @@ class UniqueGenerator {
 
 enum SendableIdentifier: UInt8 {
   case Item = 0
-  case QueueItem
+  case Queue
   case Request
 }
 
