@@ -195,6 +195,10 @@ class Queue: NSObject, Sendable {
   // | HIST/CUR/UPCOM |
   // +----------------+
 
+  var sendableIdentifier: SendableIdentifier {
+    return .Queue
+  }
+
   var sendableData: NSData {
     let data = NSMutableData()
 
@@ -215,7 +219,60 @@ class Queue: NSObject, Sendable {
     return data
   }
 
-  var sendableIdentifier: SendableIdentifier {
-    return .Queue
+  func updateFromData(data: NSData, usingLibrary library: RemoteLibrary) -> Bool {
+    var offset = 0
+    guard let historyCount = data.getNextByte(&offset) else {
+      return false
+    }
+    guard let currentCount = data.getNextByte(&offset) else {
+      return false
+    }
+    guard let upcomingCount = data.getNextByte(&offset) else {
+      return false
+    }
+
+    // clear out the existing data before we replace it
+    previousQueueItems.removeAll()
+    currentQueueItem = nil
+    upcomingQueueItems.removeAll()
+
+    // then add all the objects
+    for _ in 0..<historyCount {
+      guard let identifier = data.getNextInteger(&offset) else {
+        return false
+      }
+      if let item = library.itemForIdentifier(identifier), let song = item as? Song {
+        previousQueueItems.append(QueueItem(song: song))
+      } else {
+        print("Couldn't get a Song for ID \(identifier).")
+      }
+    }
+
+    if currentCount > 0 {
+      guard let identifier = data.getNextInteger(&offset) else {
+        return false
+      }
+      if let item = library.itemForIdentifier(identifier), let song = item as? Song {
+        upcomingQueueItems.append(QueueItem(song: song))
+      } else {
+        print("Couldn't get a Song for ID \(identifier).")
+      }
+    }
+
+    for _ in 0..<upcomingCount {
+      guard let identifier = data.getNextInteger(&offset) else {
+        return false
+      }
+      if let item = library.itemForIdentifier(identifier), let song = item as? Song {
+        upcomingQueueItems.append(QueueItem(song: song))
+      } else {
+        print("Couldn't get a Song for ID \(identifier).")
+      }
+    }
+
+    let center = NSNotificationCenter.defaultCenter()
+    center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
+
+    return true
   }
 }
