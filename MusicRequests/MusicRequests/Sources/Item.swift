@@ -10,7 +10,7 @@ import UIKit
 
 class Item: NSObject, Sendable {
 
-  static var nextIdentifier: UInt32 = 1
+  private static let idGenerator = UniqueGenerator()
 
   /** The identifier of the Item, used to maintain links across the network. */
   let identifier: UInt32
@@ -24,8 +24,7 @@ class Item: NSObject, Sendable {
   init(name: String, sortName: String) {
     self.name = name
     self.sortName = sortName
-    self.identifier = Item.nextIdentifier
-    ++Item.nextIdentifier
+    self.identifier = Item.idGenerator.next()
 
     super.init()
   }

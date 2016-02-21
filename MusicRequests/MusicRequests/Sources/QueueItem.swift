@@ -10,14 +10,10 @@ import Foundation
 
 class QueueItem: NSObject, CustomDebugStringConvertible {
 
-  private static var uniqueIdentifier = 0
-  private static func generateUniqueIdentifier() -> Int {
-    ++uniqueIdentifier
-    return uniqueIdentifier
-  }
+  private static let idGenerator = UniqueGenerator()
 
   /** Stores a unique identifier for the item.  Used in network comms. */
-  private let id: Int
+  private let identifier: UInt32
 
   /** Stores the internal number of votes.  Not publicly accessible. */
   private var votes: Int = 0
@@ -26,7 +22,7 @@ class QueueItem: NSObject, CustomDebugStringConvertible {
   let song: Song
 
   init(song: Song) {
-    self.id = QueueItem.generateUniqueIdentifier()
+    self.identifier = QueueItem.idGenerator.next()
     self.song = song
   }
 
