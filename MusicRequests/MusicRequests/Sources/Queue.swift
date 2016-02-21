@@ -138,8 +138,8 @@ class Queue: NSObject {
 
   /** Advances to the next Song.
 
-  This involves adding the current song to the list of previously-played songs,
-  updating the currently playing song, and then grabbing a new Song. */
+   This involves adding the current song to the list of previously-played songs,
+   updating the currently playing song, and then grabbing a new Song. */
   func advanceToNextSong() {
     // If there was something playing, move it to the history list.
     if let previousSong = currentQueueItem {
@@ -150,7 +150,7 @@ class Queue: NSObject {
     // should always have one to play since we pick random songs.)
     let nextSong = upcomingQueueItems.first
     currentQueueItem = nextSong
-    if nextSong != nil {
+    if let _ = nextSong {
       upcomingQueueItems.removeAtIndex(0)
     }
 
@@ -158,19 +158,24 @@ class Queue: NSObject {
     let center = NSNotificationCenter.defaultCenter()
     center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
   }
-  
-  /** Returns to the previous played song.
-  
-  */
+
+  /** Returns to the Song that was most recently played.
+
+   This involves adding the current song to the list of upcoming songs,
+   updating the currently playing song, and then grabbing a new Song. */
   func returnToPreviousSong() {
-    //if there was something playing, move it to the upcoming list.
+    // If there was something playing, move it to the upcoming list.
     if let nextSong = currentQueueItem {
       upcomingQueueItems.insert(nextSong, atIndex: 0)
     }
-    
-    //place the previous song in the current position.
-    currentQueueItem = previousQueueItems.removeLast()
-   
+
+    // Place the most recent song in the "now playing" position.
+    let previousSong = previousQueueItems.last
+    currentQueueItem = previousSong
+    if let _ = previousSong {
+      previousQueueItems.removeLast()
+    }
+
     // Post a notification informing the rest of application about the change.
     let center = NSNotificationCenter.defaultCenter()
     center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
