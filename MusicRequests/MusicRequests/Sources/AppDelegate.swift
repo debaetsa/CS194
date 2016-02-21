@@ -8,30 +8,75 @@
 
 import UIKit
 
+protocol SessionChanged {
+  func didChangeSession(newSession: Session)
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+  /** Gets a reference to the shared application delegate.
+
+   This is unwrapped with "!" since the application cannot possibly work if
+   this is not the case.  It's not a recoverable error. */
+  static var sharedDelegate: AppDelegate {
+    return (UIApplication.sharedApplication().delegate as? AppDelegate)!
+  }
+
   var window: UIWindow?
-  var library: Library?
-  var queue: Queue?
-  var nowPlaying: NowPlaying?
 
+  // we always need a reference to our session that stores the configuration
+  var localSession: LocalSession!
 
+  private var sessionChangedListeners = [SessionChanged]()
+  func addSessionChangedListener(listener: SessionChanged) {
+    sessionChangedListeners.append(listener)
+  }
+
+  // and this is the one we actually use for data (could be local or remote)
+  var currentSession: Session! {
+    didSet {
+      for listener in sessionChangedListeners {
+        listener.didChangeSession(currentSession)
+      }
+    }
+  }
+
+  // implement some shortcuts to the needed values
+  var library: Library {
+    return currentSession.library
+  }
+  var queue: Queue {
+    return currentSession.queue
+  }
+  var nowPlaying: NowPlaying {
+    return queue.nowPlaying
+  }
+
+  // this is how we find the other sessions; it's put here so that it's always
+  // looking; this way the data is ready when the user taps "sources"
+  var remoteSessionManager: RemoteSessionManager!
+
+  
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
     #if (arch(i386) || arch(x86_64)) && os(iOS)
-      let tempLibrary = TemporaryLibrary()
-      library = tempLibrary
-      nowPlaying = NowPlaying()
-      queue = Queue(nowPlaying: nowPlaying!, sourceLibrary: tempLibrary)
+      let library = TemporaryLibrary()
+      let queue = Queue(library: library)
     #else
-      let appleLibrary = AppleLibrary()
-      library = appleLibrary
-      nowPlaying = AppleNowPlaying()
-      queue = AppleQueue(nowPlaying: nowPlaying!, sourceLibrary: appleLibrary)
+      let library = AppleLibrary()
+      let queue = AppleQueue(sourceLibrary: library)
     #endif
 
-    nowPlaying?.next()
+    // advance to the next song so that something is always playing
+    queue.nowPlaying.next()
+
+    // start the browser first
+    remoteSessionManager = RemoteSessionManager()
+
+    // do some tests with broadcasting the service
+    localSession = LocalSession(library: library, queue: queue)
+    currentSession = localSession  // start with the local session
 
     // VERYHELPFUL
     // Uncomment the following block to automatically start playing two seconds

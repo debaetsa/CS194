@@ -33,12 +33,16 @@
 		505B5E881C56EF0F00235C1C /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E7A1C56EF0F00235C1C /* Playlist.swift */; };
 		507B3A791C66B91100E4D27F /* QueueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507B3A781C66B91100E4D27F /* QueueItem.swift */; };
 		507B3A7B1C66B98F00E4D27F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507B3A7A1C66B98F00E4D27F /* AppDelegate.swift */; };
+		508148301C715D9800AB5B75 /* SourceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081482F1C715D9800AB5B75 /* SourceTableViewController.swift */; };
 		509C788F1C67B29A005B7D53 /* AppleQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C788E1C67B29A005B7D53 /* AppleQueue.swift */; };
 		509C78911C67B2B3005B7D53 /* TemporaryQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C78901C67B2B3005B7D53 /* TemporaryQueue.swift */; };
 		509C78931C67B50F005B7D53 /* AppleNowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C78921C67B50F005B7D53 /* AppleNowPlaying.swift */; };
+		509C9AE81C7329EB00E4AFCB /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C9AE71C7329EB00E4AFCB /* Connection.swift */; };
+		509C9AEA1C73BA9700E4AFCB /* Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C9AE91C73BA9700E4AFCB /* Sendable.swift */; };
 		50B7F3DC1C6A6CC1006F3CE7 /* ItemPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7F3DB1C6A6CC1006F3CE7 /* ItemPresentation.swift */; };
 		50D2492B1C5D754E00A10E97 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492A1C5D754E00A10E97 /* Item.swift */; };
 		50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */; };
+		50DC09251C60171B00323425 /* RemoteSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DC09241C60171B00323425 /* RemoteSessionManager.swift */; };
 		B3572B221C694E62007A8BD3 /* DetailedAlbumTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3572B211C694E62007A8BD3 /* DetailedAlbumTableViewController.swift */; };
 		B3BD51BE1C680EBA0079299F /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */; };
 		B3BD51C01C682B860079299F /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BF1C682B860079299F /* SongViewController.swift */; };
@@ -88,12 +92,16 @@
 		505B5E7A1C56EF0F00235C1C /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playlist.swift; path = Sources/Playlist.swift; sourceTree = "<group>"; };
 		507B3A781C66B91100E4D27F /* QueueItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QueueItem.swift; path = Sources/QueueItem.swift; sourceTree = "<group>"; };
 		507B3A7A1C66B98F00E4D27F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Sources/AppDelegate.swift; sourceTree = "<group>"; };
+		5081482F1C715D9800AB5B75 /* SourceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceTableViewController.swift; path = MusicRequests/Sources/SourceTableViewController.swift; sourceTree = "<group>"; };
 		509C788E1C67B29A005B7D53 /* AppleQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppleQueue.swift; path = Sources/AppleQueue.swift; sourceTree = "<group>"; };
 		509C78901C67B2B3005B7D53 /* TemporaryQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporaryQueue.swift; path = Sources/TemporaryQueue.swift; sourceTree = "<group>"; };
 		509C78921C67B50F005B7D53 /* AppleNowPlaying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppleNowPlaying.swift; path = Sources/AppleNowPlaying.swift; sourceTree = "<group>"; };
+		509C9AE71C7329EB00E4AFCB /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Connection.swift; path = Sources/Connection.swift; sourceTree = "<group>"; };
+		509C9AE91C73BA9700E4AFCB /* Sendable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sendable.swift; path = Sources/Sendable.swift; sourceTree = "<group>"; };
 		50B7F3DB1C6A6CC1006F3CE7 /* ItemPresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemPresentation.swift; path = Sources/ItemPresentation.swift; sourceTree = "<group>"; };
 		50D2492A1C5D754E00A10E97 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Item.swift; path = Sources/Item.swift; sourceTree = "<group>"; };
 		50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporaryLibrary.swift; path = Sources/TemporaryLibrary.swift; sourceTree = "<group>"; };
+		50DC09241C60171B00323425 /* RemoteSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteSessionManager.swift; path = Sources/RemoteSessionManager.swift; sourceTree = "<group>"; };
 		B3572B211C694E62007A8BD3 /* DetailedAlbumTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailedAlbumTableViewController.swift; path = Sources/DetailedAlbumTableViewController.swift; sourceTree = "<group>"; };
 		B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlayingViewController.swift; path = Sources/NowPlayingViewController.swift; sourceTree = "<group>"; };
 		B3BD51BF1C682B860079299F /* SongViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongViewController.swift; path = Sources/SongViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +161,7 @@
 		505B5E281C55CDFB00235C1C = {
 			isa = PBXGroup;
 			children = (
+				5081482F1C715D9800AB5B75 /* SourceTableViewController.swift */,
 				505B5E331C55CDFB00235C1C /* MusicRequests */,
 				505B5E481C55CDFB00235C1C /* MusicRequestsTests */,
 				505B5E321C55CDFB00235C1C /* Products */,
@@ -221,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				505B5E6C1C55D1B700235C1C /* Session */,
+				50DC09241C60171B00323425 /* RemoteSessionManager.swift */,
 				505B5E621C55D15700235C1C /* LibraryServer.swift */,
 			);
 			name = Networking;
@@ -231,7 +241,9 @@
 			children = (
 				505B5E661C55D18B00235C1C /* Session.swift */,
 				505B5E681C55D19D00235C1C /* LocalSession.swift */,
+				509C9AE71C7329EB00E4AFCB /* Connection.swift */,
 				505B5E6A1C55D1AC00235C1C /* RemoteSession.swift */,
+				509C9AE91C73BA9700E4AFCB /* Sendable.swift */,
 			);
 			name = Session;
 			sourceTree = "<group>";
@@ -389,6 +401,7 @@
 				50D2492B1C5D754E00A10E97 /* Item.swift in Sources */,
 				505B5E881C56EF0F00235C1C /* Playlist.swift in Sources */,
 				505B5E671C55D18B00235C1C /* Session.swift in Sources */,
+				50DC09251C60171B00323425 /* RemoteSessionManager.swift in Sources */,
 				505B5E691C55D19D00235C1C /* LocalSession.swift in Sources */,
 				505B5E581C55CEE100235C1C /* FilteredLibrary.swift in Sources */,
 				50159F641C65AE26000E4878 /* UpNextTableViewController.swift in Sources */,
@@ -400,12 +413,15 @@
 				505B5E601C55D0E100235C1C /* RemoteLibrary.swift in Sources */,
 				505B5E6B1C55D1AC00235C1C /* RemoteSession.swift in Sources */,
 				50159F601C65AE26000E4878 /* AlbumsTableViewController.swift in Sources */,
+				509C9AEA1C73BA9700E4AFCB /* Sendable.swift in Sources */,
 				50159F611C65AE26000E4878 /* ArtistsTableViewController.swift in Sources */,
 				50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */,
 				5010EB4C1C6488EE0085D615 /* AppleLibrary.swift in Sources */,
 				B3F56B9D1C69526500A16F95 /* DetailedArtistTableViewController.swift in Sources */,
 				505B5E561C55CEC900235C1C /* Library.swift in Sources */,
 				B3572B221C694E62007A8BD3 /* DetailedAlbumTableViewController.swift in Sources */,
+				509C9AE81C7329EB00E4AFCB /* Connection.swift in Sources */,
+				508148301C715D9800AB5B75 /* SourceTableViewController.swift in Sources */,
 				50159F621C65AE26000E4878 /* ItemTableViewController.swift in Sources */,
 				50B7F3DC1C6A6CC1006F3CE7 /* ItemPresentation.swift in Sources */,
 				505B5E651C55D16800235C1C /* Queue.swift in Sources */,

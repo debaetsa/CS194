@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UpNextTableViewController: ItemTableViewController {
+class UpNextTableViewController: ItemTableViewController, SessionChanged {
 
   var listener: NSObjectProtocol?
 
@@ -18,15 +18,11 @@ class UpNextTableViewController: ItemTableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.updateData()  // load the initial data
+    // add a listener -- technically means that this will never go away
+    AppDelegate.sharedDelegate.addSessionChangedListener(self)
 
-    let center = NSNotificationCenter.defaultCenter()
-    listener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: nil, queue: nil, usingBlock: {
-      [unowned self] (note) in
-      self.updateData()
-      self.tableView.reloadData()
-      }
-    )
+    updateQueueObserver()
+    self.updateData()  // load the initial data
   }
 
   deinit {
@@ -34,6 +30,28 @@ class UpNextTableViewController: ItemTableViewController {
       let center = NSNotificationCenter.defaultCenter()
       center.removeObserver(listener)
     }
+  }
+
+  func updateQueueObserver() {
+    let center = NSNotificationCenter.defaultCenter()
+
+    if let listener = self.listener {
+      center.removeObserver(listener)
+    }
+
+    listener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: queue, queue: nil) {
+      [unowned self] (note) in
+      self.updateData()
+      self.tableView.reloadData()
+    }
+
+  }
+
+  func didChangeSession(newSession: Session) {
+    queue = AppDelegate.sharedDelegate.queue
+    updateQueueObserver()
+    updateData()
+    tableView.reloadData()
   }
 
   private func updateData() {
