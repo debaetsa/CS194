@@ -144,6 +144,7 @@ class LocalSession: Session, NSNetServiceDelegate {
 
   private func addClient(connection: Connection) {
     // add them to the list
+    connection.onClosed = didCloseConnection
     clients.append(connection)
 
     // and then send them the contents of the entire library
@@ -159,6 +160,21 @@ class LocalSession: Session, NSNetServiceDelegate {
 
     // and finally the Queue (once all the songs are known)
     connection.sendItem(queue, withCachedData: currentQueueData)
+  }
+
+  private func didCloseConnection(connection: Connection, didFail fail: Bool) {
+    print("Removed client \(connection) with failure \(fail).")
+
+    var indexOfClient: Int?
+    for (index, client) in clients.enumerate() {
+      if client === connection {
+        indexOfClient = index
+        break
+      }
+    }
+    if let index = indexOfClient {
+      clients.removeAtIndex(index)
+    }
   }
 
   // MARK: - Sending the Queue

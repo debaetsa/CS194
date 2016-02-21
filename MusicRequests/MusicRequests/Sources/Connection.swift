@@ -23,6 +23,7 @@ class Connection: NSObject, NSStreamDelegate {
 
   // called to allow the received data to be processed
   var onReceivedData: ((SendableIdentifier, NSData) -> Void)?
+  var onClosed: ((Connection, didFail: Bool) -> Void)?
 
   init(ipAddress: String, port: Int, input: NSInputStream, output: NSOutputStream) {
     self.inputStream = input
@@ -47,6 +48,11 @@ class Connection: NSObject, NSStreamDelegate {
     stream.open()
   }
 
+  private func close() {
+    inputStream.close()
+    outputStream.close()
+  }
+
   // MARK: - Stream Delegate
 
   func stream(aStream: NSStream, handleEvent eventCode: NSStreamEvent) {
@@ -66,7 +72,6 @@ class Connection: NSObject, NSStreamDelegate {
       print("\(address) finished opening the input stream.")
 
     case NSStreamEvent.HasBytesAvailable:
-      print("\(address) has bytes available to read.")
       readAvailableData()
 
     default:
@@ -101,17 +106,24 @@ class Connection: NSObject, NSStreamDelegate {
     }
 
     let read = inputStream.read(Connection.buffer, maxLength: Connection.bufferLength)
-    if read > 0 {
-      // put it in a data object
-      let data = NSData(
-        bytesNoCopy: UnsafeMutablePointer(Connection.buffer),
-        length: read,
-        freeWhenDone: false
-      )
 
-      // and add it to the data that needs to be processed
-      bytesToProcess.appendData(data)
+    guard read > 0 else {
+      if let callback = onClosed {
+        callback(self, didFail: (read < 0))  // report that it closed
+      }
+      close()  // end the communication
+      return  // can't read if this failed
     }
+
+    // put it in a data object
+    let data = NSData(
+      bytesNoCopy: UnsafeMutablePointer(Connection.buffer),
+      length: read,
+      freeWhenDone: false
+    )
+
+    // and add it to the data that needs to be processed
+    bytesToProcess.appendData(data)
     Connection.buffer.destroy()  // get rid of what we put in there since it doesn't matter
     processAvailableItems()
   }
@@ -195,7 +207,6 @@ class Connection: NSObject, NSStreamDelegate {
 
     // write as many bytes as possible
     let written = outputStream.write(UnsafePointer(bytesToSend.bytes), maxLength: count)
-    print("\(address) wrote \(written) bytes")
 
     // TODO: Handle the case where written is -1.
     if written > 0 {
