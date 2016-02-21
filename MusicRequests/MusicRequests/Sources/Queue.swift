@@ -236,39 +236,25 @@ class Queue: NSObject, Sendable {
     currentQueueItem = nil
     upcomingQueueItems.removeAll()
 
-    // then add all the objects
-    for _ in 0..<historyCount {
+    // then read all the objects
+    var allQueueItems = [QueueItem]()
+    for _ in 0..<(historyCount + currentCount + upcomingCount) {
       guard let identifier = data.getNextInteger(&offset) else {
         return false
       }
       if let item = library.itemForIdentifier(identifier), let song = item as? Song {
-        previousQueueItems.append(QueueItem(song: song))
+        allQueueItems.append(QueueItem(song: song))
       } else {
         print("Couldn't get a Song for ID \(identifier).")
       }
     }
 
+    // finally, move them into the appropriate arrays
+    previousQueueItems.appendContentsOf(allQueueItems.prefix(Int(historyCount)))
     if currentCount > 0 {
-      guard let identifier = data.getNextInteger(&offset) else {
-        return false
-      }
-      if let item = library.itemForIdentifier(identifier), let song = item as? Song {
-        upcomingQueueItems.append(QueueItem(song: song))
-      } else {
-        print("Couldn't get a Song for ID \(identifier).")
-      }
+      currentQueueItem = allQueueItems[Int(historyCount)]
     }
-
-    for _ in 0..<upcomingCount {
-      guard let identifier = data.getNextInteger(&offset) else {
-        return false
-      }
-      if let item = library.itemForIdentifier(identifier), let song = item as? Song {
-        upcomingQueueItems.append(QueueItem(song: song))
-      } else {
-        print("Couldn't get a Song for ID \(identifier).")
-      }
-    }
+    upcomingQueueItems.appendContentsOf(allQueueItems.suffix(Int(upcomingCount)))
 
     let center = NSNotificationCenter.defaultCenter()
     center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)

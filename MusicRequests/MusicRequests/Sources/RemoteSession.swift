@@ -80,7 +80,6 @@ class RemoteSession: Session, NSNetServiceDelegate {
 
     case .Queue:
       queue.updateFromData(data, usingLibrary: remoteLibrary)
-      print(queue.history, queue.current, queue.upcoming)
 
     default:
       print("Ignoring: \(data)")

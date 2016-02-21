@@ -88,12 +88,32 @@ class LocalSession: Session, NSNetServiceDelegate {
    order to save the battery as much as possible. */
   private var socket: CFSocket?
 
+  /** Stores the listener for changes to the Queue.
+
+   We send out Queue updates whenever it changes.  We might decrease the
+   frequency of these updates depending on the data usage. */
+  private var queueChangedListener: NSObjectProtocol?
+
   init(library: Library, queue: Queue) {
     self.fullLibrary = library
     self.sourceLibrary = library
     self.currentQueueData = queue.sendableData
 
     super.init(queue: queue)
+
+    let center = NSNotificationCenter.defaultCenter()
+    queueChangedListener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: queue, queue: nil) {
+      [unowned self] (note) in
+
+      // when the Queue changes, check if we need to send the updated version
+      self.sendQueueIfNeeded()
+    }
+  }
+
+  deinit {
+    if let listener = queueChangedListener {
+      NSNotificationCenter.defaultCenter().removeObserver(listener)
+    }
   }
 
   // MARK: - Clients
