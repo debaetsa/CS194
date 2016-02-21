@@ -35,4 +35,46 @@ class QueueItem: NSObject, CustomDebugStringConvertible {
     return "QueueItem<name: \(song.name); votes: \(currentRequestCount)>"
   }
 
+  enum Voted {
+    case None
+    case Up
+    case Down
+  }
+
+  private var voted: Voted
+  var isUpvoted: Bool {
+    return voted == .Up
+  }
+  var isDownvoted: Bool {
+    return voted == .Down
+  }
+
+  /** Upvotes the current QueueItem.
+
+   This will clear the vote if it is called when it's already upvoted. */
+  func upvote() {
+    switch voted {
+    case .Up:
+      voted = .None
+
+    case .Down: fallthrough
+    case .None:
+      voted = .Up
+    }
+  }
+
+  /** Downvotes the current QueueItem.
+
+   This will clear the vote if it is called when it's already upvoted. */
+  func downvote() {
+    switch voted {
+    case .Down:
+      voted = .None
+
+    case .Up: fallthrough
+    case .None:
+      voted = .Down
+    }
+  }
+
 }
