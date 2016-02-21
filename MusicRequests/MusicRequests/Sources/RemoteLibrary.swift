@@ -38,6 +38,11 @@ class RemoteLibrary: Library {
     return genres
   }
 
+  /** Looks up an Item based on its identifier. */
+  func itemForIdentifier(identifier: UInt32) -> Item? {
+    return identifierToItem[identifier]
+  }
+
   func tryToAddItem<T: Item>(data: NSData, inout withOffset offset: Int, inout toArray array: [T]) -> T? {
     let maybeItem = T(data: data, lookup: identifierToItem, offset: &offset)
     if let item = maybeItem {

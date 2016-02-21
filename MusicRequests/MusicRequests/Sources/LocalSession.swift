@@ -88,11 +88,32 @@ class LocalSession: Session, NSNetServiceDelegate {
    order to save the battery as much as possible. */
   private var socket: CFSocket?
 
+  /** Stores the listener for changes to the Queue.
+
+   We send out Queue updates whenever it changes.  We might decrease the
+   frequency of these updates depending on the data usage. */
+  private var queueChangedListener: NSObjectProtocol?
+
   init(library: Library, queue: Queue) {
     self.fullLibrary = library
     self.sourceLibrary = library
+    self.currentQueueData = queue.sendableData
 
     super.init(queue: queue)
+
+    let center = NSNotificationCenter.defaultCenter()
+    queueChangedListener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: queue, queue: nil) {
+      [unowned self] (note) in
+
+      // when the Queue changes, check if we need to send the updated version
+      self.sendQueueIfNeeded()
+    }
+  }
+
+  deinit {
+    if let listener = queueChangedListener {
+      NSNotificationCenter.defaultCenter().removeObserver(listener)
+    }
   }
 
   // MARK: - Clients
@@ -123,6 +144,7 @@ class LocalSession: Session, NSNetServiceDelegate {
 
   private func addClient(connection: Connection) {
     // add them to the list
+    connection.onClosed = didCloseConnection
     clients.append(connection)
 
     // and then send them the contents of the entire library
@@ -135,6 +157,50 @@ class LocalSession: Session, NSNetServiceDelegate {
     for song in sourceLibrary.allSongs {
       connection.sendItem(song)
     }
+
+    // and finally the Queue (once all the songs are known)
+    connection.sendItem(queue, withCachedData: currentQueueData)
+  }
+
+  private func didCloseConnection(connection: Connection, didFail fail: Bool) {
+    print("Removed client \(connection) with failure \(fail).")
+
+    var indexOfClient: Int?
+    for (index, client) in clients.enumerate() {
+      if client === connection {
+        indexOfClient = index
+        break
+      }
+    }
+    if let index = indexOfClient {
+      clients.removeAtIndex(index)
+    }
+  }
+
+  // MARK: - Sending the Queue
+
+  // We only want to send the Queue when it changes, so we store what we last
+  // sent and compare it to what we are about to send.  We only need to send it
+  // when the data object is different.  This also gives a quick way to send
+  // the Queue when a new client connects.
+
+  private var currentQueueData: NSData
+
+  /** Sends the Queue data if it has changed.
+
+   Returns whether or not the data was sent. */
+  func sendQueueIfNeeded() -> Bool {
+    let data = queue.sendableData
+    guard currentQueueData != data else {
+      return false  // the data didn't change, so don't send anything
+    }
+    currentQueueData = data
+
+    for client in clients {
+      client.sendItem(queue, withCachedData: currentQueueData)
+    }
+
+    return true
   }
 
   // MARK: - Socket

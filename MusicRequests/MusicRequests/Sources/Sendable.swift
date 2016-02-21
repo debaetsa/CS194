@@ -8,9 +8,18 @@
 
 import Foundation
 
+class UniqueGenerator {
+  private var counter = UInt32(0)
+
+  func next() -> UInt32 {
+    ++counter
+    return counter
+  }
+}
+
 enum SendableIdentifier: UInt8 {
   case Item = 0
-  case QueueItem
+  case Queue
   case Request
 }
 

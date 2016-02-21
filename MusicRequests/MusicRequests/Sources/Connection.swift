@@ -23,6 +23,7 @@ class Connection: NSObject, NSStreamDelegate {
 
   // called to allow the received data to be processed
   var onReceivedData: ((SendableIdentifier, NSData) -> Void)?
+  var onClosed: ((Connection, didFail: Bool) -> Void)?
 
   init(ipAddress: String, port: Int, input: NSInputStream, output: NSOutputStream) {
     self.inputStream = input
@@ -47,6 +48,11 @@ class Connection: NSObject, NSStreamDelegate {
     stream.open()
   }
 
+  private func close() {
+    inputStream.close()
+    outputStream.close()
+  }
+
   // MARK: - Stream Delegate
 
   func stream(aStream: NSStream, handleEvent eventCode: NSStreamEvent) {
@@ -66,7 +72,6 @@ class Connection: NSObject, NSStreamDelegate {
       print("\(address) finished opening the input stream.")
 
     case NSStreamEvent.HasBytesAvailable:
-      print("\(address) has bytes available to read.")
       readAvailableData()
 
     default:
@@ -101,17 +106,24 @@ class Connection: NSObject, NSStreamDelegate {
     }
 
     let read = inputStream.read(Connection.buffer, maxLength: Connection.bufferLength)
-    if read > 0 {
-      // put it in a data object
-      let data = NSData(
-        bytesNoCopy: UnsafeMutablePointer(Connection.buffer),
-        length: read,
-        freeWhenDone: false
-      )
 
-      // and add it to the data that needs to be processed
-      bytesToProcess.appendData(data)
+    guard read > 0 else {
+      if let callback = onClosed {
+        callback(self, didFail: (read < 0))  // report that it closed
+      }
+      close()  // end the communication
+      return  // can't read if this failed
     }
+
+    // put it in a data object
+    let data = NSData(
+      bytesNoCopy: UnsafeMutablePointer(Connection.buffer),
+      length: read,
+      freeWhenDone: false
+    )
+
+    // and add it to the data that needs to be processed
+    bytesToProcess.appendData(data)
     Connection.buffer.destroy()  // get rid of what we put in there since it doesn't matter
     processAvailableItems()
   }
@@ -163,21 +175,22 @@ class Connection: NSObject, NSStreamDelegate {
   // MARK: - Write Handling
 
   func sendItem(item: Sendable) {
+    sendItem(item, withCachedData: nil)
+  }
+
+  /** Sends the Sendable, but uses the cached data.
+
+   This is intended to avoid running the same code repeatedly when sending the
+   same thing to every client. */
+  func sendItem(item: Sendable, withCachedData cachedData: NSData?) {
     // write the identifier
-    var identifier = item.sendableIdentifier
-    withUnsafePointer(&identifier) {
-      bytesToSend.appendBytes(UnsafePointer($0), length: sizeofValue(identifier))
-    }
+    bytesToSend.appendByte(item.sendableIdentifier.rawValue)
 
-    let data = item.sendableData  // get the data so that we can write its length
-
-    var length = UInt32(data.length).bigEndian
-    withUnsafePointer(&length) {
-      bytesToSend.appendBytes(UnsafePointer($0), length: sizeofValue(length))
-    }
-
-    // and then the actual data for the item
+    // then write the data length and actual data
+    let data = cachedData ?? item.sendableData
+    bytesToSend.appendCustomInteger(UInt32(data.length))
     bytesToSend.appendData(data)
+
     sendAvailableData()
   }
 
@@ -194,7 +207,6 @@ class Connection: NSObject, NSStreamDelegate {
 
     // write as many bytes as possible
     let written = outputStream.write(UnsafePointer(bytesToSend.bytes), maxLength: count)
-    print("\(address) wrote \(written) bytes")
 
     // TODO: Handle the case where written is -1.
     if written > 0 {

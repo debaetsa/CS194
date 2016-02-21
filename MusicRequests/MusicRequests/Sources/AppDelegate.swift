@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SessionChanged {
+  func didChangeSession(newSession: Session)
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -24,8 +28,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   // we always need a reference to our session that stores the configuration
   var localSession: LocalSession!
 
+  private var sessionChangedListeners = [SessionChanged]()
+  func addSessionChangedListener(listener: SessionChanged) {
+    sessionChangedListeners.append(listener)
+  }
+
   // and this is the one we actually use for data (could be local or remote)
-  var currentSession: Session!
+  var currentSession: Session! {
+    didSet {
+      for listener in sessionChangedListeners {
+        listener.didChangeSession(currentSession)
+      }
+    }
+  }
 
   // implement some shortcuts to the needed values
   var library: Library {
