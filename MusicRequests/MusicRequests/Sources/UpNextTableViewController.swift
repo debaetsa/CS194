@@ -132,6 +132,7 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
           currentSong.votes! += 1;
           self.updateData();
           self.tableView.reloadData()
+          AppDelegate.sharedDelegate.localSession.sendQueueIfNeeded()
           print("Upvoted song from host device: \(currentSong.name): \(currentSong.votes!)");
         }
       }
@@ -146,6 +147,7 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
           currentSong.votes! -= 1;
           self.updateData();
           self.tableView.reloadData()
+          AppDelegate.sharedDelegate.localSession.sendQueueIfNeeded()
           print("Downvoted song from host device: \(currentSong.name): \(currentSong.votes!)");
         }
       }
