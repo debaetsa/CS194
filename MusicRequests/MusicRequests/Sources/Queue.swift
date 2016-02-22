@@ -48,7 +48,7 @@ class Queue: NSObject, Sendable {
     return currentQueueItem
   }
 
-  private var lookup = [UInt32: QueueItem]()
+  var lookup = [UInt32: QueueItem]()
 
 
   ///////////////////////
@@ -97,7 +97,7 @@ class Queue: NSObject, Sendable {
     self.init(nowPlaying: NowPlaying(), sourceLibrary: library)
   }
 
-  private func createQueueItem(forSong song: Song, withIdentifier maybeIdentifier: UInt32? = nil) -> QueueItem {
+  func createQueueItem(forSong song: Song, withIdentifier maybeIdentifier: UInt32? = nil) -> QueueItem {
     let item: QueueItem
     if let identifier = maybeIdentifier {
       item = QueueItem(identifier: identifier, song: song)
@@ -110,21 +110,31 @@ class Queue: NSObject, Sendable {
 
   /** Finds the item for the specified Song, creating it if needed.
 
-  This will find an upcoming item for the specified Song.  If there is already
-  an upcoming item for the Song, it will return that.  If not, it will create
-  it and add it to the list of upcoming songs. */
-  func itemForSong(song: Song) -> QueueItem {
+   This will find an upcoming item for the specified Song.  If there is already
+   an upcoming item for the Song, it will return that.  If not, it will create
+   it and add it to the list of upcoming songs. */
+  func createUpcomingItemForSong(song: Song) -> QueueItem {
+    if let queueItem = findUpcomingItemForSong(song) {
+      return queueItem
+    } else {
+      // We weren't able to find a QueueItem for the song, so create one.
+      let item = createQueueItem(forSong: song)
+      upcomingQueueItems.append(item)
+      return item
+    }
+  }
+
+  /** Finds the upcoming QueueItem for the Song.
+
+   Note that this DOES NOT create a new QueueItem if one doesn't exist. */
+  func findUpcomingItemForSong(song: Song) -> QueueItem? {
     // First try to search for the Song.
     for item in upcoming {
       if item.song == song {
         return item
       }
     }
-
-    // We weren't able to find a QueueItem for the song, so create one.
-    let item = createQueueItem(forSong: song)
-    upcomingQueueItems.append(item)
-    return item
+    return nil
   }
 
   func itemForIdentifier(identifier: UInt32) -> QueueItem? {
@@ -265,6 +275,7 @@ class Queue: NSObject, Sendable {
       }
       if let item = library.itemForIdentifier(songIdentifier), let song = item as? Song {
         if let queueItem = itemForIdentifier(queueItemIdentifier) {
+          assert(queueItem.song === song)  // QueueItems should always be the same Song
           allQueueItems.append(queueItem)  // re-using the item
         } else {
           allQueueItems.append(

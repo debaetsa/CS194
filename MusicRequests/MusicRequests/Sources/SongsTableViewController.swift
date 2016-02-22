@@ -20,11 +20,18 @@ class SongsTableViewController: ItemTableViewController {
     let songs = library.allSongs
     let currentSong = songs[indexPath.row]
 
-    cell.textLabel?.text = currentSong.name
+    cell.textLabel?.text = "\(currentSong.cachedVote) \(currentSong.name)"
     cell.detailTextLabel?.text = currentSong.artistAlbumString
     cell.imageView?.image = currentSong.album!.imageToShow
 
     return cell
+  }
+
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    if let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as? RemoteQueue {
+      remoteQueue.upvote(withSong: library.allSongs[indexPath.row])
+    }
+    tableView.deselectRowAtIndexPath(indexPath, animated: true)
   }
 
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
