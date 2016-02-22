@@ -111,6 +111,7 @@ class Song: Item {
     self.userInfo = nil
     self.artistOverride = nil
     self.genre = nil
+    self.votes = 0
 
     super.init(data: data, lookup: lookup, offset: &offset)
 
