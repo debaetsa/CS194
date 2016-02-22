@@ -152,10 +152,10 @@ class Queue: NSObject, Sendable {
     var counter = 0
     for _ in count ..< Queue.minimumUpcomingCount {
 //      let maybeSong = library.pickRandomSong()
-      let song = maybeSongs[counter]
-      if (counter >= library.allSongs.count) {
+      if (counter >= maybeSongs.count) {
         return
       }
+      let song = maybeSongs[counter]
       counter++;
 //      guard let song = maybeSong else {
 //        // If we didn't get a result back, we have to stop adding songs.
@@ -305,7 +305,7 @@ class Queue: NSObject, Sendable {
     center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
 
     return true
-  
+  }
   /** Refreshes the queue to take into account new votes.
 
    * A couple things I don't like about this: 
@@ -322,15 +322,18 @@ class Queue: NSObject, Sendable {
     for item in upcomingQueueItems {
       queuedSongs.insert(item.song)
     }
+    if upcomingQueueItems.count == 0 {
+      return
+    }
     let minVotes = upcomingQueueItems[upcomingQueueItems.count - 1].song.votes!
     let toAddSongs = library.rankSongsByVotes(minVotes)
-
     for song in toAddSongs {
       if !queuedSongs.contains(song) {
         upcomingQueueItems.append(QueueItem(song: song))
         queuedSongs.insert(song)
       }
     }
+    
     upcomingQueueItems = upcomingQueueItems.sort({ (first, second) -> Bool in
       if (first.song.votes! > second.song.votes!) {
         return true;

@@ -24,6 +24,7 @@ class QueueItem: NSObject, CustomDebugStringConvertible {
     self.identifier = identifier
     self.song = song
     self.request = Request()
+    self.voted = .None
   }
 
   init(identifier: UInt32, song: Song, request: Request) {
