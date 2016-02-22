@@ -185,11 +185,23 @@ class LocalSession: Session, NSNetServiceDelegate {
         if let item = request.queueItem {
           // this already has a QueueItem, so maybe increment the vote
           // TODO: Increment the vote.
-          print("Received vote \(request.vote) for QueueItem \(item).")
+          let localItem = queue.itemForIdentifier(item.identifier)
+          if request.vote == Request.Vote.Up {
+            localItem?.song.votes!++
+          }
+          if request.vote == Request.Vote.Down {
+            localItem?.song.votes!--
+          }
+          queue.refreshUpcoming()
+          // TODO: Post notification to server app's view controllers so they update in live time
+          // TODO: Broadcast new queue state to all other listeners
+          print("Received vote \(request.vote) for QueueItem  \(item).")
         } else {
           // There should be a Song.  Create a QueueItem for it.
           if let song = request.song {
-            let _ = queue.createUpcomingItemForSong(song)  // this will get sent
+            song.votes!++
+//            let localItem = queue.createUpcomingItemForSong(song)  // this will get sent
+            queue.refreshUpcoming()
             print("Received vote \(request.vote) for Song \(song.name).")
             // TODO: Do something with the QueueItem.
 

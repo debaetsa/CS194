@@ -105,17 +105,17 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
 //    return (indexPath.row == currentIndex) ? indexPath : nil
   }
 
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    if indexPath.row == currentIndex {
-      super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
-    } else {
-      // we want to try and vote for the QueueItem
-      if let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as? RemoteQueue {
-        remoteQueue.upvote(withQueueItem: items[indexPath.row])
-      }
-      tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
-  }
+//  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//    if indexPath.row == currentIndex {
+//      super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+//    } else {
+//      // we want to try and vote for the QueueItem
+//      if let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as? RemoteQueue {
+//        remoteQueue.upvote(withQueueItem: items[indexPath.row])
+//      }
+//      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+//    }
+//  }
 
   @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
     self.dismissViewControllerAnimated(true, completion: nil)
@@ -124,20 +124,30 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
   override func tableView(tableView: UITableView,
     editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
       let upvote = UITableViewRowAction(style: .Normal, title: "+") { action, index in
-      let currentSong = self.items[indexPath.row].song;
-        currentSong.votes! += 1;
-        self.updateData();
-        self.tableView.reloadData()
-        print("Upvoted song: \(currentSong.name): \(currentSong.votes!)");
+        let currentSong = self.items[indexPath.row].song;
+        if let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as? RemoteQueue {
+          remoteQueue.upvote(withQueueItem: self.items[indexPath.row])
+          print("Upvoted song from listener device: \(currentSong.name): \(currentSong.votes!)");
+        } else {
+          currentSong.votes! += 1;
+          self.updateData();
+          self.tableView.reloadData()
+          print("Upvoted song from host device: \(currentSong.name): \(currentSong.votes!)");
+        }
       }
       upvote.backgroundColor = UIColor.blueColor()
       
       let downvote = UITableViewRowAction(style: .Normal, title: "-") { action, index in
         let currentSong = self.items[indexPath.row].song;
-        currentSong.votes! -= 1;
-        self.updateData();
-        self.tableView.reloadData()
-        print("Upvoted song: \(currentSong.name): \(currentSong.votes!)");
+        if let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as? RemoteQueue {
+          remoteQueue.downvote(withQueueItem: self.items[indexPath.row])
+          print("Downvoted song from listener device: \(currentSong.name): \(currentSong.votes!)");
+        } else {
+          currentSong.votes! -= 1;
+          self.updateData();
+          self.tableView.reloadData()
+          print("Downvoted song from host device: \(currentSong.name): \(currentSong.votes!)");
+        }
       }
       downvote.backgroundColor = UIColor.redColor()
       
