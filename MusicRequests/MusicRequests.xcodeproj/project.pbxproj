@@ -76,7 +76,7 @@
 		50159F5E1C65AE26000E4878 /* SongsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongsTableViewController.swift; path = Sources/SongsTableViewController.swift; sourceTree = "<group>"; };
 		50159F5F1C65AE26000E4878 /* UpNextTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UpNextTableViewController.swift; path = Sources/UpNextTableViewController.swift; sourceTree = "<group>"; };
 		50159F661C65B3C7000E4878 /* Pluralize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pluralize.swift; path = Sources/Pluralize.swift; sourceTree = "<group>"; };
-		505B5E311C55CDFB00235C1C /* MusicRequests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicRequests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		505B5E311C55CDFB00235C1C /* JAMM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JAMM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505B5E391C55CDFB00235C1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		505B5E3B1C55CDFB00235C1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		505B5E3E1C55CDFB00235C1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 		505B5E321C55CDFB00235C1C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				505B5E311C55CDFB00235C1C /* MusicRequests.app */,
+				505B5E311C55CDFB00235C1C /* JAMM.app */,
 				505B5E451C55CDFB00235C1C /* MusicRequestsTests.xctest */,
 			);
 			name = Products;
@@ -304,9 +304,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		505B5E301C55CDFB00235C1C /* MusicRequests */ = {
+		505B5E301C55CDFB00235C1C /* JAMM */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 505B5E4E1C55CDFC00235C1C /* Build configuration list for PBXNativeTarget "MusicRequests" */;
+			buildConfigurationList = 505B5E4E1C55CDFC00235C1C /* Build configuration list for PBXNativeTarget "JAMM" */;
 			buildPhases = (
 				505B5E2D1C55CDFB00235C1C /* Sources */,
 				505B5E2E1C55CDFB00235C1C /* Frameworks */,
@@ -316,9 +316,9 @@
 			);
 			dependencies = (
 			);
-			name = MusicRequests;
+			name = JAMM;
 			productName = MusicRequests;
-			productReference = 505B5E311C55CDFB00235C1C /* MusicRequests.app */;
+			productReference = 505B5E311C55CDFB00235C1C /* JAMM.app */;
 			productType = "com.apple.product-type.application";
 		};
 		505B5E441C55CDFB00235C1C /* MusicRequestsTests */ = {
@@ -375,7 +375,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				505B5E301C55CDFB00235C1C /* MusicRequests */,
+				505B5E301C55CDFB00235C1C /* JAMM */,
 				505B5E441C55CDFB00235C1C /* MusicRequestsTests */,
 			);
 		};
@@ -463,7 +463,7 @@
 /* Begin PBXTargetDependency section */
 		505B5E471C55CDFB00235C1C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 505B5E301C55CDFB00235C1C /* MusicRequests */;
+			target = 505B5E301C55CDFB00235C1C /* JAMM */;
 			targetProxy = 505B5E461C55CDFB00235C1C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -629,7 +629,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		505B5E4E1C55CDFC00235C1C /* Build configuration list for PBXNativeTarget "MusicRequests" */ = {
+		505B5E4E1C55CDFC00235C1C /* Build configuration list for PBXNativeTarget "JAMM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				505B5E4F1C55CDFC00235C1C /* Debug */,

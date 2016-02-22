@@ -26,7 +26,7 @@
         <!--Test-->
         <scene sceneID="H66-PI-Vd6">
             <objects>
-                <tableViewController storyboardIdentifier="Test" title="Test" id="iDw-oc-B5F" customClass="UpNextTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Test" title="Test" id="iDw-oc-B5F" customClass="UpNextTableViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="kvf-ec-RgY">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -127,7 +127,7 @@
         <!--Source View-->
         <scene sceneID="2iH-jc-7vH">
             <objects>
-                <tableViewController title="Source View" id="w67-fo-vCv" customClass="SourceTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Source View" id="w67-fo-vCv" customClass="SourceTableViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="1" id="Se7-LL-iiG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -315,7 +315,7 @@
         <!--Library/Songs-->
         <scene sceneID="pkS-Rt-AHb">
             <objects>
-                <tableViewController storyboardIdentifier="Songs" title="Songs Library" id="v1S-5T-ImP" userLabel="Library/Songs" customClass="SongsTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Songs" title="Songs Library" id="v1S-5T-ImP" userLabel="Library/Songs" customClass="SongsTableViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Wu1-tZ-pa9">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -371,7 +371,7 @@
         <!--Library/Artists-->
         <scene sceneID="gia-2J-mgS">
             <objects>
-                <tableViewController storyboardIdentifier="Artists" title="Artists Library" id="6HP-Vg-yo3" userLabel="Library/Artists" customClass="ArtistsTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Artists" title="Artists Library" id="6HP-Vg-yo3" userLabel="Library/Artists" customClass="ArtistsTableViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="SQA-sw-dAu">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -427,7 +427,7 @@
         <!--Library/Albums-->
         <scene sceneID="Z5Z-Aq-JpJ">
             <objects>
-                <tableViewController storyboardIdentifier="Albums" title="Albums Library" id="b27-j9-jh3" userLabel="Library/Albums" customClass="AlbumsTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Albums" title="Albums Library" id="b27-j9-jh3" userLabel="Library/Albums" customClass="AlbumsTableViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="LbS-DA-q9p">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -483,7 +483,7 @@
         <!--Library/Playlists-->
         <scene sceneID="ALZ-K6-Lhg">
             <objects>
-                <tableViewController storyboardIdentifier="Playlists" title="Playlists Library" id="0Zt-Jy-9wo" userLabel="Library/Playlists" customClass="PlaylistsTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Playlists" title="Playlists Library" id="0Zt-Jy-9wo" userLabel="Library/Playlists" customClass="PlaylistsTableViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="dSe-wr-lb3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -590,7 +590,7 @@
         <!--Library/Genres-->
         <scene sceneID="b0z-oZ-20b">
             <objects>
-                <tableViewController storyboardIdentifier="Genres" title="Genres Library" id="fA3-hQ-AvJ" userLabel="Library/Genres" customClass="GenresTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Genres" title="Genres Library" id="fA3-hQ-AvJ" userLabel="Library/Genres" customClass="GenresTableViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="jbM-ud-BNK">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -662,7 +662,7 @@
         <!--Song View Controller-->
         <scene sceneID="alZ-vI-dBO">
             <objects>
-                <viewController id="eq0-SH-uWZ" customClass="SongViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="eq0-SH-uWZ" customClass="SongViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UFh-xk-rMq"/>
                         <viewControllerLayoutGuide type="bottom" id="Woy-lU-pPF"/>
@@ -731,7 +731,7 @@
         <!--Detailed Playlists Library-->
         <scene sceneID="IXf-6b-oHl">
             <objects>
-                <tableViewController storyboardIdentifier="PlaylistsDetail" title="Detailed Playlists Library" id="SH5-fW-q1x" userLabel="Detailed Playlists Library" customClass="DetailedPlaylistTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PlaylistsDetail" title="Detailed Playlists Library" id="SH5-fW-q1x" userLabel="Detailed Playlists Library" customClass="DetailedPlaylistTableViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="84F-CG-WwQ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -780,7 +780,7 @@
         <!--Detailed Genres Library-->
         <scene sceneID="K20-ce-r2H">
             <objects>
-                <tableViewController storyboardIdentifier="GenresDetail" title="Detailed Genres Library" id="kxH-ul-Qtl" userLabel="Detailed Genres Library" customClass="DetailedGenreTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="GenresDetail" title="Detailed Genres Library" id="kxH-ul-Qtl" userLabel="Detailed Genres Library" customClass="DetailedGenreTableViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="gcm-xe-I7e">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -829,7 +829,7 @@
         <!--Detailed Albums Library-->
         <scene sceneID="ban-Tf-HJE">
             <objects>
-                <tableViewController storyboardIdentifier="AlbumsDetail" title="Detailed Albums Library" id="jKz-xP-VDG" userLabel="Detailed Albums Library" customClass="DetailedAlbumTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AlbumsDetail" title="Detailed Albums Library" id="jKz-xP-VDG" userLabel="Detailed Albums Library" customClass="DetailedAlbumTableViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="1TP-h7-IOE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -879,7 +879,7 @@
         <!--Detailed Artists Library-->
         <scene sceneID="af4-V4-Xoc">
             <objects>
-                <tableViewController storyboardIdentifier="Detailed Artists Library" title="Detailed Artists Library" id="qSr-pb-aIm" userLabel="Detailed Artists Library" customClass="DetailedArtistTableViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Detailed Artists Library" title="Detailed Artists Library" id="qSr-pb-aIm" userLabel="Detailed Artists Library" customClass="DetailedArtistTableViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="vQX-Oy-jx7">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -929,7 +929,7 @@
         <!--Now Playing View Controller-->
         <scene sceneID="jCK-5h-xxm">
             <objects>
-                <viewController id="NiG-oO-CD2" customClass="NowPlayingViewController" customModule="MusicRequests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="NiG-oO-CD2" customClass="NowPlayingViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MDd-Y4-E0N"/>
                         <viewControllerLayoutGuide type="bottom" id="Gcx-3w-E0m"/>
