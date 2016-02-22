@@ -334,7 +334,7 @@ class Queue: NSObject, Sendable {
       }
     }
     
-    upcomingQueueItems = upcomingQueueItems.sort({ (first, second) -> Bool in
+	upcomingQueueItems = upcomingQueueItems.sort({ (first, second) -> Bool in
       if (first.song.votes! > second.song.votes!) {
         return true;
       } else {
