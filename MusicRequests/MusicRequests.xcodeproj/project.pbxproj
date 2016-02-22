@@ -34,6 +34,8 @@
 		507B3A791C66B91100E4D27F /* QueueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507B3A781C66B91100E4D27F /* QueueItem.swift */; };
 		507B3A7B1C66B98F00E4D27F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507B3A7A1C66B98F00E4D27F /* AppDelegate.swift */; };
 		508148301C715D9800AB5B75 /* SourceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081482F1C715D9800AB5B75 /* SourceTableViewController.swift */; };
+		509B13DF1C7AB7F0009464D4 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509B13DE1C7AB7F0009464D4 /* Request.swift */; };
+		509B13E11C7AC202009464D4 /* RemoteQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509B13E01C7AC202009464D4 /* RemoteQueue.swift */; };
 		509C788F1C67B29A005B7D53 /* AppleQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C788E1C67B29A005B7D53 /* AppleQueue.swift */; };
 		509C78911C67B2B3005B7D53 /* TemporaryQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C78901C67B2B3005B7D53 /* TemporaryQueue.swift */; };
 		509C78931C67B50F005B7D53 /* AppleNowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C78921C67B50F005B7D53 /* AppleNowPlaying.swift */; };
@@ -93,6 +95,8 @@
 		507B3A781C66B91100E4D27F /* QueueItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QueueItem.swift; path = Sources/QueueItem.swift; sourceTree = "<group>"; };
 		507B3A7A1C66B98F00E4D27F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Sources/AppDelegate.swift; sourceTree = "<group>"; };
 		5081482F1C715D9800AB5B75 /* SourceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceTableViewController.swift; path = MusicRequests/Sources/SourceTableViewController.swift; sourceTree = "<group>"; };
+		509B13DE1C7AB7F0009464D4 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Sources/Request.swift; sourceTree = "<group>"; };
+		509B13E01C7AC202009464D4 /* RemoteQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteQueue.swift; path = Sources/RemoteQueue.swift; sourceTree = "<group>"; };
 		509C788E1C67B29A005B7D53 /* AppleQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppleQueue.swift; path = Sources/AppleQueue.swift; sourceTree = "<group>"; };
 		509C78901C67B2B3005B7D53 /* TemporaryQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporaryQueue.swift; path = Sources/TemporaryQueue.swift; sourceTree = "<group>"; };
 		509C78921C67B50F005B7D53 /* AppleNowPlaying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppleNowPlaying.swift; path = Sources/AppleNowPlaying.swift; sourceTree = "<group>"; };
@@ -219,7 +223,9 @@
 				509C78941C67B519005B7D53 /* Apple */,
 				505B5E5D1C55D0B300235C1C /* NowPlaying.swift */,
 				505B5E641C55D16800235C1C /* Queue.swift */,
+				509B13E01C7AC202009464D4 /* RemoteQueue.swift */,
 				507B3A781C66B91100E4D27F /* QueueItem.swift */,
+				509B13DE1C7AB7F0009464D4 /* Request.swift */,
 				B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */,
 				B3BD51BF1C682B860079299F /* SongViewController.swift */,
 			);
@@ -419,6 +425,8 @@
 				5010EB4C1C6488EE0085D615 /* AppleLibrary.swift in Sources */,
 				B3F56B9D1C69526500A16F95 /* DetailedArtistTableViewController.swift in Sources */,
 				505B5E561C55CEC900235C1C /* Library.swift in Sources */,
+				509B13DF1C7AB7F0009464D4 /* Request.swift in Sources */,
+				509B13E11C7AC202009464D4 /* RemoteQueue.swift in Sources */,
 				B3572B221C694E62007A8BD3 /* DetailedAlbumTableViewController.swift in Sources */,
 				509C9AE81C7329EB00E4AFCB /* Connection.swift in Sources */,
 				508148301C715D9800AB5B75 /* SourceTableViewController.swift in Sources */,

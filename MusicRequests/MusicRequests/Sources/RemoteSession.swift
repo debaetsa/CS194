@@ -29,7 +29,9 @@ class RemoteSession: Session, NSNetServiceDelegate {
 
     // TODO: Create a Queue() specifically for this remote session.  Just know
     // that it will probably not be populated until it is actually accessed.
-    super.init(queue: Queue(library: remoteLibrary))
+    let queue = RemoteQueue(library: remoteLibrary)
+    super.init(queue: queue)
+    queue.remoteSession = self
 
     // set the delegate after the super.init() call
     self.netService.delegate = self
