@@ -41,7 +41,7 @@ class QueueItem: NSObject, CustomDebugStringConvertible {
     case Down
   }
 
-  private var voted: Voted
+  private var voted: Voted = .Up
   var isUpvoted: Bool {
     return voted == .Up
   }
