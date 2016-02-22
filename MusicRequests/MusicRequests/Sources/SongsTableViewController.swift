@@ -9,6 +9,7 @@
 import UIKit
 
 class SongsTableViewController: ItemTableViewController {
+  var song: Song?
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return library.allSongs.count
@@ -27,11 +28,16 @@ class SongsTableViewController: ItemTableViewController {
     return cell
   }
 
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    song = library.allSongs[indexPath.row]
+    performSegueWithIdentifier("ToSongPreview", sender: self)
+  }
+
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    if segue.identifier == "preview" {
-      let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
+    if segue.identifier == "ToSongPreview" {
       let destination = segue.destinationViewController as! SongViewController
-      destination.song = library.allSongs[indexPath.row]
+      destination.song = song
     }
   }
+
 }

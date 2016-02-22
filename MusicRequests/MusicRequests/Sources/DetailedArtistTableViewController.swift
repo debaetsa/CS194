@@ -12,6 +12,13 @@ class DetailedArtistTableViewController: ItemTableViewController {
   var album: Album?
   var artist: Artist?
   var song: Song?
+  @IBOutlet weak var NavBar: UINavigationItem!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    NavBar.title = artist!.name
+  }
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return artist!.albumCount
@@ -41,4 +48,5 @@ class DetailedArtistTableViewController: ItemTableViewController {
       destinationVC.album = album
     }
   }
+
 }
