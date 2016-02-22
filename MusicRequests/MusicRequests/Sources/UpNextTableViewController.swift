@@ -82,7 +82,7 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
     }
 
     let song = items[indexPath.row].song
-    cell.textLabel?.text = song.name
+    cell.textLabel?.text = "\(song.cachedVote) \(song.name)"
     cell.detailTextLabel?.text = song.artistAlbumString
     cell.imageView?.image = song.album!.imageToShow
 
@@ -94,7 +94,20 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
   }
 
   override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-    return (indexPath.row == currentIndex) ? indexPath : nil
+    return indexPath
+//    return (indexPath.row == currentIndex) ? indexPath : nil
+  }
+
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    if indexPath.row == currentIndex {
+      super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+    } else {
+      // we want to try and vote for the QueueItem
+      if let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as? RemoteQueue {
+        remoteQueue.upvote(withQueueItem: items[indexPath.row])
+      }
+      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
   }
 
   @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
