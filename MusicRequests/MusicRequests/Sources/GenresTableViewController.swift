@@ -11,7 +11,6 @@ import UIKit
 class GenresTableViewController: ItemTableViewController {
 
   var genre: Genre?
-  var genreName: String?
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return library.allGenres.count
@@ -31,7 +30,6 @@ class GenresTableViewController: ItemTableViewController {
 
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     genre = library.allGenres[indexPath.row]
-    genreName = genre!.name
     performSegueWithIdentifier("ToGenreDetail", sender: self)
   }
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
@@ -39,7 +37,6 @@ class GenresTableViewController: ItemTableViewController {
       // Create a new variable to store the instance of PreviewController
       let destinationVC = segue.destinationViewController as! DetailedGenreTableViewController
       destinationVC.genre = genre
-      destinationVC.genreName = genreName
     }
   }
 

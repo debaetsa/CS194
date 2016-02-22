@@ -10,14 +10,14 @@ import UIKit
 
 class DetailedPlaylistTableViewController: ItemTableViewController {
 
+  var song: Song?
   var playlist: Playlist?
-  var playlistName: String?
   @IBOutlet weak var NavBar: UINavigationItem!
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    NavBar.title = playlistName
+    NavBar.title = playlist!.name
   }
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -35,16 +35,18 @@ class DetailedPlaylistTableViewController: ItemTableViewController {
     return cell
   }
 
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    if segue.identifier == "preview" {
-      // find the NSIndexPath, crashing if we are unable to find it
-      let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    song = playlist!.allSongs[indexPath.row]
+    performSegueWithIdentifier("ToSongPreview", sender: self)
+  }
 
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    if segue.identifier == "ToSongPreview" {
       // we need to cast the destination controller; it's a bad error if we can't
       let destination = segue.destinationViewController as! SongViewController
 
       // set the data to show
-      destination.song = playlist!.allSongs[indexPath.row]
+      destination.song = song
     }
   }
 
