@@ -20,6 +20,7 @@ class Song: Item {
   let artistOverride: Artist?
   var album: Album?
   let genre: Genre?
+  var cachedVoteStatus = Request.Voted.None
 
   init(name: String, sortName: String, artist: Artist?, album: Album?, genre: Genre?, discNumber: Int?, trackNumber: Int?, userInfo: AnyObject?) {
 
