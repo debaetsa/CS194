@@ -48,6 +48,8 @@ class Queue: NSObject, Sendable {
     return currentQueueItem
   }
 
+  var lookup = [UInt32: QueueItem]()
+
 
   ///////////////////////
   // PRIVATE CONSTANTS //
@@ -95,23 +97,48 @@ class Queue: NSObject, Sendable {
     self.init(nowPlaying: NowPlaying(), sourceLibrary: library)
   }
 
+  func createQueueItem(forSong song: Song, withIdentifier maybeIdentifier: UInt32? = nil) -> QueueItem {
+    let item: QueueItem
+    if let identifier = maybeIdentifier {
+      item = QueueItem(identifier: identifier, song: song)
+    } else {
+      item = QueueItem(song: song)
+    }
+    lookup[item.identifier] = item
+    return item
+  }
+
   /** Finds the item for the specified Song, creating it if needed.
 
-  This will find an upcoming item for the specified Song.  If there is already
-  an upcoming item for the Song, it will return that.  If not, it will create
-  it and add it to the list of upcoming songs. */
-  func itemForSong(song: Song) -> QueueItem {
+   This will find an upcoming item for the specified Song.  If there is already
+   an upcoming item for the Song, it will return that.  If not, it will create
+   it and add it to the list of upcoming songs. */
+  func createUpcomingItemForSong(song: Song) -> QueueItem {
+    if let queueItem = findUpcomingItemForSong(song) {
+      return queueItem
+    } else {
+      // We weren't able to find a QueueItem for the song, so create one.
+      let item = createQueueItem(forSong: song)
+      upcomingQueueItems.append(item)
+      return item
+    }
+  }
+
+  /** Finds the upcoming QueueItem for the Song.
+
+   Note that this DOES NOT create a new QueueItem if one doesn't exist. */
+  func findUpcomingItemForSong(song: Song) -> QueueItem? {
     // First try to search for the Song.
     for item in upcoming {
       if item.song == song {
         return item
       }
     }
+    return nil
+  }
 
-    // We weren't able to find a QueueItem for the song, so create one.
-    let item = QueueItem(song: song)
-    upcomingQueueItems.append(item)
-    return item
+  func itemForIdentifier(identifier: UInt32) -> QueueItem? {
+    return lookup[identifier]
   }
 
   /** Fills to the upcoming queue to the minimum required length.
@@ -121,18 +148,24 @@ class Queue: NSObject, Sendable {
   were randomly generated, then it will have no impact. */
   private func fillToMinimum() -> Void {
     let count = upcomingQueueItems.count
+    let maybeSongs = library.rankSongsByVotes(0)
+    var counter = 0
     for _ in count ..< Queue.minimumUpcomingCount {
-      let maybeSong = library.pickRandomSong()
-
-      guard let song = maybeSong else {
-        // If we didn't get a result back, we have to stop adding songs.
+//      let maybeSong = library.pickRandomSong()
+      if (counter >= maybeSongs.count) {
         return
       }
+      let song = maybeSongs[counter]
+      counter++;
+//      guard let song = maybeSong else {
+//        // If we didn't get a result back, we have to stop adding songs.
+//        return
+//      }
 
       // TODO: Fix this issue.
       // Using this approach will technically allow multiple copies of a song
       // to appear in the Queue.  We can address that later.
-      upcomingQueueItems.append(QueueItem(song: song))
+      upcomingQueueItems.append(createQueueItem(forSong: song))
     }
   }
 
@@ -206,13 +239,14 @@ class Queue: NSObject, Sendable {
     data.appendByte(UInt8(currentQueueItem != nil ? 1 : 0))
     data.appendByte(UInt8(upcomingQueueItems.count))
 
-    for item in previousQueueItems {
-      data.appendCustomInteger(item.song.identifier)
+    var items = previousQueueItems
+    if let current = currentQueueItem {
+      items.append(current)
     }
-    if let item = currentQueueItem {
-      data.appendCustomInteger(item.song.identifier)
-    }
-    for item in upcomingQueueItems {
+    items.appendContentsOf(upcomingQueueItems)
+
+    for item in items {
+      data.appendCustomInteger(item.identifier)
       data.appendCustomInteger(item.song.identifier)
     }
 
@@ -239,13 +273,24 @@ class Queue: NSObject, Sendable {
     // then read all the objects
     var allQueueItems = [QueueItem]()
     for _ in 0..<(historyCount + currentCount + upcomingCount) {
-      guard let identifier = data.getNextInteger(&offset) else {
+      guard let queueItemIdentifier = data.getNextInteger(&offset) else {
         return false
       }
-      if let item = library.itemForIdentifier(identifier), let song = item as? Song {
-        allQueueItems.append(QueueItem(song: song))
+      guard let songIdentifier = data.getNextInteger(&offset) else {
+        return false
+      }
+      if let item = library.itemForIdentifier(songIdentifier), let song = item as? Song {
+        if let queueItem = itemForIdentifier(queueItemIdentifier) {
+          assert(queueItem.song === song)  // QueueItems should always be the same Song
+          allQueueItems.append(queueItem)  // re-using the item
+        } else {
+          allQueueItems.append(
+            createQueueItem(forSong: song, withIdentifier: queueItemIdentifier)
+          )
+        }
+
       } else {
-        print("Couldn't get a Song for ID \(identifier).")
+        print("Couldn't get a Song for ID \(songIdentifier).")
       }
     }
 
@@ -260,5 +305,42 @@ class Queue: NSObject, Sendable {
     center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
 
     return true
+  }
+  /** Refreshes the queue to take into account new votes.
+
+   * A couple things I don't like about this: 
+   * (1) Right now, I have to keep a parallel set of queuedSongs to avoid an ugly
+   * O(n^2) iteration over upcomingQueueItems to prevent duplication of songs. I
+   * think we can get rid of the QueueItem class entirely if you're okay with it.
+   * 
+   * (2) This keeps the queue at minimum upcoming count for now--we should talk 
+   * through exactly what we want the queue to do later.
+   */
+  func refreshUpcoming() {
+
+    var queuedSongs = Set<Song>()
+    for item in upcomingQueueItems {
+      queuedSongs.insert(item.song)
+    }
+    if upcomingQueueItems.count == 0 {
+      return
+    }
+    let minVotes = upcomingQueueItems[upcomingQueueItems.count - 1].song.votes!
+    let toAddSongs = library.rankSongsByVotes(minVotes)
+    for song in toAddSongs {
+      if !queuedSongs.contains(song) {
+        upcomingQueueItems.append(QueueItem(song: song))
+        queuedSongs.insert(song)
+      }
+    }
+    
+    upcomingQueueItems = upcomingQueueItems.sort({ (first, second) -> Bool in
+      if (first.song.votes! > second.song.votes!) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    upcomingQueueItems = Array(upcomingQueueItems[0..<Queue.minimumUpcomingCount])
   }
 }

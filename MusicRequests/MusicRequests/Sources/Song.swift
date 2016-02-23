@@ -20,6 +20,16 @@ class Song: Item {
   let artistOverride: Artist?
   var album: Album?
   let genre: Genre?
+  var cachedVote = Request.Vote.None
+
+  var isUpvoted: Bool {
+    return cachedVote == .Up
+  }
+
+  var isDownvoted: Bool {
+    return cachedVote == .Down
+  }
+  var votes: Int?
 
   init(name: String, sortName: String, artist: Artist?, album: Album?, genre: Genre?, discNumber: Int?, trackNumber: Int?, userInfo: AnyObject?) {
 
@@ -27,6 +37,7 @@ class Song: Item {
     self.album = album
     self.genre = genre
     self.artistOverride = artist
+    self.votes = 0
 
     super.init(name: name, sortName: sortName)
 
@@ -100,6 +111,7 @@ class Song: Item {
     self.userInfo = nil
     self.artistOverride = nil
     self.genre = nil
+    self.votes = 0
 
     super.init(data: data, lookup: lookup, offset: &offset)
 

@@ -25,6 +25,11 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
     self.updateData()  // load the initial data
   }
 
+  override func viewDidAppear(animated: Bool) {
+    self.updateData()
+    self.tableView.reloadData()
+  }
+  
   deinit {
     if let listener = self.listener {
       let center = NSNotificationCenter.defaultCenter()
@@ -55,6 +60,7 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
   }
 
   private func updateData() {
+    print("UpdateData() called.")
     items.removeAll()
     items.appendContentsOf(queue.history)
     if let current = queue.current {
@@ -63,6 +69,7 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
     } else {
       currentIndex = nil  // there is not a playing item
     }
+    queue.refreshUpcoming()
     items.appendContentsOf(queue.upcoming)
   }
 
@@ -83,7 +90,7 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
 
     let song = items[indexPath.row].song
     cell.textLabel?.text = song.name
-    cell.detailTextLabel?.text = song.artistAlbumString
+    cell.detailTextLabel?.text = "\(song.artistAlbumString), Votes: \(song.votes!)"
     cell.imageView?.image = song.album!.imageToShow
 
     return cell
@@ -94,10 +101,58 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
   }
 
   override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-    return (indexPath.row == currentIndex) ? indexPath : nil
+    return indexPath
+//    return (indexPath.row == currentIndex) ? indexPath : nil
   }
+
+//  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//    if indexPath.row == currentIndex {
+//      super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+//    } else {
+//      // we want to try and vote for the QueueItem
+//      if let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as? RemoteQueue {
+//        remoteQueue.upvote(withQueueItem: items[indexPath.row])
+//      }
+//      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+//    }
+//  }
 
   @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
     self.dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+  override func tableView(tableView: UITableView,
+    editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+      let upvote = UITableViewRowAction(style: .Normal, title: "+") { action, index in
+        let currentSong = self.items[indexPath.row].song;
+        if let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as? RemoteQueue {
+          remoteQueue.upvote(withQueueItem: self.items[indexPath.row])
+          print("Upvoted song from listener device: \(currentSong.name): \(currentSong.votes!)");
+        } else {
+          currentSong.votes! += 1;
+          self.updateData();
+          self.tableView.reloadData()
+          AppDelegate.sharedDelegate.localSession.sendQueueIfNeeded()
+          print("Upvoted song from host device: \(currentSong.name): \(currentSong.votes!)");
+        }
+      }
+      upvote.backgroundColor = UIColor.blueColor()
+      
+      let downvote = UITableViewRowAction(style: .Normal, title: "-") { action, index in
+        let currentSong = self.items[indexPath.row].song;
+        if let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as? RemoteQueue {
+          remoteQueue.downvote(withQueueItem: self.items[indexPath.row])
+          print("Downvoted song from listener device: \(currentSong.name): \(currentSong.votes!)");
+        } else {
+          currentSong.votes! -= 1;
+          self.updateData();
+          self.tableView.reloadData()
+          AppDelegate.sharedDelegate.localSession.sendQueueIfNeeded()
+          print("Downvoted song from host device: \(currentSong.name): \(currentSong.votes!)");
+        }
+      }
+      downvote.backgroundColor = UIColor.redColor()
+      
+      return [downvote, upvote]
   }
 }

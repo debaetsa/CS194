@@ -17,6 +17,8 @@ class AppleLibrary: NSObject, Library {
   let allPlaylists: [Playlist]
   let allGenres: [Genre]
 
+  let lookup: [UInt32: Item]
+
   override init() {
     let query = MPMediaQuery.songsQuery()
 
@@ -34,6 +36,7 @@ class AppleLibrary: NSObject, Library {
     var albums = [Album]()
     var genres = [String: Genre]()
     var idToSong = [MPMediaEntityPersistentID: Song]()
+    var lookup = [UInt32: Item]()
 
     for item in items {
       var genre: Genre?
@@ -77,6 +80,7 @@ class AppleLibrary: NSObject, Library {
       }
 
       let song = Song(name: item.title ?? "", artist: artist, album: album, genre: genre, discNumber: item.discNumber, trackNumber: item.albumTrackNumber, userInfo: item)
+      lookup[song.identifier] = song
       songs.append(song)
       idToSong[item.persistentID] = song
     }
@@ -112,6 +116,7 @@ class AppleLibrary: NSObject, Library {
     allAlbums = albums.sort(Item.sorter)
     allPlaylists = playlists.sort(Item.sorter)
     allGenres = genres.values.sort(Item.sorter)
+    self.lookup = lookup
 
     for genre in allGenres {
       genre.didFinishImporting()
