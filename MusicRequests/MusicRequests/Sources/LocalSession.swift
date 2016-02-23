@@ -185,12 +185,26 @@ class LocalSession: Session, NSNetServiceDelegate {
         if let item = request.queueItem {
           // this already has a QueueItem, so maybe increment the vote
           // TODO: Increment the vote.
-          print("Received vote \(request.vote) for QueueItem \(item).")
+          let localItem = queue.itemForIdentifier(item.identifier)
+          if request.vote == Request.Vote.Up {
+            localItem?.song.votes!++
+          }
+          if request.vote == Request.Vote.Down {
+            localItem?.song.votes!--
+          }
+          queue.refreshUpcoming()
+          let queueSent = sendQueueIfNeeded()
+          // TODO: Post notification to server app's view controllers so they update in live time
+          // TODO: Broadcast new queue state to all other listeners
+          print("Received vote \(request.vote) for QueueItem  \(item) and sendQueueIfNeeded returned \(queueSent).")
         } else {
           // There should be a Song.  Create a QueueItem for it.
           if let song = request.song {
-            let _ = queue.createUpcomingItemForSong(song)  // this will get sent
-            print("Received vote \(request.vote) for Song \(song.name).")
+            song.votes!++
+//            let localItem = queue.createUpcomingItemForSong(song)  // this will get sent
+            queue.refreshUpcoming()
+            let queueSent = sendQueueIfNeeded()
+            print("Received vote \(request.vote) for Song \(song.name) and sendQueueIfNeeded returned \(queueSent).")
             // TODO: Do something with the QueueItem.
 
             let center = NSNotificationCenter.defaultCenter()

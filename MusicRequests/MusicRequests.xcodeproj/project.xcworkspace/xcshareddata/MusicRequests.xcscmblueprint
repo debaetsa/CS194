@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "37AA689A774FA821DADD78175B556EB44AF2B1E2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "4099C8052EE7ABC80938CE060D9B759272FE60A4" : 0,
+    "37AA689A774FA821DADD78175B556EB44AF2B1E2" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F93E200B-155E-4ECD-81FD-D1033ED1E597",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "4099C8052EE7ABC80938CE060D9B759272FE60A4" : "CS194\/MusicRequests\/MGSwipeTableCell\/",
+    "37AA689A774FA821DADD78175B556EB44AF2B1E2" : "CS194\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "MusicRequests",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "MusicRequests\/MusicRequests.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/debaetsa\/CS194.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "37AA689A774FA821DADD78175B556EB44AF2B1E2"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MortimerGoro\/MGSwipeTableCell.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "4099C8052EE7ABC80938CE060D9B759272FE60A4"
+    }
+  ]
+}

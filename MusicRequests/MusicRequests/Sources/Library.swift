@@ -21,7 +21,9 @@ protocol Library {
   var allGenres: [Genre] { get }
 
   func pickRandomSong() -> Song?
-
+  
+  func rankSongsByVotes(minVotes: Int) -> [Song]
+  
 }
 
 /** Define an extension to the protocol.
@@ -41,5 +43,21 @@ extension Library {
 
     let index = Int(arc4random_uniform(UInt32(count)))
     return songs[index]
+  }
+  
+  func rankSongsByVotes(minVotes: Int) -> [Song] {
+    let filteredSongs = allSongs.filter({
+      $0.votes >= minVotes
+    })
+    return filteredSongs.sort({ (first, second) -> Bool in
+      if (first.votes! > second.votes!) {
+        return true;
+      } else if (first.votes! < second.votes!) {
+        return false;
+      } else {
+        // Randomly pick amongst equally-ranked songs
+        return Int(arc4random_uniform(2)) == 1
+      }
+    })
   }
 }
