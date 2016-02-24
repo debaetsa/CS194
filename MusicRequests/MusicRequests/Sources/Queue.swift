@@ -201,21 +201,23 @@ class Queue: NSObject, Sendable {
    This involves adding the current song to the list of upcoming songs,
    updating the currently playing song, and then grabbing a new Song. */
   func returnToPreviousSong() {
-    // If there was something playing, move it to the upcoming list.
-    if let nextSong = currentQueueItem {
-      upcomingQueueItems.insert(nextSong, atIndex: 0)
+    if(!previousQueueItems.isEmpty) {
+      // If there was something playing, move it to the upcoming list.
+      if let nextSong = currentQueueItem {
+        upcomingQueueItems.insert(nextSong, atIndex: 0)
+      }
+      
+      // Place the most recent song in the "now playing" position.
+      let previousSong = previousQueueItems.last
+      currentQueueItem = previousSong
+      if let _ = previousSong {
+        previousQueueItems.removeLast()
+      }
+      
+      // Post a notification informing the rest of application about the change.
+      let center = NSNotificationCenter.defaultCenter()
+      center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
     }
-
-    // Place the most recent song in the "now playing" position.
-    let previousSong = previousQueueItems.last
-    currentQueueItem = previousSong
-    if let _ = previousSong {
-      previousQueueItems.removeLast()
-    }
-
-    // Post a notification informing the rest of application about the change.
-    let center = NSNotificationCenter.defaultCenter()
-    center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
   }
 
   // MARK: - Sending
