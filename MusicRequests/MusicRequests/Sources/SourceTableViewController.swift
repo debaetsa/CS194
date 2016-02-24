@@ -154,6 +154,11 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
   }
 
+  override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
+    Style.darkTheme.sourceView(tableView, header: header)
+  }
+
   /*
   // Override to support conditional editing of the table view.
   override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

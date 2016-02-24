@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
     // change the color theme of the app
-    Style.darkTheme()
+    Style.darkTheme.standardView()
 
     #if (arch(i386) || arch(x86_64)) && os(iOS)
       let library = TemporaryLibrary()
