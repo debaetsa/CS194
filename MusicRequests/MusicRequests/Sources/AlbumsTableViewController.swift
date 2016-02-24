@@ -9,31 +9,48 @@
 import UIKit
 
 class AlbumsTableViewController: ItemTableViewController {
+  var albums: [Album] = []
   var album: Album?
   var artist: Artist?
   var song: Song?
   
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return library.allAlbums.count
+  let searchController = UISearchController(searchResultsController: nil)
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    searchController.searchResultsUpdater = self
+    searchController.dimsBackgroundDuringPresentation = false
+    definesPresentationContext = true
+    tableView.tableHeaderView = searchController.searchBar
   }
-
+  
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if(!self.searchController.active || searchController.searchBar.text == ""){
+      return library.allAlbums.count
+    } else {
+      return albums.count
+    }
+  }
+  
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
-
-    let albums = library.allAlbums
+    
+    if(!self.searchController.active || searchController.searchBar.text == ""){
+      albums = library.allAlbums
+    }
     let currentAlbum = albums[indexPath.row]
     let artistNames = currentAlbum.artists.map({ $0.name }).joinWithSeparator(", ")
     let songCount = currentAlbum.songs.count
-
+    
     cell.textLabel?.text = currentAlbum.name
     cell.detailTextLabel?.text = "\(artistNames) • \(songCount.pluralize(("Song", "Songs")))"
     cell.imageView?.image = currentAlbum.imageToShow
-
+    
     return cell
   }
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    album = library.allAlbums[indexPath.row]
+    album = albums[indexPath.row]
     performSegueWithIdentifier("ToAlbumDetail", sender: self)
   }
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
@@ -42,5 +59,18 @@ class AlbumsTableViewController: ItemTableViewController {
       let destinationVC = segue.destinationViewController as! DetailedAlbumTableViewController
       destinationVC.album = album
     }
+  }
+  
+  func filterContentForSearchText(searchText: String, scope: String = "All") {
+    albums = library.allAlbums.filter { album in
+      return album.name.lowercaseString.containsString(searchText.lowercaseString)
+    }
+    tableView.reloadData()
+  }
+}
+
+extension AlbumsTableViewController: UISearchResultsUpdating {
+  func updateSearchResultsForSearchController(searchController: UISearchController) {
+    filterContentForSearchText(searchController.searchBar.text!)
   }
 }

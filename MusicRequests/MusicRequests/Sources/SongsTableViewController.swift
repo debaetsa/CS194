@@ -9,58 +9,60 @@
 import UIKit
 
 class SongsTableViewController: ItemTableViewController {
-  var song: Song?
-
+  
+  let searchController = UISearchController(searchResultsController: nil)
+  var songs : [Song] = []
+  
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return library.allSongs.count
-  }
-
-  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
-
-    let songs = library.allSongs
-    let currentSong = songs[indexPath.row]
-
-    cell.textLabel?.text = "\(currentSong.cachedVote) \(currentSong.name)"
-    cell.detailTextLabel?.text = currentSong.artistAlbumString
-    cell.imageView?.image = currentSong.album!.imageToShow
-
-    return cell
-  }
-
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    if let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as? RemoteQueue {
-      remoteQueue.upvote(withSong: library.allSongs[indexPath.row])
-    }
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
-  }
-
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    if segue.identifier == "ToSongPreview" {
-      let destination = segue.destinationViewController as! SongViewController
-      destination.song = song
+    if(!self.searchController.active || searchController.searchBar.text == ""){
+      return library.allSongs.count
+    } else {
+      return songs.count
     }
   }
   
-  override func tableView(tableView: UITableView,
-    editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-    let upvote = UITableViewRowAction(style: .Normal, title: "+") { action, index in
-      let currentSong = self.library.allSongs[indexPath.row];
-      currentSong.votes! += 1;
-      self.queue.refreshUpcoming()
-      print("Upvoted song: \(currentSong.name): \(currentSong.votes!)");
-    }
-    upvote.backgroundColor = UIColor.blueColor()
-    
-    let downvote = UITableViewRowAction(style: .Normal, title: "-") { action, index in
-      let currentSong = self.library.allSongs[indexPath.row];
-      currentSong.votes! -= 1;
-      self.queue.refreshUpcoming()
-      print("Upvoted song: \(currentSong.name): \(currentSong.votes!)");
-    }
-    downvote.backgroundColor = UIColor.redColor()
-    
-    return [downvote, upvote]
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    searchController.searchResultsUpdater = self
+    searchController.dimsBackgroundDuringPresentation = false
+    definesPresentationContext = true
+    tableView.tableHeaderView = searchController.searchBar
   }
+  
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
+    
+    if(!self.searchController.active || searchController.searchBar.text == ""){
+      songs = library.allSongs
+    }
+    
+    let currentSong = songs[indexPath.row]
+    
+    cell.textLabel?.text = currentSong.name
+    cell.detailTextLabel?.text = currentSong.artistAlbumString
+    cell.imageView?.image = currentSong.album!.imageToShow
+    
+    return cell
+  }
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    if segue.identifier == "preview" {
+      let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
+      let destination = segue.destinationViewController as! SongViewController
+      destination.song = songs[indexPath.row]
+    }
+  }
+  
+  func filterContentForSearchText(searchText: String, scope: String = "All") {
+    songs = library.allSongs.filter { song in
+      return song.name.lowercaseString.containsString(searchText.lowercaseString)
+    }
+    tableView.reloadData()
+  }
+}
 
+extension SongsTableViewController: UISearchResultsUpdating {
+  func updateSearchResultsForSearchController(searchController: UISearchController) {
+    filterContentForSearchText(searchController.searchBar.text!)
+  }
 }
