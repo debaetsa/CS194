@@ -56,6 +56,10 @@ class Queue: NSObject, Sendable {
   ///////////////////////
 
   /** Stores the minimum size for the upcoming queue. */
+  
+  //This crashes on my phone because I have less than 15 songs so I've fixed 
+  //this by making it the minimum of this or the total number of songs on the
+  //phone
   private static let minimumUpcomingCount = 15;
 
 
@@ -150,7 +154,7 @@ class Queue: NSObject, Sendable {
     let count = upcomingQueueItems.count
     let maybeSongs = library.rankSongsByVotes(0)
     var counter = 0
-    for _ in count ..< Queue.minimumUpcomingCount {
+    for _ in count ..< min(library.allSongs.count, Queue.minimumUpcomingCount) {
 //      let maybeSong = library.pickRandomSong()
       if (counter >= maybeSongs.count) {
         return
@@ -341,6 +345,6 @@ class Queue: NSObject, Sendable {
         return false;
       }
     })
-    upcomingQueueItems = Array(upcomingQueueItems[0..<Queue.minimumUpcomingCount])
+    upcomingQueueItems = Array(upcomingQueueItems[0..<min(library.allSongs.count, Queue.minimumUpcomingCount)])
   }
 }
