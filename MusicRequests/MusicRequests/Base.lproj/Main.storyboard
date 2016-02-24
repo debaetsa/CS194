@@ -10,11 +10,15 @@
         <!--Navigation Controller-->
         <scene sceneID="lTY-HJ-ap6">
             <objects>
-                <navigationController id="Dfl-c5-LVm" sceneMemberID="viewController">
+                <navigationController toolbarHidden="NO" id="Dfl-c5-LVm" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zV3-Qi-0b6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="8dw-1O-nZs">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="iDw-oc-B5F" kind="relationship" relationship="rootViewController" id="gY5-F6-b7y"/>
                     </connections>
@@ -90,6 +94,30 @@
                             <outlet property="delegate" destination="iDw-oc-B5F" id="2ds-K4-uY7"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="zAD-YO-ObO"/>
+                        <barButtonItem image="rewind_button" id="nAx-fa-pds">
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="prevButtonPressed:" destination="iDw-oc-B5F" id="1g7-5t-COy"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Nkp-a8-pQG"/>
+                        <barButtonItem image="play_button" id="BWc-Xz-Hes">
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="playButtonPressed:" destination="iDw-oc-B5F" id="G6K-pi-70h"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="45v-T4-dDf"/>
+                        <barButtonItem image="forward_button" id="if4-Fu-gMr">
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="nextButtonPressed:" destination="iDw-oc-B5F" id="HcP-Ch-AxK"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="04D-Ue-cfm"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Music Requests" id="8Oy-4U-Wrn">
                         <barButtonItem key="leftBarButtonItem" title="Source" id="fdq-D9-woY">
                             <connections>
@@ -102,6 +130,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="playButton" destination="BWc-Xz-Hes" id="s4d-XF-OcU"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="elW-V5-Elo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
