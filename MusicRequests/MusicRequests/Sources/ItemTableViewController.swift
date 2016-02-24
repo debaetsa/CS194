@@ -22,7 +22,6 @@ class ItemTableViewController: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    Style.darkTheme()
 
     let delegate = AppDelegate.sharedDelegate
     library = delegate.library

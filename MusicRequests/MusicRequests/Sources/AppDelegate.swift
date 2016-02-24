@@ -3,7 +3,7 @@
 //  MusicRequests
 //
 //  Created by Max Radermacher on 1/24/16.
-//
+//  Copyright © 2016 Capps, De Baets, Radermacher, Volk. All rights reserved.
 //
 
 import UIKit
@@ -59,6 +59,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+
+    // change the color theme of the app
+    Style.darkTheme()
 
     #if (arch(i386) || arch(x86_64)) && os(iOS)
       let library = TemporaryLibrary()
