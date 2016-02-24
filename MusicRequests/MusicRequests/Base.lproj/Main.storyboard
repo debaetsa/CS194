@@ -1151,6 +1151,7 @@
                         <outlet property="imageViewAlbumArt" destination="X6n-j1-ChJ" id="Ew6-c0-W1Y"/>
                         <outlet property="labelSongDetails" destination="tPF-Hh-WCJ" id="6g7-Of-LpI"/>
                         <outlet property="labelSongName" destination="d6l-fC-4eS" id="Rp8-2r-LFb"/>
+                        <outlet property="playButton" destination="BO4-zH-8tV" id="f6o-O9-iM8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Chw-xG-brC" userLabel="First Responder" sceneMemberID="firstResponder"/>
