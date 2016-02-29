@@ -10,6 +10,7 @@ import UIKit
 
 class NowPlayingViewController: SongViewController {
 
+  @IBOutlet weak var playButton: UIButton!
   let nowPlaying = AppDelegate.sharedDelegate.nowPlaying
   var listener: NSObjectProtocol?
 
@@ -19,6 +20,12 @@ class NowPlayingViewController: SongViewController {
     let center = NSNotificationCenter.defaultCenter()
     listener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: nowPlaying.queue, queue: nil) { [unowned self] (note) -> Void in
       self.reloadSong()
+    }
+    
+    if (nowPlaying.isPlaying) {
+      playButton.setImage(UIImage(named: "pause_button"), forState: UIControlState.Normal)
+    } else {
+      playButton.setImage(UIImage(named: "play_button"), forState: UIControlState.Normal)
     }
   }
 

@@ -56,6 +56,10 @@ class Queue: NSObject, Sendable {
   ///////////////////////
 
   /** Stores the minimum size for the upcoming queue. */
+  
+  //This crashes on my phone because I have less than 15 songs so I've fixed 
+  //this by making it the minimum of this or the total number of songs on the
+  //phone
   private static let minimumUpcomingCount = 15;
 
 
@@ -150,7 +154,7 @@ class Queue: NSObject, Sendable {
     let count = upcomingQueueItems.count
     let maybeSongs = library.rankSongsByVotes(0)
     var counter = 0
-    for _ in count ..< Queue.minimumUpcomingCount {
+    for _ in count ..< min(library.allSongs.count, Queue.minimumUpcomingCount) {
 //      let maybeSong = library.pickRandomSong()
       if (counter >= maybeSongs.count) {
         return
@@ -197,21 +201,23 @@ class Queue: NSObject, Sendable {
    This involves adding the current song to the list of upcoming songs,
    updating the currently playing song, and then grabbing a new Song. */
   func returnToPreviousSong() {
-    // If there was something playing, move it to the upcoming list.
-    if let nextSong = currentQueueItem {
-      upcomingQueueItems.insert(nextSong, atIndex: 0)
+    if(!previousQueueItems.isEmpty) {
+      // If there was something playing, move it to the upcoming list.
+      if let nextSong = currentQueueItem {
+        upcomingQueueItems.insert(nextSong, atIndex: 0)
+      }
+      
+      // Place the most recent song in the "now playing" position.
+      let previousSong = previousQueueItems.last
+      currentQueueItem = previousSong
+      if let _ = previousSong {
+        previousQueueItems.removeLast()
+      }
+      
+      // Post a notification informing the rest of application about the change.
+      let center = NSNotificationCenter.defaultCenter()
+      center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
     }
-
-    // Place the most recent song in the "now playing" position.
-    let previousSong = previousQueueItems.last
-    currentQueueItem = previousSong
-    if let _ = previousSong {
-      previousQueueItems.removeLast()
-    }
-
-    // Post a notification informing the rest of application about the change.
-    let center = NSNotificationCenter.defaultCenter()
-    center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
   }
 
   // MARK: - Sending
@@ -341,6 +347,6 @@ class Queue: NSObject, Sendable {
         return false;
       }
     })
-    upcomingQueueItems = Array(upcomingQueueItems[0..<Queue.minimumUpcomingCount])
+    upcomingQueueItems = Array(upcomingQueueItems[0..<min(library.allSongs.count, Queue.minimumUpcomingCount)])
   }
 }
