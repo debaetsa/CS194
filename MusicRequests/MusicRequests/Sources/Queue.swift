@@ -180,6 +180,7 @@ class Queue: NSObject, Sendable {
   func advanceToNextSong() {
     // If there was something playing, move it to the history list.
     if let previousSong = currentQueueItem {
+      previousSong.song.votes = 0
       previousQueueItems.append(previousSong)
     }
 
@@ -334,7 +335,7 @@ class Queue: NSObject, Sendable {
     let minVotes = upcomingQueueItems[upcomingQueueItems.count - 1].song.votes!
     let toAddSongs = library.rankSongsByVotes(minVotes)
     for song in toAddSongs {
-      if !queuedSongs.contains(song) {
+      if !queuedSongs.contains(song) && current != nil && current!.song != song {
         upcomingQueueItems.append(QueueItem(song: song))
         queuedSongs.insert(song)
       }
