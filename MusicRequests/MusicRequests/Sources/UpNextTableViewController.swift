@@ -11,8 +11,6 @@ import UIKit
 class UpNextTableViewController: ItemTableViewController, SessionChanged {
 
   var listener: NSObjectProtocol?
-
-  @IBOutlet weak var playButton: UIBarButtonItem!
   
   var items = [QueueItem]()
   var currentIndex: Int?
@@ -31,15 +29,10 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
   override func viewDidAppear(animated: Bool) {
     self.updateData()
     self.tableView.reloadData()
-//    if (self.queue.nowPlaying.isPlaying){
-//      playButton.image = UIImage(named: "pause_button")
-//    } else {
-//      playButton.image = UIImage(named: "play_button")
-//    }
   }
   
-  func isPlaying() -> Bool {
-    return self.queue.nowPlaying.isPlaying
+  func getQueue() -> Queue {
+    return self.queue
   }
   
   deinit {
@@ -117,18 +110,6 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
 //    return (indexPath.row == currentIndex) ? indexPath : nil
   }
 
-//  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//    if indexPath.row == currentIndex {
-//      super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
-//    } else {
-//      // we want to try and vote for the QueueItem
-//      if let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as? RemoteQueue {
-//        remoteQueue.upvote(withQueueItem: items[indexPath.row])
-//      }
-//      tableView.deselectRowAtIndexPath(indexPath, animated: true)
-//    }
-//  }
-
   @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
     self.dismissViewControllerAnimated(true, completion: nil)
   }
@@ -166,23 +147,5 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
       downvote.backgroundColor = UIColor.redColor()
       
       return [downvote, upvote]
-  }
-  
-  @IBAction func prevButtonPressed(sender: AnyObject) {
-    self.queue.nowPlaying.last()
-  }
-  
-  @IBAction func playButtonPressed(sender: AnyObject) {
-    if (self.queue.nowPlaying.isPlaying) {
-      self.queue.nowPlaying.pause()
-      playButton.image = UIImage(named: "play_button")
-    } else {
-      self.queue.nowPlaying.play()
-      playButton.image = UIImage(named: "pause_button")
-    }
-  }
-  
-  @IBAction func nextButtonPressed(sender: AnyObject) {
-    self.queue.nowPlaying.next()
   }
 }

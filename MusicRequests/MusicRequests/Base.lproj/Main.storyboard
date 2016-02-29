@@ -30,7 +30,7 @@
         <!--Music Requests-->
         <scene sceneID="xBw-hp-ZA9">
             <objects>
-                <viewController id="6hF-xc-4kf" sceneMemberID="viewController">
+                <viewController id="6hF-xc-4kf" customClass="QueueViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nxD-yJ-wGO"/>
                         <viewControllerLayoutGuide type="bottom" id="dQf-c7-onU"/>
@@ -65,21 +65,21 @@
                         <barButtonItem image="rewind_button" id="nAx-fa-pds">
                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="prevButtonPressed:" destination="iDw-oc-B5F" id="1g7-5t-COy"/>
+                                <action selector="prevButtonPressed:" destination="6hF-xc-4kf" id="Yj1-Wl-jEx"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Nkp-a8-pQG"/>
                         <barButtonItem image="play_button" id="BWc-Xz-Hes">
                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="playButtonPressed:" destination="iDw-oc-B5F" id="G6K-pi-70h"/>
+                                <action selector="playButtonPressed:" destination="6hF-xc-4kf" id="rgK-aW-URd"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="45v-T4-dDf"/>
                         <barButtonItem image="forward_button" id="if4-Fu-gMr">
                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="nextButtonPressed:" destination="iDw-oc-B5F" id="HcP-Ch-AxK"/>
+                                <action selector="nextButtonPressed:" destination="6hF-xc-4kf" id="kUF-UI-xiQ"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="04D-Ue-cfm"/>
@@ -96,6 +96,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="playButton" destination="BWc-Xz-Hes" id="JAI-fk-qpY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zrp-Gd-AzN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -169,9 +172,6 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <connections>
-                        <outlet property="playButton" destination="BWc-Xz-Hes" id="s4d-XF-OcU"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="elW-V5-Elo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1216,6 +1216,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Guu-Xr-O2m"/>
-        <segue reference="qJT-lF-pMe"/>
+        <segue reference="SZD-ah-ccg"/>
     </inferredMetricsTieBreakers>
 </document>

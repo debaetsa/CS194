@@ -8,39 +8,41 @@
 
 import UIKit
 
-class QueueViewController: UITableViewController {
+class QueueViewController: UIViewController {
 
+  
+  
   @IBOutlet weak var playButton: UIBarButtonItem!
   
   @IBAction func prevButtonPressed(sender: AnyObject) {
-//    self.queue.nowPlaying.last()
+    let upNextVC = self.childViewControllers[0] as! UpNextTableViewController
+    upNextVC.getQueue().nowPlaying.last()
   }
   
   @IBAction func playButtonPressed(sender: AnyObject) {
-//    if (self.queue.nowPlaying.isPlaying) {
-//      self.queue.nowPlaying.pause()
-//      playButton.image = UIImage(named: "play_button")
-//    } else {
-//      self.queue.nowPlaying.play()
-//      playButton.image = UIImage(named: "pause_button")
-//    }
+    let upNextVC = self.childViewControllers[0] as! UpNextTableViewController
+    let queue = upNextVC.getQueue()
+    if (queue.nowPlaying.isPlaying) {
+      queue.nowPlaying.pause()
+      playButton.image = UIImage(named: "play_button")
+    } else {
+      queue.nowPlaying.play()
+      playButton.image = UIImage(named: "pause_button")
+    }
   }
   
   @IBAction func nextButtonPressed(sender: AnyObject) {
-//    self.queue.nowPlaying.next()
+    let upNextVC = self.childViewControllers[0] as! UpNextTableViewController
+    upNextVC.queue.nowPlaying.next()
   }
   
   override func viewDidAppear(animated: Bool) {
-    let upNextVC = self.childViewControllers[0]
-    print ("ChildViewControllers: \(upNextVC)")
-//    print ("queue playing: \(upNextVC.isPlaying())")
-//    self.updateData()
-//    self.tableView.reloadData()
-//    if (self.queue.nowPlaying.isPlaying){
-//      playButton.image = UIImage(named: "pause_button")
-//    } else {
-//      playButton.image = UIImage(named: "play_button")
-//    }
+    let upNextVC = self.childViewControllers[0] as! UpNextTableViewController
+    if (upNextVC.getQueue().nowPlaying.isPlaying){
+      playButton.image = UIImage(named: "pause_button")
+    } else {
+      playButton.image = UIImage(named: "play_button")
+    }
   }
 
 }
