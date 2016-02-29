@@ -31,11 +31,15 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
   override func viewDidAppear(animated: Bool) {
     self.updateData()
     self.tableView.reloadData()
-    if (self.queue.nowPlaying.isPlaying){
-      playButton.image = UIImage(named: "pause_button")
-    } else {
-      playButton.image = UIImage(named: "play_button")
-    }
+//    if (self.queue.nowPlaying.isPlaying){
+//      playButton.image = UIImage(named: "pause_button")
+//    } else {
+//      playButton.image = UIImage(named: "play_button")
+//    }
+  }
+  
+  func isPlaying() -> Bool {
+    return self.queue.nowPlaying.isPlaying
   }
   
   deinit {
