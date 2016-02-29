@@ -45,9 +45,12 @@
                                     <segue destination="iDw-oc-B5F" kind="embed" identifier="UpNextTableSegue" id="Vmv-GK-XL7"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1I-Q9-M9O">
-                                <rect key="frame" x="513" y="518" width="67" height="30"/>
-                                <state key="normal" title="Add Song"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1I-Q9-M9O">
+                                <rect key="frame" x="495" y="520" width="104" height="22"/>
+                                <state key="normal" image="Temp_plus_button"/>
+                                <connections>
+                                    <segue destination="3vd-1D-etH" kind="presentation" id="E5b-2t-9Gj"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -55,7 +58,7 @@
                             <constraint firstAttribute="trailing" secondItem="JfY-Ma-sFp" secondAttribute="trailing" id="0yg-6e-BFv"/>
                             <constraint firstItem="dQf-c7-onU" firstAttribute="top" secondItem="h1I-Q9-M9O" secondAttribute="bottom" constant="8" id="V42-jW-ebu"/>
                             <constraint firstAttribute="bottom" secondItem="JfY-Ma-sFp" secondAttribute="bottom" id="VrA-XR-x7w"/>
-                            <constraint firstItem="h1I-Q9-M9O" firstAttribute="leading" secondItem="JfY-Ma-sFp" secondAttribute="trailing" constant="-87" id="ppO-8Z-6lG"/>
+                            <constraint firstItem="h1I-Q9-M9O" firstAttribute="trailing" secondItem="JfY-Ma-sFp" secondAttribute="trailing" constant="-8" id="ppO-8Z-6lG"/>
                             <constraint firstItem="JfY-Ma-sFp" firstAttribute="top" secondItem="ypp-Yn-W6i" secondAttribute="top" id="t2Y-9P-mhA"/>
                             <constraint firstItem="JfY-Ma-sFp" firstAttribute="leading" secondItem="ypp-Yn-W6i" secondAttribute="leading" id="vTQ-Sf-kYA"/>
                         </constraints>
@@ -90,19 +93,15 @@
                                 <segue destination="rAk-2t-h0h" kind="presentation" modalTransitionStyle="coverVertical" id="KQQ-gv-JPo"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Library" id="l9I-Od-fK9">
-                            <connections>
-                                <segue destination="3vd-1D-etH" kind="presentation" modalTransitionStyle="coverVertical" id="zL6-He-7wK"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addSongButton" destination="h1I-Q9-M9O" id="JdO-Xp-T37"/>
                         <outlet property="playButton" destination="BWc-Xz-Hes" id="JAI-fk-qpY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zrp-Gd-AzN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2915" y="911"/>
+            <point key="canvasLocation" x="-3013" y="937"/>
         </scene>
         <!--Test-->
         <scene sceneID="H66-PI-Vd6">
@@ -1210,6 +1209,7 @@
         <image name="Genres" width="25" height="25"/>
         <image name="Playlists" width="25" height="25"/>
         <image name="Songs" width="25" height="25"/>
+        <image name="Temp_plus_button" width="25" height="25"/>
         <image name="forward_button" width="40" height="40"/>
         <image name="play_button" width="40" height="40"/>
         <image name="rewind_button" width="40" height="40"/>

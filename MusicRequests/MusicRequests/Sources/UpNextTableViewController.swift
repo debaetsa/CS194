@@ -54,7 +54,6 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
       self.updateData()
       self.tableView.reloadData()
     }
-
   }
 
   func didChangeSession(newSession: Session) {

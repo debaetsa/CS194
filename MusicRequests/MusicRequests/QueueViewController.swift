@@ -9,9 +9,12 @@
 import UIKit
 
 class QueueViewController: UIViewController {
-
   
+  let playButtonFile = "play_button"
+  let pauseButtonFile = "pause_button"
+  let addSongButtonFile = "temp_plus_button"
   
+  @IBOutlet weak var addSongButton: UIButton!
   @IBOutlet weak var playButton: UIBarButtonItem!
   
   @IBAction func prevButtonPressed(sender: AnyObject) {
@@ -24,10 +27,10 @@ class QueueViewController: UIViewController {
     let queue = upNextVC.getQueue()
     if (queue.nowPlaying.isPlaying) {
       queue.nowPlaying.pause()
-      playButton.image = UIImage(named: "play_button")
+      playButton.image = UIImage(named: playButtonFile)
     } else {
       queue.nowPlaying.play()
-      playButton.image = UIImage(named: "pause_button")
+      playButton.image = UIImage(named: pauseButtonFile)
     }
   }
   
@@ -39,10 +42,9 @@ class QueueViewController: UIViewController {
   override func viewDidAppear(animated: Bool) {
     let upNextVC = self.childViewControllers[0] as! UpNextTableViewController
     if (upNextVC.getQueue().nowPlaying.isPlaying){
-      playButton.image = UIImage(named: "pause_button")
+      playButton.image = UIImage(named: pauseButtonFile)
     } else {
-      playButton.image = UIImage(named: "play_button")
+      playButton.image = UIImage(named: playButtonFile)
     }
   }
-
 }
