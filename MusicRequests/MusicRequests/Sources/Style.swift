@@ -40,6 +40,15 @@ struct Style {
       // Change color of navigation links in navigation bar
       UINavigationBar.appearance().tintColor = lightGray
 
+      // Change the basic style of the search bar
+      UISearchBar.appearance().barStyle = UIBarStyle.Black
+      // Change color surrounding the search field
+      UISearchBar.appearance().barTintColor = dark
+      // Change color of the cancel button in the search bar
+      UISearchBar.appearance().tintColor = lightGray
+      // Change color of text typed in search bar
+      UITextField.appearance().textColor = lightGray
+
       // Change color of tab bar
       UITabBar.appearance().barTintColor = darkGray
       // Change color of selected icon in tab bar

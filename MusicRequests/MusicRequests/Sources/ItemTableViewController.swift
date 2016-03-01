@@ -23,6 +23,10 @@ class ItemTableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    // This clears the background of each table view so that it displays
+    // the correct color in the "bounce" area
+    tableView.backgroundView = UIView()
+
     let delegate = AppDelegate.sharedDelegate
     library = delegate.library
     queue = delegate.queue
