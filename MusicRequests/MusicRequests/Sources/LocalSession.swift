@@ -94,7 +94,11 @@ class LocalSession: Session, NSNetServiceDelegate {
    frequency of these updates depending on the data usage. */
   private var queueChangedListener: NSObjectProtocol?
 
-  init(library: Library, queue: Queue) {
+  private var localQueue: LocalQueue {
+    return queue as! LocalQueue
+  }
+
+  init(library: Library, queue: LocalQueue) {
     self.fullLibrary = library
     self.sourceLibrary = library
     self.currentQueueData = queue.sendableData
@@ -182,38 +186,29 @@ class LocalSession: Session, NSNetServiceDelegate {
     switch identifier {
     case .Request:
       if let request = Request(data: data, lookup: (sourceLibrary as! AppleLibrary).lookup, queue: queue) {
-        if let item = request.queueItem {
-          // this already has a QueueItem, so maybe increment the vote
-          // TODO: Increment the vote.
-          let localItem = queue.itemForIdentifier(item.identifier)
-          if request.vote == Request.Vote.Up {
-            localItem?.song.votes!++
-          }
-          if request.vote == Request.Vote.Down {
-            localItem?.song.votes!--
-          }
-          queue.refreshUpcoming()
-          let queueSent = sendQueueIfNeeded()
-          // TODO: Post notification to server app's view controllers so they update in live time
-          // TODO: Broadcast new queue state to all other listeners
-          print("Received vote \(request.vote) for QueueItem  \(item) and sendQueueIfNeeded returned \(queueSent).")
+
+        let queueItem: QueueItem
+
+        if let boundQueueItem = request.queueItem {
+          queueItem = boundQueueItem
+
         } else {
-          // There should be a Song.  Create a QueueItem for it.
-          if let song = request.song {
-            song.votes!++
-//            let localItem = queue.createUpcomingItemForSong(song)  // this will get sent
-            queue.refreshUpcoming()
-            let queueSent = sendQueueIfNeeded()
-            print("Received vote \(request.vote) for Song \(song.name) and sendQueueIfNeeded returned \(queueSent).")
-            // TODO: Do something with the QueueItem.
+          // We got a Request for something that isn't in the Queue.  Add it to
+          // the Queue so that we can update it.
+          queueItem = localQueue.createUpcomingItemForSong(request.song!)
 
-            let center = NSNotificationCenter.defaultCenter()
-            center.postNotificationName(Queue.didChangeNowPlayingNotification, object: queue)
-
-          } else {
-            print("Invalid state -- this is bad.")
-          }
+          // And also associate it with the Request.
+          request.queueItem = queueItem
         }
+
+
+        // Now that we have the QueueItem for this Request, figure out if the
+        // response changed.  For now, just increment/decrement for up/down.
+        ++(queueItem as! LocalQueueItem).votes
+
+        // Refresh the display.  Wahoo!
+        localQueue.refresh()
+
       } else {
         print("Could not load Request from data \(data).")
       }

@@ -65,14 +65,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     #if (arch(i386) || arch(x86_64)) && os(iOS)
       let library = TemporaryLibrary()
-      let queue = Queue(library: library)
+      let queue = LocalQueue(library: library)
     #else
       let library = AppleLibrary()
       let queue = AppleQueue(sourceLibrary: library)
     #endif
 
     // advance to the next song so that something is always playing
-    queue.nowPlaying.next()
+    (queue.nowPlaying as! LocalNowPlaying).next()
 
     // start the browser first
     remoteSessionManager = RemoteSessionManager()

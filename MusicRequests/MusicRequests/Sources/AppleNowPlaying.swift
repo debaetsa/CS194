@@ -9,7 +9,7 @@
 import Foundation
 import MediaPlayer
 
-class AppleNowPlaying: NowPlaying {
+class AppleNowPlaying: LocalNowPlaying {
 
   ///////////////////////
   // PRIVATE VARIABLES //

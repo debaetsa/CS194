@@ -26,9 +26,17 @@ class NowPlaying: NSObject {
     return playing
   }
 
+}
+
+class LocalNowPlaying: NowPlaying {
+  /** This must be associated with a LocalQueue object. */
+  var localQueue: LocalQueue {
+    return queue as! LocalQueue
+  }
+
   func didFinishCurrentSong() {
     // Tell the queue to advance to the next song.
-    queue.advanceToNextSong()
+    localQueue.advanceToNextSong()
 
     // And then tell this instance to play that song.
     playCurrentSong()
@@ -42,7 +50,7 @@ class NowPlaying: NSObject {
 
     playing = true
     if queue.current == nil {
-      queue.advanceToNextSong()
+      localQueue.advanceToNextSong()
     }
     playCurrentSong()
   }
@@ -52,22 +60,21 @@ class NowPlaying: NSObject {
 
     playing = false
   }
-  
+
   func next() {
-    queue.advanceToNextSong()
+    localQueue.advanceToNextSong()
     if playing {
       playCurrentSong()
     }
-  }
-  
-  func last() {
-    queue.returnToPreviousSong()
-    if playing {
-      playCurrentSong()
-    }
-  }
-  
-  func scrub() {
   }
 
+  func last() {
+    localQueue.returnToPreviousSong()
+    if playing {
+      playCurrentSong()
+    }
+  }
+
+  func scrub() {
+  }
 }

@@ -53,24 +53,15 @@ class DetailedAlbumTableViewController: ItemTableViewController {
     }
   }
   
-  override func tableView(tableView: UITableView,
-    editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+  override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
       let upvote = UITableViewRowAction(style: .Normal, title: "+") { action, index in
-        let currentSong = self.library.allSongs[indexPath.row];
-        currentSong.votes! += 1;
-        self.queue.refreshUpcoming()
-        print("Upvoted song: \(currentSong.name): \(currentSong.votes!)");
       }
       upvote.backgroundColor = UIColor.blueColor()
-      
+
       let downvote = UITableViewRowAction(style: .Normal, title: "-") { action, index in
-        let currentSong = self.library.allSongs[indexPath.row];
-        currentSong.votes! -= 1;
-        self.queue.refreshUpcoming()
-        print("Upvoted song: \(currentSong.name): \(currentSong.votes!)");
       }
       downvote.backgroundColor = UIColor.redColor()
-      
+
       return [downvote, upvote]
   }
 }

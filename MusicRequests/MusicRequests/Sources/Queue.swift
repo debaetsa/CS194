@@ -86,6 +86,17 @@ class Queue: NSObject, Sendable {
   private var currentQueueItem: QueueItem?
   private var previousQueueItems = [QueueItem]()
 
+  /** Changes the QueueItem objects in this queue to the specified Arrays. */
+  func changeAllItems(history history: [QueueItem], current: QueueItem?, upcoming: [QueueItem]) {
+    // finally, move them into the appropriate arrays
+    previousQueueItems = history
+    currentQueueItem = current
+    upcomingQueueItems = upcoming
+
+    let center = NSNotificationCenter.defaultCenter()
+    center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
+  }
+
 
   init(nowPlaying: NowPlaying, sourceLibrary: Library) {
     self.nowPlaying = nowPlaying
@@ -94,38 +105,15 @@ class Queue: NSObject, Sendable {
     super.init()
 
     self.nowPlaying.queue = self
-    self.fillToMinimum()
   }
 
   convenience init(library: Library) {
     self.init(nowPlaying: NowPlaying(), sourceLibrary: library)
   }
 
-  func createQueueItem(forSong song: Song, withIdentifier maybeIdentifier: UInt32? = nil) -> QueueItem {
-    let item: QueueItem
-    if let identifier = maybeIdentifier {
-      item = QueueItem(identifier: identifier, song: song)
-    } else {
-      item = QueueItem(song: song)
-    }
+  func addQueueItem(item: QueueItem) {
+    // TODO: Make sure that we don't already have a QueueItem.
     lookup[item.identifier] = item
-    return item
-  }
-
-  /** Finds the item for the specified Song, creating it if needed.
-
-   This will find an upcoming item for the specified Song.  If there is already
-   an upcoming item for the Song, it will return that.  If not, it will create
-   it and add it to the list of upcoming songs. */
-  func createUpcomingItemForSong(song: Song) -> QueueItem {
-    if let queueItem = findUpcomingItemForSong(song) {
-      return queueItem
-    } else {
-      // We weren't able to find a QueueItem for the song, so create one.
-      let item = createQueueItem(forSong: song)
-      upcomingQueueItems.append(item)
-      return item
-    }
   }
 
   /** Finds the upcoming QueueItem for the Song.
@@ -143,82 +131,6 @@ class Queue: NSObject, Sendable {
 
   func itemForIdentifier(identifier: UInt32) -> QueueItem? {
     return lookup[identifier]
-  }
-
-  /** Fills to the upcoming queue to the minimum required length.
-
-  This will only do something if the current queue length is less than the
-  minimum requirement.  If there are already enough songs (even if none of them
-  were randomly generated, then it will have no impact. */
-  private func fillToMinimum() -> Void {
-    let count = upcomingQueueItems.count
-    let maybeSongs = library.rankSongsByVotes(0)
-    var counter = 0
-    for _ in count ..< min(library.allSongs.count, Queue.minimumUpcomingCount) {
-//      let maybeSong = library.pickRandomSong()
-      if (counter >= maybeSongs.count) {
-        return
-      }
-      let song = maybeSongs[counter]
-      counter++;
-//      guard let song = maybeSong else {
-//        // If we didn't get a result back, we have to stop adding songs.
-//        return
-//      }
-
-      // TODO: Fix this issue.
-      // Using this approach will technically allow multiple copies of a song
-      // to appear in the Queue.  We can address that later.
-      upcomingQueueItems.append(createQueueItem(forSong: song))
-    }
-  }
-
-  /** Advances to the next Song.
-
-   This involves adding the current song to the list of previously-played songs,
-   updating the currently playing song, and then grabbing a new Song. */
-  func advanceToNextSong() {
-    // If there was something playing, move it to the history list.
-    if let previousSong = currentQueueItem {
-      previousSong.song.votes = 0
-      previousQueueItems.append(previousSong)
-    }
-
-    // Otherwise, pick the next song to play, if there is one.  (Note that we
-    // should always have one to play since we pick random songs.)
-    let nextSong = upcomingQueueItems.first
-    currentQueueItem = nextSong
-    if let _ = nextSong {
-      upcomingQueueItems.removeAtIndex(0)
-    }
-
-    // Post a notification informing the rest of application about the change.
-    let center = NSNotificationCenter.defaultCenter()
-    center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
-  }
-
-  /** Returns to the Song that was most recently played.
-
-   This involves adding the current song to the list of upcoming songs,
-   updating the currently playing song, and then grabbing a new Song. */
-  func returnToPreviousSong() {
-    if(!previousQueueItems.isEmpty) {
-      // If there was something playing, move it to the upcoming list.
-      if let nextSong = currentQueueItem {
-        upcomingQueueItems.insert(nextSong, atIndex: 0)
-      }
-      
-      // Place the most recent song in the "now playing" position.
-      let previousSong = previousQueueItems.last
-      currentQueueItem = previousSong
-      if let _ = previousSong {
-        previousQueueItems.removeLast()
-      }
-      
-      // Post a notification informing the rest of application about the change.
-      let center = NSNotificationCenter.defaultCenter()
-      center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
-    }
   }
 
   // MARK: - Sending
@@ -259,95 +171,144 @@ class Queue: NSObject, Sendable {
 
     return data
   }
+}
 
-  func updateFromData(data: NSData, usingLibrary library: RemoteLibrary) -> Bool {
-    var offset = 0
-    guard let historyCount = data.getNextByte(&offset) else {
-      return false
-    }
-    guard let currentCount = data.getNextByte(&offset) else {
-      return false
-    }
-    guard let upcomingCount = data.getNextByte(&offset) else {
-      return false
-    }
+class LocalQueue: Queue {
 
-    // clear out the existing data before we replace it
-    previousQueueItems.removeAll()
-    currentQueueItem = nil
-    upcomingQueueItems.removeAll()
+  override init(nowPlaying: NowPlaying, sourceLibrary: Library) {
+    super.init(nowPlaying: nowPlaying, sourceLibrary: sourceLibrary)
 
-    // then read all the objects
-    var allQueueItems = [QueueItem]()
-    for _ in 0..<(historyCount + currentCount + upcomingCount) {
-      guard let queueItemIdentifier = data.getNextInteger(&offset) else {
-        return false
+    fillToMinimum()  // put in the original songs -- only for Local queues
+  }
+
+  convenience init(library: Library) {
+    self.init(nowPlaying: LocalNowPlaying(), sourceLibrary: library)
+  }
+
+  private func createQueueItem(forSong song: Song) -> LocalQueueItem {
+    let queueItem = LocalQueueItem(song: song)
+    addQueueItem(queueItem)
+    return queueItem
+  }
+
+  /** Finds the item for the specified Song, creating it if needed.
+
+   This will find an upcoming item for the specified Song.  If there is already
+   an upcoming item for the Song, it will return that.  If not, it will create
+   it and add it to the list of upcoming songs. */
+  func createUpcomingItemForSong(song: Song) -> QueueItem {
+    if let queueItem = findUpcomingItemForSong(song) {
+      return queueItem
+    } else {
+      // We weren't able to find a QueueItem for the song, so create one.
+      let item = createQueueItem(forSong: song)
+      upcomingQueueItems.append(item)
+      shouldForceUpdate = true
+      return item
+    }
+  }
+
+  // MARK: - Queue Filling and Sorting
+
+  /** Fills to the upcoming queue to the minimum required length.
+
+   This will only do something if the current queue length is less than the
+   minimum requirement.  If there are already enough songs (even if none of
+   them were randomly generated), then it will have no impact. */
+  private func fillToMinimum() -> Void {
+    let count = upcomingQueueItems.count
+    let target = Queue.minimumUpcomingCount
+
+    for _ in count..<target {
+      let maybeSong = library.pickRandomSong()
+      guard let song = maybeSong else {
+        // If we didn't get a result back, we have to stop adding songs.
+        return
       }
-      guard let songIdentifier = data.getNextInteger(&offset) else {
-        return false
-      }
-      if let item = library.itemForIdentifier(songIdentifier), let song = item as? Song {
-        if let queueItem = itemForIdentifier(queueItemIdentifier) {
-          assert(queueItem.song === song)  // QueueItems should always be the same Song
-          allQueueItems.append(queueItem)  // re-using the item
-        } else {
-          allQueueItems.append(
-            createQueueItem(forSong: song, withIdentifier: queueItemIdentifier)
-          )
-        }
 
-      } else {
-        print("Couldn't get a Song for ID \(songIdentifier).")
-      }
+      upcomingQueueItems.append(createQueueItem(forSong: song))
+      shouldForceUpdate = true
     }
+  }
 
-    // finally, move them into the appropriate arrays
-    previousQueueItems.appendContentsOf(allQueueItems.prefix(Int(historyCount)))
-    if currentCount > 0 {
-      currentQueueItem = allQueueItems[Int(historyCount)]
+  /** Tracks whether or not a "forced update" change has been made. */
+  private var shouldForceUpdate: Bool = false
+
+  /** Sorts the list of upcoming QueueItem objects. */
+  func sort() -> Bool {
+    upcomingQueueItems.sortInPlace {
+      let one = $0 as! LocalQueueItem
+      let two = $1 as! LocalQueueItem
+
+      return (one.votes == two.votes) ? one.identifier < two.identifier : one.votes > two.votes
     }
-    upcomingQueueItems.appendContentsOf(allQueueItems.suffix(Int(upcomingCount)))
-
-    let center = NSNotificationCenter.defaultCenter()
-    center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
-
     return true
   }
-  /** Refreshes the queue to take into account new votes.
 
-   * A couple things I don't like about this: 
-   * (1) Right now, I have to keep a parallel set of queuedSongs to avoid an ugly
-   * O(n^2) iteration over upcomingQueueItems to prevent duplication of songs. I
-   * think we can get rid of the QueueItem class entirely if you're okay with it.
-   * 
-   * (2) This keeps the queue at minimum upcoming count for now--we should talk 
-   * through exactly what we want the queue to do later.
-   */
-  func refreshUpcoming() {
+  /** Refreshes the Queue, resorting it, and potentially notifying.
 
-    var queuedSongs = Set<Song>()
-    for item in upcomingQueueItems {
-      queuedSongs.insert(item.song)
+   This should be called after any changes are made to the Queue in order to
+   normalize everything.  It will send out a notification as needed. */
+  func refresh() {
+    // set this based on whether or not anything changes in the Queue
+    let didChange = sort()
+
+    if didChange || shouldForceUpdate {
+      let center = NSNotificationCenter.defaultCenter()
+      center.postNotificationName(Queue.didChangeNowPlayingNotification, object: self)
     }
-    if upcomingQueueItems.count == 0 {
-      return
-    }
-    let minVotes = upcomingQueueItems[upcomingQueueItems.count - 1].song.votes!
-    let toAddSongs = library.rankSongsByVotes(minVotes)
-    for song in toAddSongs {
-      if !queuedSongs.contains(song) && current != nil && current!.song != song {
-        upcomingQueueItems.append(QueueItem(song: song))
-        queuedSongs.insert(song)
-      }
-    }
-    
-    upcomingQueueItems = upcomingQueueItems.sort({ (first, second) -> Bool in
-      if (first.song.votes! > second.song.votes!) {
-        return true;
-      } else {
-        return false;
-      }
-    })
-    upcomingQueueItems = Array(upcomingQueueItems[0..<min(upcomingQueueItems.count, Queue.minimumUpcomingCount)])
+    shouldForceUpdate = false
   }
+
+
+  // MARK: - Playing
+
+  /** Advances to the next Song.
+
+   This involves adding the current song to the list of previously-played songs,
+   updating the currently playing song, and then grabbing a new Song. */
+  func advanceToNextSong() {
+    guard let nextSong = upcomingQueueItems.first else {
+      return  // don't change anything if we can't switch to the next Song
+    }
+
+    // If there was something playing, move it to the history list.
+    if let previousSong = currentQueueItem {
+      previousQueueItems.append(previousSong)
+    }
+
+    // We then want to update the currentQueueItem to be the one that we are
+    // taking from the queue of upcoming songs.
+    currentQueueItem = nextSong
+    upcomingQueueItems.removeAtIndex(0)
+
+    shouldForceUpdate = true
+    refresh()
+  }
+
+  /** Returns to the Song that was most recently played.
+
+   This involves adding the current song to the list of upcoming songs,
+   updating the currently playing song, and then grabbing a new Song. */
+  func returnToPreviousSong() {
+    guard let previousSong = previousQueueItems.last else {
+      return  // do nothing if there isn't a previous Song
+    }
+
+    // If there was something playing, move it to the upcoming list.
+    if let nextSong = currentQueueItem {
+      upcomingQueueItems.insert(nextSong, atIndex: 0)
+    }
+
+    // Then update the current song with the one we retrieved from the list of
+    // previous QueueItem objects.
+    currentQueueItem = previousSong
+    previousQueueItems.removeLast()
+
+    // And then refresh() with a forced update since we changed the contents of
+    // the lists.
+    shouldForceUpdate = true
+    refresh()
+  }
+
 }

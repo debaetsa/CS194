@@ -22,6 +22,11 @@ class RemoteSession: Session, NSNetServiceDelegate {
   /** Stores the data objects received into the Library. */
   let remoteLibrary: RemoteLibrary
 
+  /** Gets the Queue for this Session as a RemoteQueue. */
+  var remoteQueue: RemoteQueue {
+    return queue as! RemoteQueue  // we must have a RemoteQueue
+  }
+
   init(netService: NSNetService) {
     self.netService = netService
     self.name = netService.name
@@ -81,7 +86,7 @@ class RemoteSession: Session, NSNetServiceDelegate {
       remoteLibrary.addItemFromData(data)
 
     case .Queue:
-      queue.updateFromData(data, usingLibrary: remoteLibrary)
+      remoteQueue.updateFromData(data, usingLibrary: remoteLibrary)
 
     default:
       print("Ignoring: \(data)")
