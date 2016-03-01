@@ -27,6 +27,7 @@ class ArtistsTableViewController: ItemTableViewController {
     super.viewDidLoad()
     searchController.searchResultsUpdater = self
     searchController.dimsBackgroundDuringPresentation = false
+    searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
     definesPresentationContext = true
     tableView.tableHeaderView = searchController.searchBar
   }
