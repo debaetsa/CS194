@@ -25,7 +25,6 @@
 		505B5E581C55CEE100235C1C /* FilteredLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E571C55CEE100235C1C /* FilteredLibrary.swift */; };
 		505B5E5E1C55D0B300235C1C /* NowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E5D1C55D0B300235C1C /* NowPlaying.swift */; };
 		505B5E601C55D0E100235C1C /* RemoteLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */; };
-		505B5E631C55D15700235C1C /* LibraryServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E621C55D15700235C1C /* LibraryServer.swift */; };
 		505B5E651C55D16800235C1C /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E641C55D16800235C1C /* Queue.swift */; };
 		505B5E671C55D18B00235C1C /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E661C55D18B00235C1C /* Session.swift */; };
 		505B5E691C55D19D00235C1C /* LocalSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B5E681C55D19D00235C1C /* LocalSession.swift */; };
@@ -92,7 +91,6 @@
 		505B5E571C55CEE100235C1C /* FilteredLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilteredLibrary.swift; path = Sources/FilteredLibrary.swift; sourceTree = "<group>"; };
 		505B5E5D1C55D0B300235C1C /* NowPlaying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlaying.swift; path = Sources/NowPlaying.swift; sourceTree = "<group>"; };
 		505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteLibrary.swift; path = Sources/RemoteLibrary.swift; sourceTree = "<group>"; };
-		505B5E621C55D15700235C1C /* LibraryServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LibraryServer.swift; path = Sources/LibraryServer.swift; sourceTree = "<group>"; };
 		505B5E641C55D16800235C1C /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Queue.swift; path = Sources/Queue.swift; sourceTree = "<group>"; };
 		505B5E661C55D18B00235C1C /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Session.swift; path = Sources/Session.swift; sourceTree = "<group>"; };
 		505B5E681C55D19D00235C1C /* LocalSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalSession.swift; path = Sources/LocalSession.swift; sourceTree = "<group>"; };
@@ -104,7 +102,7 @@
 		505B5E7A1C56EF0F00235C1C /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playlist.swift; path = Sources/Playlist.swift; sourceTree = "<group>"; };
 		507B3A781C66B91100E4D27F /* QueueItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QueueItem.swift; path = Sources/QueueItem.swift; sourceTree = "<group>"; };
 		507B3A7A1C66B98F00E4D27F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Sources/AppDelegate.swift; sourceTree = "<group>"; };
-		5081482F1C715D9800AB5B75 /* SourceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceTableViewController.swift; path = MusicRequests/Sources/SourceTableViewController.swift; sourceTree = "<group>"; };
+		5081482F1C715D9800AB5B75 /* SourceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceTableViewController.swift; path = Sources/SourceTableViewController.swift; sourceTree = "<group>"; };
 		509B13DE1C7AB7F0009464D4 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Sources/Request.swift; sourceTree = "<group>"; };
 		509B13E01C7AC202009464D4 /* RemoteQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteQueue.swift; path = Sources/RemoteQueue.swift; sourceTree = "<group>"; };
 		509C788E1C67B29A005B7D53 /* AppleQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppleQueue.swift; path = Sources/AppleQueue.swift; sourceTree = "<group>"; };
@@ -145,9 +143,13 @@
 		50159F591C65ADE7000E4878 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				505B5E381C55CDFB00235C1C /* Main.storyboard */,
 				505B5E3B1C55CDFB00235C1C /* Assets.xcassets */,
+				505B5E381C55CDFB00235C1C /* Main.storyboard */,
+				505B5E3D1C55CDFB00235C1C /* LaunchScreen.storyboard */,
+				BD7D58921C8518B600203450 /* Style.swift */,
+				50159F661C65B3C7000E4878 /* Pluralize.swift */,
 				50B7F3DB1C6A6CC1006F3CE7 /* ItemPresentation.swift */,
+				50C2436C1C85873D002EDA63 /* Sources */,
 				50159F651C65AE2C000E4878 /* Up Next */,
 				50159F5A1C65AE11000E4878 /* Library */,
 			);
@@ -158,12 +160,14 @@
 			isa = PBXGroup;
 			children = (
 				B3F56B9E1C69526C00A16F95 /* Detail Views */,
-				50159F5B1C65AE26000E4878 /* AlbumsTableViewController.swift */,
-				50159F5C1C65AE26000E4878 /* ArtistsTableViewController.swift */,
-				1A533B971C75B8AD00B41D7F /* GenresTableViewController.swift */,
 				50159F5D1C65AE26000E4878 /* ItemTableViewController.swift */,
 				1ABBE7CC1C7541AB007C02D7 /* PlaylistsTableViewController.swift */,
+				50159F5C1C65AE26000E4878 /* ArtistsTableViewController.swift */,
 				50159F5E1C65AE26000E4878 /* SongsTableViewController.swift */,
+				50159F5B1C65AE26000E4878 /* AlbumsTableViewController.swift */,
+				1A533B971C75B8AD00B41D7F /* GenresTableViewController.swift */,
+				B3BD51BF1C682B860079299F /* SongViewController.swift */,
+				B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -172,7 +176,6 @@
 			isa = PBXGroup;
 			children = (
 				B37573901C84F3C900537726 /* QueueViewController.swift */,
-				BD7D58921C8518B600203450 /* Style.swift */,
 				50159F5F1C65AE26000E4878 /* UpNextTableViewController.swift */,
 			);
 			name = "Up Next";
@@ -181,7 +184,6 @@
 		505B5E281C55CDFB00235C1C = {
 			isa = PBXGroup;
 			children = (
-				5081482F1C715D9800AB5B75 /* SourceTableViewController.swift */,
 				505B5E331C55CDFB00235C1C /* MusicRequests */,
 				505B5E481C55CDFB00235C1C /* MusicRequestsTests */,
 				505B5E321C55CDFB00235C1C /* Products */,
@@ -200,14 +202,11 @@
 		505B5E331C55CDFB00235C1C /* MusicRequests */ = {
 			isa = PBXGroup;
 			children = (
-				50159F591C65ADE7000E4878 /* Views */,
-				50D2492C1C5D781C00A10E97 /* Temporary */,
-				505B5E541C55CE9600235C1C /* Library */,
-				505B5E5C1C55D09800235C1C /* Playing */,
-				505B5E611C55D0F700235C1C /* Networking */,
 				507B3A7A1C66B98F00E4D27F /* AppDelegate.swift */,
-				50159F661C65B3C7000E4878 /* Pluralize.swift */,
-				505B5E3D1C55CDFB00235C1C /* LaunchScreen.storyboard */,
+				50D2492C1C5D781C00A10E97 /* Temporary */,
+				50159F591C65ADE7000E4878 /* Views */,
+				505B5E541C55CE9600235C1C /* Model */,
+				505B5E611C55D0F700235C1C /* Networking */,
 				505B5E401C55CDFB00235C1C /* Info.plist */,
 			);
 			path = MusicRequests;
@@ -222,28 +221,25 @@
 			path = MusicRequestsTests;
 			sourceTree = "<group>";
 		};
-		505B5E541C55CE9600235C1C /* Library */ = {
+		505B5E541C55CE9600235C1C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				505B5E891C56EF3000235C1C /* Model */,
-				505B5E551C55CEC900235C1C /* Library.swift */,
-				505B5E571C55CEE100235C1C /* FilteredLibrary.swift */,
-				505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */,
+				505B5E891C56EF3000235C1C /* Items */,
+				50C2436D1C858776002EDA63 /* Library */,
+				505B5E5C1C55D09800235C1C /* Playing */,
 			);
-			name = Library;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		505B5E5C1C55D09800235C1C /* Playing */ = {
 			isa = PBXGroup;
 			children = (
-				509C78941C67B519005B7D53 /* Apple */,
-				505B5E5D1C55D0B300235C1C /* NowPlaying.swift */,
 				505B5E641C55D16800235C1C /* Queue.swift */,
-				509B13E01C7AC202009464D4 /* RemoteQueue.swift */,
 				507B3A781C66B91100E4D27F /* QueueItem.swift */,
 				509B13DE1C7AB7F0009464D4 /* Request.swift */,
-				B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */,
-				B3BD51BF1C682B860079299F /* SongViewController.swift */,
+				509C788E1C67B29A005B7D53 /* AppleQueue.swift */,
+				505B5E5D1C55D0B300235C1C /* NowPlaying.swift */,
+				509C78921C67B50F005B7D53 /* AppleNowPlaying.swift */,
 			);
 			name = Playing;
 			sourceTree = "<group>";
@@ -252,8 +248,9 @@
 			isa = PBXGroup;
 			children = (
 				505B5E6C1C55D1B700235C1C /* Session */,
-				50DC09241C60171B00323425 /* RemoteSessionManager.swift */,
-				505B5E621C55D15700235C1C /* LibraryServer.swift */,
+				509C9AE91C73BA9700E4AFCB /* Sendable.swift */,
+				505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */,
+				509B13E01C7AC202009464D4 /* RemoteQueue.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -262,15 +259,15 @@
 			isa = PBXGroup;
 			children = (
 				505B5E661C55D18B00235C1C /* Session.swift */,
+				50DC09241C60171B00323425 /* RemoteSessionManager.swift */,
 				505B5E681C55D19D00235C1C /* LocalSession.swift */,
-				509C9AE71C7329EB00E4AFCB /* Connection.swift */,
 				505B5E6A1C55D1AC00235C1C /* RemoteSession.swift */,
-				509C9AE91C73BA9700E4AFCB /* Sendable.swift */,
+				509C9AE71C7329EB00E4AFCB /* Connection.swift */,
 			);
 			name = Session;
 			sourceTree = "<group>";
 		};
-		505B5E891C56EF3000235C1C /* Model */ = {
+		505B5E891C56EF3000235C1C /* Items */ = {
 			isa = PBXGroup;
 			children = (
 				505B5E701C56EF0F00235C1C /* Artist.swift */,
@@ -280,17 +277,25 @@
 				505B5E7A1C56EF0F00235C1C /* Playlist.swift */,
 				50D2492A1C5D754E00A10E97 /* Item.swift */,
 			);
-			name = Model;
+			name = Items;
 			sourceTree = "<group>";
 		};
-		509C78941C67B519005B7D53 /* Apple */ = {
+		50C2436C1C85873D002EDA63 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				5010EB4B1C6488EE0085D615 /* AppleLibrary.swift */,
-				509C788E1C67B29A005B7D53 /* AppleQueue.swift */,
-				509C78921C67B50F005B7D53 /* AppleNowPlaying.swift */,
+				5081482F1C715D9800AB5B75 /* SourceTableViewController.swift */,
 			);
-			name = Apple;
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		50C2436D1C858776002EDA63 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				505B5E551C55CEC900235C1C /* Library.swift */,
+				5010EB4B1C6488EE0085D615 /* AppleLibrary.swift */,
+				505B5E571C55CEE100235C1C /* FilteredLibrary.swift */,
+			);
+			name = Library;
 			sourceTree = "<group>";
 		};
 		50D2492C1C5D781C00A10E97 /* Temporary */ = {
@@ -433,7 +438,6 @@
 				509C78911C67B2B3005B7D53 /* TemporaryQueue.swift in Sources */,
 				50159F671C65B3C7000E4878 /* Pluralize.swift in Sources */,
 				50159F631C65AE26000E4878 /* SongsTableViewController.swift in Sources */,
-				505B5E631C55D15700235C1C /* LibraryServer.swift in Sources */,
 				505B5E601C55D0E100235C1C /* RemoteLibrary.swift in Sources */,
 				505B5E6B1C55D1AC00235C1C /* RemoteSession.swift in Sources */,
 				50159F601C65AE26000E4878 /* AlbumsTableViewController.swift in Sources */,
