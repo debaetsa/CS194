@@ -348,6 +348,6 @@ class Queue: NSObject, Sendable {
         return false;
       }
     })
-    upcomingQueueItems = Array(upcomingQueueItems[0..<min(library.allSongs.count, Queue.minimumUpcomingCount)])
+    upcomingQueueItems = Array(upcomingQueueItems[0..<min(upcomingQueueItems.count, Queue.minimumUpcomingCount)])
   }
 }
