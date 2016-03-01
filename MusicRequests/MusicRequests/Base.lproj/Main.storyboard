@@ -18,6 +18,7 @@
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="8dw-1O-nZs">
                         <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </toolbar>
                     <connections>
                         <segue destination="6hF-xc-4kf" kind="relationship" relationship="rootViewController" id="MzK-eJ-26d"/>
@@ -1209,7 +1210,7 @@
         <image name="Genres" width="25" height="25"/>
         <image name="Playlists" width="25" height="25"/>
         <image name="Songs" width="25" height="25"/>
-        <image name="Temp_plus_button" width="25" height="25"/>
+        <image name="Temp_plus_button" width="40" height="40"/>
         <image name="forward_button" width="40" height="40"/>
         <image name="play_button" width="40" height="40"/>
         <image name="rewind_button" width="40" height="40"/>
