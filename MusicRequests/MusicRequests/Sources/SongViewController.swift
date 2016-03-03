@@ -15,25 +15,20 @@ class SongViewController: UIViewController {
   @IBOutlet weak var labelSongDetails: UILabel!
   @IBOutlet weak var imageViewAlbumArt: UIImageView!
 
-  @IBOutlet weak var NavBar: UINavigationItem!
-
   // the Song that we are supposed to display
-  var song: Song?
+  var song: Song!
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    if NavBar != nil {
-      NavBar.title = song!.name
-    }
 
     reloadSong()
   }
 
   func reloadSong() {
-    labelSongName.text = song!.name
-    labelSongDetails.text = song!.artistAlbumString
-    imageViewAlbumArt.image = song!.album!.imageToShow
+    navigationItem.title = song.name
+    labelSongName.text = song.name
+    labelSongDetails.text = song.artistAlbumString
+    imageViewAlbumArt.image = song.album?.imageToShow
   }
 
 }

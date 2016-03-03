@@ -8,10 +8,11 @@
 
 import UIKit
 
-class UpNextTableViewController: ItemTableViewController, SessionChanged {
+class UpNextTableViewController: ItemListTableViewController, SessionChanged {
 
   var listener: NSObjectProtocol?
-  
+
+  var queue: Queue!
   var items = [QueueItem]()
   var currentIndex: Int?
 
@@ -19,16 +20,12 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
     super.viewDidLoad()
 
     // add a listener -- technically means that this will never go away
-    AppDelegate.sharedDelegate.addSessionChangedListener(self)
+    let delegate = AppDelegate.sharedDelegate
+    delegate.addSessionChangedListener(self)
+    queue = delegate.queue
 
     updateQueueObserver()
     self.updateData()  // load the initial data
-    
-  }
-
-  override func viewDidAppear(animated: Bool) {
-    self.updateData()
-    self.tableView.reloadData()
   }
 
   deinit {
@@ -108,11 +105,6 @@ class UpNextTableViewController: ItemTableViewController, SessionChanged {
 
   override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     return (indexPath.row == currentIndex) ? 100 : 50
-  }
-
-  override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-    return indexPath
-//    return (indexPath.row == currentIndex) ? indexPath : nil
   }
 
   @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
