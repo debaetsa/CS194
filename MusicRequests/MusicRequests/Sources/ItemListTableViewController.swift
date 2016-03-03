@@ -66,6 +66,10 @@ class ItemListTableViewController: UITableViewController {
     return 1
   }
 
+  override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    return 50
+  }
+
   func indexPathForSender(sender: AnyObject) -> NSIndexPath {
     return tableView.indexPathForCell(sender as! UITableViewCell)!
   }

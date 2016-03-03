@@ -12,6 +12,7 @@ class SongListTableViewController: ItemListTableViewController {
 
   var numberedItems: [(Int?, Song)]!
   var showNumbers = false
+  var showDetails = true
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return numberedItems.count
@@ -40,18 +41,38 @@ class SongListTableViewController: ItemListTableViewController {
     }
   }
 
+  private func getCellIdentifier() -> String {
+    if showNumbers {
+      if showDetails {
+        return "DetailedNumberedCell"
+      } else {
+        return "BasicNumberedCell"
+      }
+    } else {
+      return "SmallCell"
+    }
+  }
+
+  override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    if showNumbers && !showDetails {
+      return 40
+    } else {
+      return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+    }
+  }
+
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
+    let cell = tableView.dequeueReusableCellWithIdentifier(getCellIdentifier(), forIndexPath: indexPath)
 
     let (number, song) = numberedItems[indexPath.row]
 
-    cell.textLabel?.text = song.name
     if showNumbers {
-      cell.detailTextLabel?.text = (number != nil) ? "\(number!)" : nil
+      (cell as! NumberedTableViewCell).numberedItem = (number!, song)
     } else {
+      cell.textLabel?.text = song.name
       cell.detailTextLabel?.text = song.artistAlbumString
+      cell.imageView?.image = song.album!.imageToShow
     }
-    cell.imageView?.image = song.album!.imageToShow
 
     return cell
   }
@@ -63,6 +84,22 @@ class SongListTableViewController: ItemListTableViewController {
 
       let (_, song) = numberedItems[indexPath.row]
       destination.song = song
+    }
+  }
+}
+
+class NumberedTableViewCell : UITableViewCell {
+  @IBOutlet weak var labelName: UILabel!
+  @IBOutlet weak var labelDetails: UILabel?
+  @IBOutlet weak var labelNumber: UILabel!
+
+  var numberedItem: (number: Int, song: Song)? {
+    didSet {
+      if let item = numberedItem {
+        labelName.text = item.song.name
+        labelDetails?.text = item.song.artistAlbumString  // don't set if not needed
+        labelNumber.text = "\(item.number)."
+      }
     }
   }
 }

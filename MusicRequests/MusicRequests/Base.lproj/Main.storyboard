@@ -418,6 +418,99 @@
                                     <segue destination="eq0-SH-uWZ" kind="show" identifier="PushSongPreview" id="LQW-w3-NSf"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailedNumberedCell" rowHeight="50" id="m31-GY-Utp" userLabel="DetailedNumberedCell" customClass="NumberedTableViewCell" customModule="JAMM" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="142" width="600" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m31-GY-Utp" id="aCx-xQ-pdh">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="49"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vw1-ei-Ad6">
+                                            <rect key="frame" x="45" y="8" width="547" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="vg7-Ow-Uey"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4UM-oP-Itk">
+                                            <rect key="frame" x="8" y="8" width="29" height="33"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="29" id="9Dh-hb-atQ"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Name • Album Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXr-9e-pUr">
+                                            <rect key="frame" x="45" y="28" width="547" height="14"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="14" id="RLM-q9-upS"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="4UM-oP-Itk" secondAttribute="bottom" id="Irr-M8-Fcd"/>
+                                        <constraint firstItem="oXr-9e-pUr" firstAttribute="top" secondItem="vw1-ei-Ad6" secondAttribute="bottom" id="Jwu-WF-hS4"/>
+                                        <constraint firstItem="4UM-oP-Itk" firstAttribute="top" secondItem="aCx-xQ-pdh" secondAttribute="topMargin" id="R2k-HM-hvp"/>
+                                        <constraint firstItem="4UM-oP-Itk" firstAttribute="leading" secondItem="aCx-xQ-pdh" secondAttribute="leadingMargin" id="U8k-l8-dI1"/>
+                                        <constraint firstItem="oXr-9e-pUr" firstAttribute="trailing" secondItem="aCx-xQ-pdh" secondAttribute="trailingMargin" id="Y0R-vO-aIm"/>
+                                        <constraint firstItem="vw1-ei-Ad6" firstAttribute="trailing" secondItem="aCx-xQ-pdh" secondAttribute="trailingMargin" id="kmp-rD-bX4"/>
+                                        <constraint firstItem="vw1-ei-Ad6" firstAttribute="leading" secondItem="4UM-oP-Itk" secondAttribute="trailing" constant="8" id="nFe-in-lF0"/>
+                                        <constraint firstItem="oXr-9e-pUr" firstAttribute="leading" secondItem="4UM-oP-Itk" secondAttribute="trailing" constant="8" id="yev-5V-dty"/>
+                                        <constraint firstItem="vw1-ei-Ad6" firstAttribute="top" secondItem="aCx-xQ-pdh" secondAttribute="topMargin" id="zIA-6B-zR8"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="labelDetails" destination="oXr-9e-pUr" id="e59-uo-58U"/>
+                                    <outlet property="labelName" destination="vw1-ei-Ad6" id="yEr-0K-Y6U"/>
+                                    <outlet property="labelNumber" destination="4UM-oP-Itk" id="86Y-vk-v5H"/>
+                                    <segue destination="eq0-SH-uWZ" kind="show" identifier="PushSongPreview" id="FdG-ou-k7T"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BasicNumberedCell" rowHeight="40" id="rLV-eb-N54" userLabel="BasicNumberedCell" customClass="NumberedTableViewCell" customModule="JAMM" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="192" width="600" height="40"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rLV-eb-N54" id="BYW-Kj-gRp">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="39"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2b-tB-ucK">
+                                            <rect key="frame" x="8" y="0.0" width="29" height="39"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="29" id="g0T-Nu-sRf"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y9B-Xp-h3Z">
+                                            <rect key="frame" x="45" y="0.0" width="547" height="39"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="s2b-tB-ucK" secondAttribute="bottom" id="2Ig-ZG-0oj"/>
+                                        <constraint firstItem="Y9B-Xp-h3Z" firstAttribute="leading" secondItem="s2b-tB-ucK" secondAttribute="trailing" constant="8" id="b2S-hI-B1G"/>
+                                        <constraint firstItem="Y9B-Xp-h3Z" firstAttribute="top" secondItem="BYW-Kj-gRp" secondAttribute="top" id="ccy-fq-dMv"/>
+                                        <constraint firstAttribute="bottom" secondItem="Y9B-Xp-h3Z" secondAttribute="bottom" id="eJ5-l2-P09"/>
+                                        <constraint firstItem="Y9B-Xp-h3Z" firstAttribute="trailing" secondItem="BYW-Kj-gRp" secondAttribute="trailingMargin" id="ga3-dw-OJk"/>
+                                        <constraint firstItem="s2b-tB-ucK" firstAttribute="top" secondItem="BYW-Kj-gRp" secondAttribute="top" id="jKz-Qi-5uX"/>
+                                        <constraint firstItem="s2b-tB-ucK" firstAttribute="leading" secondItem="BYW-Kj-gRp" secondAttribute="leadingMargin" id="oa4-jy-oeJ"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="labelName" destination="Y9B-Xp-h3Z" id="vDe-2C-vs0"/>
+                                    <outlet property="labelNumber" destination="s2b-tB-ucK" id="cZh-J2-MXa"/>
+                                    <segue destination="eq0-SH-uWZ" kind="show" identifier="PushSongPreview" id="5A4-7N-v0A"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -952,5 +1045,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="xPw-X7-Jzt"/>
         <segue reference="Pbo-ib-kMd"/>
+        <segue reference="FdG-ou-k7T"/>
     </inferredMetricsTieBreakers>
 </document>

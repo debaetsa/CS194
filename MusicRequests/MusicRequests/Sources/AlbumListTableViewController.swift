@@ -49,6 +49,7 @@ class AlbumListTableViewController: ItemListTableViewController {
       let album = items[indexPath.row]
       destination.navigationItem.title = album.name
       destination.setTrackList(album.allSongs)
+      destination.showDetails = false
     }
   }
 }
