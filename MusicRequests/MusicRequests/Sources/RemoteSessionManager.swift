@@ -52,13 +52,16 @@ class RemoteSessionManager: NSObject, NSNetServiceBrowserDelegate {
 
     var serviceIndex: Int?
     for (index, session) in remoteSessions.enumerate() {
-      if session.netService === service {
+      if session.netService == service {
         serviceIndex = index
         break
       }
     }
     if let indexToRemove = serviceIndex {
       remoteSessions.removeAtIndex(indexToRemove)
+    } else {
+      print("Could not remove service: \(service)")
+    }
 
     if !moreComing {
       postUpdatedNotification()
