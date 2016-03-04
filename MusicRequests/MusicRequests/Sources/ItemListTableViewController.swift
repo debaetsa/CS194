@@ -62,6 +62,14 @@ class ItemListTableViewController: UITableViewController {
     library = AppDelegate.sharedDelegate.library
   }
 
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+
+    if let selectedIndexPath = tableView.indexPathForSelectedRow {
+      tableView.deselectRowAtIndexPath(selectedIndexPath, animated: animated)
+    }
+  }
+
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     return 1
   }
