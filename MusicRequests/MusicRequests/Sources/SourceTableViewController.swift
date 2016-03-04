@@ -162,11 +162,20 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
       return
     }
 
+    // We need to deselect the existing cell.
+    for cell in tableView.visibleCells {
+      if cell.accessoryType == .Checkmark {
+        cell.accessoryType = .None
+      }
+    }
+
+    // Change the session.
     let session = remoteSessionManager.sessions[indexPath.row]
     session.connect()
     AppDelegate.sharedDelegate.currentSession = session
 
     // clear the row after it gets selected
+    tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
   }
 
