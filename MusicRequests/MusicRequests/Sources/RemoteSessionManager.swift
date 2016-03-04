@@ -10,6 +10,8 @@ import UIKit
 
 class RemoteSessionManager: NSObject, NSNetServiceBrowserDelegate {
 
+  static let didUpdateNotification = "jamm.RemoteSessionManager.didUpdate"
+
   private let netServiceBrowser: NSNetServiceBrowser
 
   private var remoteSessions = [RemoteSession]()
@@ -32,12 +34,17 @@ class RemoteSessionManager: NSObject, NSNetServiceBrowserDelegate {
   func netServiceBrowserDidStopSearch(browser: NSNetServiceBrowser) {
   }
 
+  private func postUpdatedNotification() {
+    let center = NSNotificationCenter.defaultCenter()
+    center.postNotificationName(RemoteSessionManager.didUpdateNotification, object: self)
+  }
+
   func netServiceBrowser(browser: NSNetServiceBrowser, didFindService service: NSNetService, moreComing: Bool) {
 
     remoteSessions.append(RemoteSession(netService: service))
 
     if !moreComing {
-      // Send out a notification since we have received some of the services.
+      postUpdatedNotification()
     }
   }
 
@@ -52,6 +59,9 @@ class RemoteSessionManager: NSObject, NSNetServiceBrowserDelegate {
     }
     if let indexToRemove = serviceIndex {
       remoteSessions.removeAtIndex(indexToRemove)
+
+    if !moreComing {
+      postUpdatedNotification()
     }
   }
 

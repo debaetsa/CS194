@@ -18,7 +18,9 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
 
   // capture the local session object to use throughout the view
   let localSession = AppDelegate.sharedDelegate.localSession
-  let remoteSessions = AppDelegate.sharedDelegate.remoteSessionManager
+
+  var listener: NSObjectProtocol?
+  let remoteSessionManager = AppDelegate.sharedDelegate.remoteSessionManager
 
   weak var broadcastSwitch: UISwitch!
   weak var nameTextField: UITextField!
@@ -34,6 +36,20 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
     // set the initial state of all the views
     broadcastSwitch.on = localSession.broadcast
     nameTextField.text = localSession.name
+
+    let center = NSNotificationCenter.defaultCenter()
+    listener = center.addObserverForName(RemoteSessionManager.didUpdateNotification, object: remoteSessionManager, queue: nil) {
+      [unowned self] (note) in
+
+      self.tableView.reloadData()
+    }
+  }
+
+  deinit {
+    if let boundListener = listener {
+      let center = NSNotificationCenter.defaultCenter()
+      center.removeObserver(boundListener)
+    }
   }
 
   private func createLocalCells() {
@@ -83,7 +99,7 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
       return localTableViewCells.count
 
     case .Remote:
-      return max(remoteSessions.sessions.count, 1)
+      return max(remoteSessionManager.sessions.count, 1)
 
     default:
       return 0
@@ -113,13 +129,13 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
 
     } else {
 
-      if remoteSessions.sessions.count == 0 {
+      if remoteSessionManager.sessions.count == 0 {
         return tableView.dequeueReusableCellWithIdentifier("NoRemoteCell", forIndexPath: indexPath)
 
       } else {
         let cell = tableView.dequeueReusableCellWithIdentifier("RemoteCell", forIndexPath: indexPath)
 
-        let session = remoteSessions.sessions[indexPath.row]
+        let session = remoteSessionManager.sessions[indexPath.row]
         cell.textLabel?.text = session.name
 
         let currentSession = AppDelegate.sharedDelegate.currentSession
@@ -146,7 +162,7 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
       return
     }
 
-    let session = remoteSessions.sessions[indexPath.row]
+    let session = remoteSessionManager.sessions[indexPath.row]
     session.connect()
     AppDelegate.sharedDelegate.currentSession = session
 
