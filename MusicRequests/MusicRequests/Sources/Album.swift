@@ -133,7 +133,7 @@ class Album: Item {
     // and then append the extra information that we need here (the Artist)
     mutableData.appendCustomInteger(self.artist?.identifier ?? UInt32(0))
     if let boundImage = image {
-      let imageData = UIImagePNGRepresentation(boundImage)
+      let imageData = UIImageJPEGRepresentation(boundImage, 0.1)
       let imageSize = imageData?.length
       mutableData.appendCustomInteger(UInt32(imageSize ?? 0))
       mutableData.appendData(imageData!)

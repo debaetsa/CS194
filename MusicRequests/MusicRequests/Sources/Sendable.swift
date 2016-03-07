@@ -110,17 +110,11 @@ extension NSData {
     guard length >= (offset + imageLength) else {
       return nil  // we don't have enough bytes to read the image, so fail
     }
-    var value = NSMutableData(capacity: imageLength)
     
     // actually grab the NSData corresponding to the UIImage
-    withUnsafeMutablePointer(&value) {
-      getBytes(UnsafeMutablePointer($0), range: NSMakeRange(offset, imageLength))
-    }
+    let value = subdataWithRange(NSMakeRange(offset, imageLength))
     offset += Int(imageLength)
-    if (value != nil) {
-      return UIImage(data: value!)
-    }
-    return nil
+    return UIImage(data: value)
   }
 }
 
