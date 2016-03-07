@@ -47,6 +47,7 @@
 		50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */; };
 		50DC09251C60171B00323425 /* RemoteSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DC09241C60171B00323425 /* RemoteSessionManager.swift */; };
 		B37573911C84F3C900537726 /* QueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37573901C84F3C900537726 /* QueueViewController.swift */; };
+		B3A117071C8E3CD700F2205F /* CustomAlbumArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A117061C8E3CD700F2205F /* CustomAlbumArt.swift */; };
 		B3BD51BE1C680EBA0079299F /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */; };
 		B3BD51C01C682B860079299F /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD51BF1C682B860079299F /* SongViewController.swift */; };
 		BD7D58931C8518B600203450 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D58921C8518B600203450 /* Style.swift */; };
@@ -109,6 +110,7 @@
 		50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporaryLibrary.swift; path = Sources/TemporaryLibrary.swift; sourceTree = "<group>"; };
 		50DC09241C60171B00323425 /* RemoteSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteSessionManager.swift; path = Sources/RemoteSessionManager.swift; sourceTree = "<group>"; };
 		B37573901C84F3C900537726 /* QueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QueueViewController.swift; path = Sources/QueueViewController.swift; sourceTree = "<group>"; };
+		B3A117061C8E3CD700F2205F /* CustomAlbumArt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomAlbumArt.swift; path = Sources/CustomAlbumArt.swift; sourceTree = "<group>"; };
 		B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlayingViewController.swift; path = Sources/NowPlayingViewController.swift; sourceTree = "<group>"; };
 		B3BD51BF1C682B860079299F /* SongViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongViewController.swift; path = Sources/SongViewController.swift; sourceTree = "<group>"; };
 		BD7D58921C8518B600203450 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Style.swift; path = Sources/Style.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 			children = (
 				505B5E6C1C55D1B700235C1C /* Session */,
 				509C9AE91C73BA9700E4AFCB /* Sendable.swift */,
+				B3A117061C8E3CD700F2205F /* CustomAlbumArt.swift */,
 				505B5E5F1C55D0E100235C1C /* RemoteLibrary.swift */,
 				509B13E01C7AC202009464D4 /* RemoteQueue.swift */,
 			);
@@ -438,7 +441,12 @@
 				505B5E841C56EF0F00235C1C /* Song.swift in Sources */,
 				505B5E5E1C55D0B300235C1C /* NowPlaying.swift in Sources */,
 				505B5E7E1C56EF0F00235C1C /* Artist.swift in Sources */,
+<<<<<<< f0de64bd0bc110bd5500088c009cff21f92bf291
 				1ABBE7CD1C7541AB007C02D7 /* PlaylistListTableViewController.swift in Sources */,
+=======
+				B3A117071C8E3CD700F2205F /* CustomAlbumArt.swift in Sources */,
+				1ABBE7CD1C7541AB007C02D7 /* PlaylistsTableViewController.swift in Sources */,
+>>>>>>> Album art uploaded asynchronously. Optimizations upcoming.
 				507B3A791C66B91100E4D27F /* QueueItem.swift in Sources */,
 				505B5E821C56EF0F00235C1C /* Genre.swift in Sources */,
 				505B5E861C56EF0F00235C1C /* Album.swift in Sources */,

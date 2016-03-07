@@ -21,10 +21,12 @@ class CustomAlbumArt: NSObject, Sendable {
   
   var sendableData: NSData {
     let mutableData = NSMutableData()
+    
     let imageData = UIImageJPEGRepresentation(album.imageToShow, 0.1)
     let imageSize = imageData?.length
     mutableData.appendCustomInteger(UInt32(imageSize ?? 0))
     mutableData.appendData(imageData!)
+    mutableData.appendCustomInteger(UInt32(album.identifier))
     return mutableData
   }
 }
