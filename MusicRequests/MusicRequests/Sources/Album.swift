@@ -132,14 +132,7 @@ class Album: Item {
 
     // and then append the extra information that we need here (the Artist)
     mutableData.appendCustomInteger(self.artist?.identifier ?? UInt32(0))
-    if let boundImage = image {
-      let imageData = UIImageJPEGRepresentation(boundImage, 0.1)
-      let imageSize = imageData?.length
-      mutableData.appendCustomInteger(UInt32(imageSize ?? 0))
-      mutableData.appendData(imageData!)
-    } else {
-      mutableData.appendCustomInteger(UInt32(0))
-    }
+
   }
 
   required init?(data: NSData, lookup: [UInt32: Item], inout offset: Int) {
@@ -149,8 +142,6 @@ class Album: Item {
       return nil
     }
     
-    image = data.getNextImage(&offset)
-
     if let item = lookup[artistId], let artist = item as? Artist {
       addArtist(artist)
     } else {

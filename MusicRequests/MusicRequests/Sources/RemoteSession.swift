@@ -88,6 +88,9 @@ class RemoteSession: Session, NSNetServiceDelegate {
     case .Queue:
       remoteQueue.updateFromData(data, usingLibrary: remoteLibrary)
 
+    case .Image:
+      print ("Received an image!")
+      
     default:
       print("Ignoring: \(data)")
     }

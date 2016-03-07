@@ -22,7 +22,7 @@ enum SendableIdentifier: UInt8 {
   case Item = 0
   case Queue
   case Request
-  // case Image -> id it's connected with
+  case Image
 }
 
 /** Applied to objects that can be serialized and sent over the network. */
