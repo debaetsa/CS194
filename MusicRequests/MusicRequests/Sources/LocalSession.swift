@@ -163,8 +163,20 @@ class LocalSession: Session, NSNetServiceDelegate {
       connection.sendItem(song)
     }
 
-    // and finally the Queue (once all the songs are known)
+    // send the Queue (once all the songs are known)
     connection.sendItem(queue, withCachedData: currentQueueData)
+    
+    // and finally send compressed images, starting with the queue
+    for song in queue.getAllQueueSongs() {
+      if let album = song.album {
+        connection.sendItem(CustomAlbumArt(albumInstance: album))
+      }
+    }
+    
+    // then the rest of the library
+    for album in sourceLibrary.allAlbums {
+      connection.sendItem(CustomAlbumArt(albumInstance: album))
+    }
   }
 
   private func didCloseConnection(connection: Connection, didFail fail: Bool) {

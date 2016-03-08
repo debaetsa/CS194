@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class UniqueGenerator {
   private var counter = UInt32(0)
@@ -21,6 +22,7 @@ enum SendableIdentifier: UInt8 {
   case Item = 0
   case Queue
   case Request
+  case Image
 }
 
 /** Applied to objects that can be serialized and sent over the network. */
@@ -96,6 +98,23 @@ extension NSData {
     )
     offset += Int(stringLength)
     return result
+  }
+  
+  func getNextImage(inout offset: Int) -> UIImage? {
+    guard let encodedImageLength = getNextInteger(&offset) else {
+      return nil  // we couldn't get the length, so we can't get the data
+    }
+
+    let imageLength = Int(encodedImageLength)  // cast it to an Int
+    
+    guard length >= (offset + imageLength) else {
+      return nil  // we don't have enough bytes to read the image, so fail
+    }
+    
+    // actually grab the NSData corresponding to the UIImage
+    let value = subdataWithRange(NSMakeRange(offset, imageLength))
+    offset += Int(imageLength)
+    return UIImage(data: value)
   }
 }
 
