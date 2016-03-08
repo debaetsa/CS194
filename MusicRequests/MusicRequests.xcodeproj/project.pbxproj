@@ -441,12 +441,8 @@
 				505B5E841C56EF0F00235C1C /* Song.swift in Sources */,
 				505B5E5E1C55D0B300235C1C /* NowPlaying.swift in Sources */,
 				505B5E7E1C56EF0F00235C1C /* Artist.swift in Sources */,
-<<<<<<< f0de64bd0bc110bd5500088c009cff21f92bf291
-				1ABBE7CD1C7541AB007C02D7 /* PlaylistListTableViewController.swift in Sources */,
-=======
 				B3A117071C8E3CD700F2205F /* CustomAlbumArt.swift in Sources */,
 				1ABBE7CD1C7541AB007C02D7 /* PlaylistsTableViewController.swift in Sources */,
->>>>>>> Album art uploaded asynchronously. Optimizations upcoming.
 				507B3A791C66B91100E4D27F /* QueueItem.swift in Sources */,
 				505B5E821C56EF0F00235C1C /* Genre.swift in Sources */,
 				505B5E861C56EF0F00235C1C /* Album.swift in Sources */,
