@@ -96,25 +96,27 @@ extension NSData {
       data: subdataWithRange(NSMakeRange(offset, stringLength)),
       encoding: NSUTF8StringEncoding
     )
-    offset += Int(stringLength)
+    offset += stringLength
     return result
   }
   
   func getNextImage(inout offset: Int) -> UIImage? {
-    guard let encodedImageLength = getNextInteger(&offset) else {
+    guard let decodedImageLength = getNextInteger(&offset) else {
       return nil  // we couldn't get the length, so we can't get the data
     }
 
-    let imageLength = Int(encodedImageLength)  // cast it to an Int
+    let imageLength = Int(decodedImageLength)  // cast it to an Int
     
     guard length >= (offset + imageLength) else {
       return nil  // we don't have enough bytes to read the image, so fail
     }
     
     // actually grab the NSData corresponding to the UIImage
-    let value = subdataWithRange(NSMakeRange(offset, imageLength))
-    offset += Int(imageLength)
-    return UIImage(data: value)
+    let result = UIImage(
+      data: subdataWithRange(NSMakeRange(offset, imageLength))
+    )
+    offset += imageLength
+    return result
   }
 }
 
@@ -133,22 +135,18 @@ extension NSMutableData {
     }
   }
 
-
-  func appendCustomString(string: String) {
-    let maybeData = string.dataUsingEncoding(NSUTF8StringEncoding)
-
-    // figure out the length
-    var length = UInt32(0)
-    if let data = maybeData {
-      length = UInt32(data.length)
-    }
-
-    // append the length to the data
-    appendCustomInteger(length)
-
-    // and then append the actual bytes if they exist
+  private func appendCustomData(maybeData: NSData?) {
+    appendCustomInteger(UInt32(maybeData?.length ?? 0))
     if let data = maybeData {
       appendData(data)
     }
+  }
+
+  func appendCustomString(string: String) {
+    appendCustomData(string.dataUsingEncoding(NSUTF8StringEncoding))
+  }
+
+  func appendCustomImage(image: UIImage) {
+    appendCustomData(UIImageJPEGRepresentation(image, 0.1))
   }
 }

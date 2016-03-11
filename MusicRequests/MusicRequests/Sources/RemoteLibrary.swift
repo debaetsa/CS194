@@ -92,17 +92,21 @@ class RemoteLibrary: Library {
   func updateFromData(data: NSData, usingLibrary library: RemoteLibrary) -> Bool {
     var offset = 0
     
-    guard let image = data.getNextImage(&offset) else {
-      return false
-    }
     guard let albumIdentifier = data.getNextInteger(&offset) else {
       return false
     }
-    if let album = library.itemForIdentifier(albumIdentifier) as! Album? {
-      album.image = image
-      return true
+    guard let image = data.getNextImage(&offset) else {
+      return false
     }
-    
-    return false
+    guard let item = library.itemForIdentifier(albumIdentifier) else {
+      return false
+    }
+    guard let album = item as? Album else {
+      return false
+    }
+
+    album.image = image
+
+    return true
   }
 }
