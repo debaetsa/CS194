@@ -270,9 +270,9 @@ class LocalQueue: Queue {
         }
       }
       
-      let etv_one = (one_pos == -1) ? Double(one.votes) : (log(Double(one_pos+1))/log(Double(previousQueueItems.count+1))) * Double(one.votes)
+      let etv_one = (one_pos == -1) ? Double(one.votesForSorting) : (log(Double(one_pos+1))/log(Double(previousQueueItems.count+1))) * Double(one.votesForSorting)
       
-      let etv_two = (two_pos == -1) ? Double(two.votes) : (log(Double(two_pos+1))/log(Double(previousQueueItems.count+1))) * Double(two.votes)
+      let etv_two = (two_pos == -1) ? Double(two.votesForSorting) : (log(Double(two_pos+1))/log(Double(previousQueueItems.count+1))) * Double(two.votesForSorting)
 
       return (etv_one == etv_two) ? one.identifier < two.identifier : etv_one > etv_two
     }
@@ -284,6 +284,9 @@ class LocalQueue: Queue {
    This should be called after any changes are made to the Queue in order to
    normalize everything.  It will send out a notification as needed. */
   func refresh() {
+    // make sure we have enough items in the Queue; if not, add more
+    fillToMinimum()
+
     // set this based on whether or not anything changes in the Queue
     let didChange = sort()
 

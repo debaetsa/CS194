@@ -32,7 +32,13 @@ class LocalQueueItem: QueueItem {
     super.init(identifier: LocalQueueItem.idGenerator.next(), song: song)
   }
 
+  /** The number of votes the song has acquired. */
   var votes = 0
+
+  /** The vote count for sorting purposes.  Used to avoid weird behavior. */
+  var votesForSorting: Int {
+    return max(0, votes)
+  }
 }
 
 
