@@ -74,6 +74,7 @@ class RemoteSession: Session, NSNetServiceDelegate {
     // we should have been able to open the connection
     let connection = Connection(ipAddress: "", port: 0, input: inputStream, output: outputStream)
     connection.onReceivedData = didReceiveData
+    connection.onReceivedCode = didReceiveCode
     self.connection = connection
 
     // and then let the caller know that this has mostly worked
@@ -94,6 +95,10 @@ class RemoteSession: Session, NSNetServiceDelegate {
     default:
       print("Ignoring: \(data)")
     }
+  }
+
+  func didReceiveCode(code: SendableCode, data: NSData?) {
+    print("Code: \(code); Data: \(data)")
   }
 
   func netServiceWillResolve(sender: NSNetService) {

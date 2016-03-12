@@ -152,6 +152,11 @@ class LocalSession: Session, NSNetServiceDelegate {
     connection.onReceivedData = didReceiveData
     clients.append(connection)
 
+    // first things first -- send the version number
+    let version = NSMutableData()
+    version.appendByte(1)
+    connection.sendCode(.Version, withData: version)
+
     // and then send them the contents of the entire library
     for artist in sourceLibrary.allArtists {
       connection.sendItem(artist)
@@ -162,6 +167,7 @@ class LocalSession: Session, NSNetServiceDelegate {
     for song in sourceLibrary.allSongs {
       connection.sendItem(song)
     }
+    connection.sendCode(.LibraryDone)
 
     // send the Queue (once all the songs are known)
     connection.sendItem(queue, withCachedData: currentQueueData)

@@ -23,6 +23,7 @@ class Connection: NSObject, NSStreamDelegate {
 
   // called to allow the received data to be processed
   var onReceivedData: ((SendableIdentifier, NSData) -> Void)?
+  var onReceivedCode: ((SendableCode, NSData?) -> Void)?
   var onClosed: ((Connection, didFail: Bool) -> Void)?
 
   init(ipAddress: String, port: Int, input: NSInputStream, output: NSOutputStream) {
@@ -51,6 +52,13 @@ class Connection: NSObject, NSStreamDelegate {
   private func close() {
     inputStream.close()
     outputStream.close()
+  }
+
+  private func closeOnError(didFail didFail: Bool) {
+    if let callback = onClosed {
+      callback(self, didFail: didFail)  // report that it closed
+    }
+    close()  // end the communication
   }
 
   // MARK: - Stream Delegate
@@ -108,67 +116,81 @@ class Connection: NSObject, NSStreamDelegate {
     let read = inputStream.read(Connection.buffer, maxLength: Connection.bufferLength)
 
     guard read > 0 else {
-      if let callback = onClosed {
-        callback(self, didFail: (read < 0))  // report that it closed
-      }
-      close()  // end the communication
+      closeOnError(didFail: (read < 0))
       return  // can't read if this failed
     }
 
-    // put it in a data object
-    let data = NSData(
-      bytesNoCopy: UnsafeMutablePointer(Connection.buffer),
-      length: read,
-      freeWhenDone: false
-    )
-
-    // and add it to the data that needs to be processed
-    bytesToProcess.appendData(data)
+    // add it to the data that needs to be processed
+    bytesToProcess.appendBytes(UnsafePointer(Connection.buffer), length: read)
     Connection.buffer.destroy()  // get rid of what we put in there since it doesn't matter
+
     processAvailableItems()
+  }
+
+  private func tryToProcessCode(inout offset: Int) -> Bool {
+    guard let codeByte = bytesToProcess.getNextByte(&offset) else {
+      return false  // don't have enough data to extract the information
+    }
+
+    guard let code = SendableCode(rawValue: codeByte) else {
+      closeOnError(didFail: true)  // close it
+      return false
+    }
+
+    var data: NSData? = nil
+    if code.hasData {
+      guard let processedData = bytesToProcess.getNextData(&offset) else {
+        return false
+      }
+      data = processedData
+    }
+
+    if let callback = onReceivedCode {
+      callback(code, data)
+    }
+
+    return true
+  }
+
+  private func tryToProcessData(ofType type: SendableIdentifier, inout withOffset offset: Int) -> Bool {
+    // get the relevant data object
+    guard let data = bytesToProcess.getNextData(&offset) else {
+      return false
+    }
+
+    // pass that object as appropriate
+    if let callback = onReceivedData {
+      callback(type, data)
+    }
+
+    return true  // because we were able to process the Item
   }
 
   private func processAvailableItems() {
     while true {
-      let length = bytesToProcess.length
-      guard length > 0 else {
-        return  // there are no bytes to process, so stop processing
+      var offset = 0
+      guard let itemTypeByte = bytesToProcess.getNextByte(&offset) else {
+        return  // there was no byte to process, so stop processing
+      }
+      guard let itemType = SendableIdentifier(rawValue: itemTypeByte) else {
+        closeOnError(didFail: true)
+        return  // we got a bad identifier, so terminate the connection
       }
 
-      var itemType: SendableIdentifier = .Item
-      var itemLength: UInt32 = 0
+      switch itemType {
+      case .Code:
+        if !tryToProcessCode(&offset) {
+          return
+        }
 
-      // make sure we have enough to extract these types
-      let minimumDataLength = sizeofValue(itemType) + sizeofValue(itemLength)
-      guard length >= minimumDataLength else {
-        return  // we can't find the type and length, so wait for more data
+      default:
+        if !tryToProcessData(ofType: itemType, withOffset: &offset) {
+          return
+        }
       }
 
-      // figure out the length of received data
-      withUnsafeMutablePointer(&itemLength) {
-        bytesToProcess.getBytes(UnsafeMutablePointer($0), range: NSMakeRange(sizeofValue(itemType), sizeofValue(itemLength)))
-      }
-      itemLength = UInt32(bigEndian: itemLength)
-
-      // now make sure we have received enough to extract this entire item
-      guard length >= (Int(itemLength) + minimumDataLength) else {
-        return  // need to wait for more data
-      }
-
-      // figure out the item type so that we can dispatch to the loader
-      withUnsafeMutablePointer(&itemType) {
-        bytesToProcess.getBytes(UnsafeMutablePointer($0), range: NSMakeRange(0, sizeofValue(itemType)))
-      }
-
-      // extract it, print it, and then remove it
-      let data = bytesToProcess.subdataWithRange(NSMakeRange(minimumDataLength, Int(itemLength)))
-
-      // pass that object as appropriate
-      if let callback = onReceivedData {
-        callback(itemType, data)
-      }
-
-      bytesToProcess.replaceBytesInRange(NSMakeRange(0, minimumDataLength + Int(itemLength)), withBytes: nil, length: 0)
+      // if we were able to process an item, delete the data
+      bytesToProcess.replaceBytesInRange(NSMakeRange(0, offset), withBytes: nil, length: 0)
     }
   }
 
@@ -187,11 +209,18 @@ class Connection: NSObject, NSStreamDelegate {
     bytesToSend.appendByte(item.sendableIdentifier.rawValue)
 
     // then write the data length and actual data
-    let data = cachedData ?? item.sendableData
-    bytesToSend.appendCustomInteger(UInt32(data.length))
-    bytesToSend.appendData(data)
+    bytesToSend.appendCustomData(cachedData ?? item.sendableData)
 
     sendAvailableData()
+  }
+
+  func sendCode(code: SendableCode, withData maybeData: NSData? = nil) {
+    bytesToSend.appendByte(SendableIdentifier.Code.rawValue)
+    bytesToSend.appendByte(code.rawValue)
+
+    if let data = maybeData {
+      bytesToSend.appendCustomData(data)
+    }
   }
 
   private func sendAvailableData() {

@@ -19,10 +19,30 @@ class UniqueGenerator {
 }
 
 enum SendableIdentifier: UInt8 {
-  case Item = 0
+  case Code = 0
+  case Item
   case Queue
   case Request
   case Image
+}
+
+enum SendableCode: UInt8 {
+  case Version = 0         // followed by 1-byte version number
+  case LibraryIdentifier   // followed by the bytes of a NSUUID
+                           //    - to the client: implies Library change
+                           //    - to the server: identifiers current Library
+  case LibraryDone         // signals that the Library has finished sending
+
+  var hasData: Bool {
+    switch self {
+    case .LibraryIdentifier: fallthrough
+    case .Version:
+      return true
+
+    default:
+      return false
+    }
+  }
 }
 
 /** Applied to objects that can be serialized and sent over the network. */
@@ -82,41 +102,35 @@ extension NSData {
     return value
   }
 
+  func getNextData(inout offset: Int) -> NSData? {
+    guard let decodedDataLength = getNextInteger(&offset) else {
+      return nil  // not enough bytes to get the length
+    }
+    let dataLength = Int(decodedDataLength)
+
+    guard length >= (offset + dataLength) else {
+      return nil  // not enough bytes to extract all the data
+    }
+
+    let range = NSMakeRange(offset, dataLength)
+    offset += dataLength  // update offset after capturing range
+    return subdataWithRange(range)
+  }
+
   func getNextString(inout offset: Int) -> String? {
-    guard let decodedStringLength = getNextInteger(&offset) else {
-      return nil  // we couldn't get the length, so we can't get the data
-    }
-    let stringLength = Int(decodedStringLength)  // cast it to an Int
-
-    guard length >= (offset + stringLength) else {
-      return nil  // we don't have enough bytes to read the string, so fail
+    guard let data = getNextData(&offset) else {
+      return nil
     }
 
-    let result = String(
-      data: subdataWithRange(NSMakeRange(offset, stringLength)),
-      encoding: NSUTF8StringEncoding
-    )
-    offset += stringLength
-    return result
+    return String(data: data, encoding: NSUTF8StringEncoding)
   }
   
   func getNextImage(inout offset: Int) -> UIImage? {
-    guard let decodedImageLength = getNextInteger(&offset) else {
-      return nil  // we couldn't get the length, so we can't get the data
+    guard let data = getNextData(&offset) else {
+      return nil
     }
 
-    let imageLength = Int(decodedImageLength)  // cast it to an Int
-    
-    guard length >= (offset + imageLength) else {
-      return nil  // we don't have enough bytes to read the image, so fail
-    }
-    
-    // actually grab the NSData corresponding to the UIImage
-    let result = UIImage(
-      data: subdataWithRange(NSMakeRange(offset, imageLength))
-    )
-    offset += imageLength
-    return result
+    return UIImage(data: data)
   }
 }
 
@@ -135,7 +149,7 @@ extension NSMutableData {
     }
   }
 
-  private func appendCustomData(maybeData: NSData?) {
+  func appendCustomData(maybeData: NSData?) {
     appendCustomInteger(UInt32(maybeData?.length ?? 0))
     if let data = maybeData {
       appendData(data)
