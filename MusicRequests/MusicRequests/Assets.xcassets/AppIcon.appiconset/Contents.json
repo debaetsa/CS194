@@ -3,79 +3,79 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "iphone_settings@2x.png",
+      "filename" : "JAMM_29pt_2x.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "iphone_settings@3x.png",
+      "filename" : "JAMM_29pt_3x.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "iphone_spotlight@2x.png",
+      "filename" : "JAMM_40pt_2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "iphone_spotlight@3x.png",
+      "filename" : "JAMM_40pt_3x.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "iphone@2x.png",
+      "filename" : "JAMM_60pt_2x.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "iphone@3x.png",
+      "filename" : "JAMM_60pt_3x.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "ipad_settings.png",
+      "filename" : "JAMM_29pt_1x.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "ipad_settings@2x.png",
+      "filename" : "JAMM_29pt_2x_copy.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "ipad_spotlight.png",
+      "filename" : "JAMM_40pt_1x.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "ipad_spotlight@2x.png",
+      "filename" : "JAMM_40pt_2x_copy.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "ipad.png",
+      "filename" : "JAMM_76pt_1x.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "ipad@2x.png",
+      "filename" : "JAMM_76pt_2x.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "ipadpro@2x.png",
+      "filename" : "JAMM_83.5pt_2x.png",
       "scale" : "2x"
     }
   ],
