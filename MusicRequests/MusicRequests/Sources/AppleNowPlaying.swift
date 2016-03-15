@@ -83,5 +83,16 @@ class AppleNowPlaying: LocalNowPlaying {
     playing = false //this took me a while to figure out why every time I paused it kept playing again.
     musicPlayer.pause()
   }
-
+  
+  override func scrub(value : Double) {
+    musicPlayer.currentPlaybackTime = value
+  }
+  
+  override func currentPlayBackDuration() -> NSTimeInterval {
+    return musicPlayer.nowPlayingItem != nil ? (musicPlayer.nowPlayingItem?.playbackDuration)! : 0.0
+  }
+  
+  override func currentPlayBackTime() -> Double {
+    return musicPlayer.currentPlaybackTime.isNaN ? 0.0 : musicPlayer.currentPlaybackTime
+  }
 }

@@ -75,6 +75,14 @@ class LocalNowPlaying: NowPlaying {
     }
   }
 
-  func scrub() {
+  func scrub(value: Double) {
+  }
+  
+  func currentPlayBackTime() -> Double{
+    return 10.0;
+  }
+  
+  func currentPlayBackDuration() -> Double {
+    return 0.0;
   }
 }
