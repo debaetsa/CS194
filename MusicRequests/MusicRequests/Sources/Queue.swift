@@ -239,8 +239,28 @@ class LocalQueue: Queue {
     upcomingQueueItems.sortInPlace {
       let one = $0 as! LocalQueueItem
       let two = $1 as! LocalQueueItem
+      
+      var one_pos = -1
+      for (var i = previousQueueItems.count-1; i >= 0; i--) {
+        if (previousQueueItems[i].song.name == one.song.name){
+          one_pos = previousQueueItems.count-i
+          break
+        }
+      }
+      
+      var two_pos = -1
+      for (var i = previousQueueItems.count-1; i >= 0; i--) {
+        if (previousQueueItems[i].song.name == two.song.name){
+          two_pos = previousQueueItems.count-i
+          break
+        }
+      }
+      
+      let etv_one = (one_pos == -1) ? Double(one.votes) : (log(Double(one_pos+1))/log(Double(previousQueueItems.count+1))) * Double(one.votes)
+      
+      let etv_two = (two_pos == -1) ? Double(two.votes) : (log(Double(two_pos+1))/log(Double(previousQueueItems.count+1))) * Double(two.votes)
 
-      return (one.votes == two.votes) ? one.identifier < two.identifier : one.votes > two.votes
+      return (etv_one == etv_two) ? one.identifier < two.identifier : etv_one > etv_two
     }
     return true
   }
