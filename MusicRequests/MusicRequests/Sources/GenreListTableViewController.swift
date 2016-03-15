@@ -37,6 +37,9 @@ class GenreListTableViewController: ItemListTableViewController {
 
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
     if segue.identifier == "PushSongList" {
+      let destination = segue.destinationViewController as! SongListTableViewController
+      let indexPath = indexPathForSender(sender)
+      destination.setSongList(items[indexPath.row].allSongs)
     }
   }
 

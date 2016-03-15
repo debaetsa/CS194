@@ -85,6 +85,20 @@ class Queue: NSObject, Sendable {
   private var upcomingQueueItems = [QueueItem]()
   private var currentQueueItem: QueueItem?
   private var previousQueueItems = [QueueItem]()
+  
+  func getAllQueueSongs() -> [Song] {
+    var songArray = [Song]()
+    for item in upcomingQueueItems {
+      songArray.append(item.song)
+    }
+    if let currentItem = currentQueueItem {
+      songArray.append(currentItem.song)
+    }
+    for item in upcomingQueueItems {
+      songArray.append(item.song)
+    }
+    return songArray
+  }
 
   /** Changes the QueueItem objects in this queue to the specified Arrays. */
   func changeAllItems(history history: [QueueItem], current: QueueItem?, upcoming: [QueueItem]) {

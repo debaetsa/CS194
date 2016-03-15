@@ -132,6 +132,7 @@ class Album: Item {
 
     // and then append the extra information that we need here (the Artist)
     mutableData.appendCustomInteger(self.artist?.identifier ?? UInt32(0))
+
   }
 
   required init?(data: NSData, lookup: [UInt32: Item], inout offset: Int) {
@@ -140,7 +141,7 @@ class Album: Item {
     guard let artistId = data.getNextInteger(&offset) else {
       return nil
     }
-
+    
     if let item = lookup[artistId], let artist = item as? Artist {
       addArtist(artist)
     } else {
