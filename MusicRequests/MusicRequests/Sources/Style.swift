@@ -13,12 +13,16 @@ struct Style {
 
   static var black = UIColor.blackColor()
   static var dark = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
+  static var toolbarDark = UIColor(red: 0.025, green: 0.025, blue: 0.025, alpha: 1.0)
   static var darkGray = UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.0)
   static var mediumGray = UIColor(red: 0.35, green: 0.35, blue: 0.35, alpha: 1.0)
   static var gray = UIColor.grayColor()
   static var lightGray = UIColor(red: 0.75, green: 0.75, blue: 0.75, alpha: 1.0)
   static var white = UIColor.whiteColor()
   static var clear = UIColor.clearColor()
+
+  static var red = UIColor.redColor()
+  static var yellow = UIColor.yellowColor()
 
 
   struct darkTheme {
@@ -28,7 +32,11 @@ struct Style {
     static func standardView() {
 
       // Change color of play controls in Up Next view
-      UIView.appearance().tintColor = gray
+      UIToolbar.appearance().tintColor = gray
+      // Change color of toolbar behind play controls in Up Next view
+      UIToolbar.appearance().barTintColor = toolbarDark
+      // Remove line dividing toolbar from table view
+      UIToolbar.appearance().clipsToBounds = true
 
       // Change color of background color of the table views
       UITableView.appearance().backgroundColor = dark
