@@ -14,6 +14,7 @@ struct Style {
   static var black = UIColor.blackColor()
   static var dark = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
   static var darkGray = UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.0)
+  static var mediumGray = UIColor(red: 0.35, green: 0.35, blue: 0.35, alpha: 1.0)
   static var gray = UIColor.grayColor()
   static var lightGray = UIColor(red: 0.75, green: 0.75, blue: 0.75, alpha: 1.0)
   static var white = UIColor.whiteColor()
@@ -26,10 +27,17 @@ struct Style {
     // "application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool"
     static func standardView() {
 
+      // Change color of play controls in Up Next view
+      UIView.appearance().tintColor = gray
+
       // Change color of background color of the table views
       UITableView.appearance().backgroundColor = dark
+      // Change color of separator lines in table view
+      UITableView.appearance().separatorColor = mediumGray
       // Change color of cells in table views
       UITableViewCell.appearance().backgroundColor = dark
+      // Change color of checkmark in sources view
+      UITableViewCell.appearance().tintColor = gray
       // Change color of text in labels
       UILabel.appearance().textColor = white
 
@@ -60,18 +68,18 @@ struct Style {
 
     }
 
-    // This function is called in SourceTableViewController.swift within the function 
+    // This function is called in SourceTableViewController.swift within the function
     // "tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)"
     static func sourceView(tableView: UITableView, header: UITableViewHeaderFooterView) {
 
       // Change color of background in Source
-      tableView.backgroundColor = black
+      tableView.backgroundColor = dark
       // Change color of headers in Source
-      header.contentView.backgroundColor = black
+      header.contentView.backgroundColor = dark
       // Change color of header text labels in Source
       header.textLabel!.textColor = gray
     }
-
+    
   }
-
+  
 }
