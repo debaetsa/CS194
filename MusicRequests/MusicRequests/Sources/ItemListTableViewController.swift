@@ -10,39 +10,13 @@ import UIKit
 
 class ItemListTableViewController: UITableViewController {
 
+  // Whether or not we should add a search bar.
+  var shouldShowSearchBar = true
+
   // The search results controller is used when searching for items.  It only
   // searches the particular item type, though it should probably search all
   // of the item types.  That can be changed later.
-  let searchController = UISearchController(searchResultsController: nil)
-
-  //    if(!self.searchController.active || searchController.searchBar.text == ""){
-  //      return library.allSongs.count
-  //    } else {
-  //    }
-
-  //    searchController.searchResultsUpdater = self
-  //    searchController.dimsBackgroundDuringPresentation = false
-  //    searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
-  //    definesPresentationContext = true
-  //    tableView.tableHeaderView = searchController.searchBar
-
-  //    if(!self.searchController.active || searchController.searchBar.text == ""){
-  //      songs = library.allSongs
-  //    }
-
-  //extension SongsTableViewController: UISearchResultsUpdating {
-  //  func updateSearchResultsForSearchController(searchController: UISearchController) {
-  //    filterContentForSearchText(searchController.searchBar.text!)
-  //  }
-  //}
-
-  //  func filterContentForSearchText(searchText: String, scope: String = "All") {
-  //    songs = library.allSongs.filter { song in
-  //      return song.name.lowercaseString.containsString(searchText.lowercaseString)
-  //    }
-  //    tableView.reloadData()
-  //  }
-
+  var searchController: UISearchController!
 
   // The application needs to handle the situation where the Library is not
   // accessible.  This can happen when the Library for a RemoteSession has not
@@ -116,6 +90,15 @@ class ItemListTableViewController: UITableViewController {
     // This clears the background of each table view so that it displays
     // the correct color in the "bounce" area
     tableView.backgroundView = UIView()
+
+    if shouldShowSearchBar {
+      let searchResultsController = SearchTableViewController()
+      searchController = UISearchController(searchResultsController: searchResultsController)
+      searchController.searchResultsUpdater = searchResultsController
+      definesPresentationContext = true
+      tableView.tableHeaderView = searchController.searchBar
+    }
+
 
     let updateCurrentSession = {
       [unowned self] (note: NSNotification?) in
