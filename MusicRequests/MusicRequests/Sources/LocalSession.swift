@@ -159,6 +159,8 @@ class LocalSession: Session, NSNetServiceDelegate {
   }
 
   private func addClient(connection: Connection) {
+    logger("new connection \(connection.address)")
+
     // add them to the list
     connection.onClosed = didCloseConnection
     connection.onReceivedData = didReceiveData
@@ -205,7 +207,7 @@ class LocalSession: Session, NSNetServiceDelegate {
   }
 
   private func didCloseConnection(connection: Connection, didFail fail: Bool) {
-    print("Removed client \(connection) with failure \(fail).")
+    logger("\(connection.address) / failed: \(fail)")
 
     var indexOfClient: Int?
     for (index, client) in clients.enumerate() {

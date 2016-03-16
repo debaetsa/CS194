@@ -25,6 +25,8 @@ class UpNextTableViewController: ItemListTableViewController {
   }
 
   private func queueDidChange() {
+    logger("queue changed to " + ((maybeQueue != nil) ? "value" : "nil"))
+
     let center = NSNotificationCenter.defaultCenter()
 
     if let listener = maybeQueueUpdatedListener {

@@ -40,6 +40,7 @@ class RemoteSessionManager: NSObject, NSNetServiceBrowserDelegate {
   }
 
   func netServiceBrowser(browser: NSNetServiceBrowser, didFindService service: NSNetService, moreComing: Bool) {
+    logger("found service with name \(service.name)")
 
     remoteSessions.append(RemoteSession(netService: service))
 
@@ -62,6 +63,7 @@ class RemoteSessionManager: NSObject, NSNetServiceBrowserDelegate {
     if let indexToRemove = serviceIndex {
       session = remoteSessions.removeAtIndex(indexToRemove)
     }
+    logger("removed session \(session?.name)")
 
     if !moreComing {
       postUpdatedNotification()
