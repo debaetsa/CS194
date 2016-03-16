@@ -239,6 +239,7 @@ class LocalSession: Session, NSNetServiceDelegate {
     let sendLibrary = shouldSendLibrary(toIdentifier: maybeIdentifier)
 
     if sendLibrary {
+      connection.sendCode(.LibraryIdentifier, withData: sourceLibrary.globallyUniqueIdentifier.data!)
       sendLibraryData(toConnection: connection)
     }
 

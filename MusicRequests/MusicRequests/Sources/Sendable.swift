@@ -175,3 +175,13 @@ extension NSMutableData {
     appendCustomData(UIImageJPEGRepresentation(image, 0.1))
   }
 }
+
+extension NSUUID {
+  var data: NSData? {
+    guard let data = NSMutableData(length: sizeof(uuid_t)) else {
+      return nil
+    }
+    getUUIDBytes(UnsafeMutablePointer(data.mutableBytes))
+    return data
+  }
+}

@@ -94,6 +94,9 @@ class RemoteSession: Session, NSNetServiceDelegate {
     connection.onReceivedCode = didReceiveCode
     self.connection = connection
 
+    // we need to write our LibraryIdentifier (for now, it's nil)
+    connection.sendCode(.LibraryIdentifier, withData: nil)
+
     // and then let the caller know that this has mostly worked
     return true
   }
@@ -138,6 +141,14 @@ class RemoteSession: Session, NSNetServiceDelegate {
 
       // Create the RemoteLibrary that will receive the songs that are sent.
       maybeRemoteLibrary = RemoteLibrary(receivedGloballyUniqueIdentifier: uuid)
+
+    case .LibraryDone:
+      guard let remoteLibrary = maybeRemoteLibrary else {
+        logger("LibraryDone: no RemoteLibrary to finish")
+        return
+      }
+
+      remoteLibrary.finishLoading()  // mark it as finished
 
     default:
       logger("received code \(code) with data \(maybeData)")
