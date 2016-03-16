@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Artist: Item {
+class Artist: Item, ShallowCopy {
 
   var albums: [Album] = []
 
@@ -49,6 +49,12 @@ class Artist: Item {
 
   override var tag: Tag {
     return .Artist
+  }
+
+  // MARK: - Copying
+
+  func shallowCopy() -> Artist {
+    return Artist(name: name)
   }
   
 }

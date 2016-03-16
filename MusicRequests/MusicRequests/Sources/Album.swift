@@ -10,7 +10,7 @@ import UIKit
 
 typealias Track = (disc: Int?, track: Int?, song: Song)
 
-class Album: Item {
+class Album: Item, ShallowCopy {
 
   // The artists associated with all songs on this album.
   var artists: [Artist] = []
@@ -49,7 +49,7 @@ class Album: Item {
     self.init(name: name, sortName: name, artist: artist, date: date)
   }
 
-  private func addArtist(artist: Artist) {
+  func addArtist(artist: Artist) {
     artists.append(artist)
     artist.addAlbum(self)
   }
@@ -147,6 +147,14 @@ class Album: Item {
     } else {
       logger("could not find artist for album \(name)")
     }
+  }
+
+  // MARK: - Copying
+
+  func shallowCopy() -> Album {
+    let album = Album(name: name, artist: nil, date: date)
+    album.image = image
+    return album
   }
 
 }

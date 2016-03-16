@@ -58,10 +58,29 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
     }
   }
 
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+
+    updatePlaylistName()
+
+    if let selectedIndexPath = tableView.indexPathForSelectedRow {
+      tableView.deselectRowAtIndexPath(selectedIndexPath, animated: true)
+    }
+  }
+
   deinit {
     if let boundListener = listener {
       let center = NSNotificationCenter.defaultCenter()
       center.removeObserver(boundListener)
+    }
+  }
+
+  private func updatePlaylistName() {
+    let maybePlaylist = (localSession.sourceLibrary as? FilteredLibrary)?.playlist
+    if let playlist = maybePlaylist {
+      cellPlaylist.detailTextLabel?.text = playlist.name
+    } else {
+      cellPlaylist.detailTextLabel?.text = "All Music"
     }
   }
 

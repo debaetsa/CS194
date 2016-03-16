@@ -8,6 +8,17 @@
 
 import UIKit
 
+protocol ShallowCopy {
+  typealias ItemType
+
+  /** Creates a very empty, basic copy of the Item.
+
+   For example, if it's an Album, a new Album will be created without any Song
+   references contained in it.  This allows entirely independent item graphs to
+   be built. */
+  func shallowCopy() -> ItemType
+}
+
 class Item: NSObject, Sendable {
 
   private static let idGenerator = UniqueGenerator()

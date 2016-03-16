@@ -52,7 +52,9 @@ class LocalSession: Session, NSNetServiceDelegate {
    library out of that playlist. */
   var sourceLibrary: Library {
     didSet {
+      localQueue.sourceLibrary = sourceLibrary
       sendDidChangeLibraryNotification()
+      sendLibraryToClients()
     }
   }
 
@@ -83,7 +85,8 @@ class LocalSession: Session, NSNetServiceDelegate {
   var password: String = ""
 
   /** Stores all the clients who are currently connected. */
-  private var clients = [Connection]()
+  private var allClients = [Connection]()
+  private var validClients = [Connection]()  // clients that have requested a Library
 
   /** Stores the broadcasted NSNetService.
 
@@ -169,7 +172,7 @@ class LocalSession: Session, NSNetServiceDelegate {
     connection.onClosed = didCloseConnection
     connection.onReceivedData = didReceiveData
     connection.onReceivedCode = didReceiveCode
-    clients.append(connection)
+    allClients.append(connection)
   }
 
   private func sendLibraryData(toConnection connection: Connection) {
@@ -213,15 +216,18 @@ class LocalSession: Session, NSNetServiceDelegate {
   private func didCloseConnection(connection: Connection, didFail fail: Bool) {
     logger("\(connection.address) / failed: \(fail)")
 
-    var indexOfClient: Int?
-    for (index, client) in clients.enumerate() {
-      if client === connection {
-        indexOfClient = index
-        break
-      }
+    // stop paying attention to anything said by this client
+    connection.onReceivedCode = nil
+    connection.onReceivedData = nil
+
+    // remove it from the list of allClients
+    if let index = allClients.indexOf(connection) {
+      allClients.removeAtIndex(index)
     }
-    if let index = indexOfClient {
-      clients.removeAtIndex(index)
+
+    // remove it from the list of activeClients
+    if let index = validClients.indexOf(connection) {
+      validClients.removeAtIndex(index)
     }
   }
 
@@ -233,6 +239,16 @@ class LocalSession: Session, NSNetServiceDelegate {
       }
     }
     return true
+  }
+
+  private func sendLibraryToClients() {
+    // We send the Library to all of the clients that have "authenticated."
+    for connection in validClients {
+      connection.sendCode(.LibraryIdentifier, withData: sourceLibrary.globallyUniqueIdentifier.data!)
+      sendLibraryData(toConnection: connection)
+      sendQueueData(toConnection: connection)
+      sendArtworkData(toConnection: connection)
+    }
   }
 
   private func respondToLibraryIdentifier(maybeIdentifier: NSData?, fromConnection connection: Connection) {
@@ -255,6 +271,7 @@ class LocalSession: Session, NSNetServiceDelegate {
     switch code {
     case .LibraryIdentifier:
       respondToLibraryIdentifier(maybeData, fromConnection: connection)
+      validClients.append(connection)  // this one is now considered valid
 
     default:
       break
@@ -316,7 +333,7 @@ class LocalSession: Session, NSNetServiceDelegate {
     }
     currentQueueData = data
 
-    for client in clients {
+    for client in validClients {
       client.sendItem(localQueue, withCachedData: currentQueueData)
     }
 

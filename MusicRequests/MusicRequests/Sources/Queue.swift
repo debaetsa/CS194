@@ -71,7 +71,7 @@ class Queue: NSObject, Sendable {
   private var lastPlayed = [Song: NSDate]()
 
   /** Stores the Library reference for randomly chosen songs. */
-  private let library: Library
+  var sourceLibrary: Library
 
   /** These three variables store the queue.
 
@@ -85,7 +85,14 @@ class Queue: NSObject, Sendable {
   private var upcomingQueueItems = [QueueItem]()
   private var currentQueueItem: QueueItem?
   private var previousQueueItems = [QueueItem]()
-  
+
+  func clear() {
+    // Clears the Queue (i.e., when the sourceLibrary changes).
+    upcomingQueueItems.removeAll()
+    currentQueueItem = nil
+    previousQueueItems.removeAll()
+  }
+
   func getAllQueueSongs() -> [Song] {
     var songArray = [Song]()
     for item in upcomingQueueItems {
@@ -114,7 +121,7 @@ class Queue: NSObject, Sendable {
 
   init(nowPlaying: NowPlaying, sourceLibrary: Library) {
     self.nowPlaying = nowPlaying
-    self.library = sourceLibrary
+    self.sourceLibrary = sourceLibrary
 
     super.init()
 
@@ -224,6 +231,14 @@ class LocalQueue: Queue {
 
   // MARK: - Queue Filling and Sorting
 
+  override var sourceLibrary: Library {
+    didSet {
+      clear()  // remove the previous Songs
+      fillToMinimum()  // fill it
+      advanceToNextSong()  // then move to the next Song (will also advance)
+    }
+  }
+
   /** Fills to the upcoming queue to the minimum required length.
 
    This will only do something if the current queue length is less than the
@@ -238,7 +253,7 @@ class LocalQueue: Queue {
     }
 
     for _ in count..<target {
-      let maybeSong = library.pickRandomSong()
+      let maybeSong = sourceLibrary.pickRandomSong()
       guard let song = maybeSong else {
         // If we didn't get a result back, we have to stop adding songs.
         return
