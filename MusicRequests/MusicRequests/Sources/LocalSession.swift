@@ -90,6 +90,10 @@ class LocalSession: Session, NSNetServiceDelegate {
   It needs to be mutable so that it can be changed if the name is updated. */
   private var netService: NSNetService?
 
+  func isLocalService(service: NSNetService) -> Bool {
+    return netService == service
+  }
+
   /** Stores the socket that is accepting connections for this device.
    
    We create and destroy the socket as broadcasting is enabled/disabled in

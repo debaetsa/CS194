@@ -42,7 +42,9 @@ class RemoteSessionManager: NSObject, NSNetServiceBrowserDelegate {
   func netServiceBrowser(browser: NSNetServiceBrowser, didFindService service: NSNetService, moreComing: Bool) {
     logger("found service with name \(service.name)")
 
-    remoteSessions.append(RemoteSession(netService: service))
+    if !AppDelegate.sharedDelegate.localSession.isLocalService(service) {
+      remoteSessions.append(RemoteSession(netService: service))
+    }
 
     if !moreComing {
       postUpdatedNotification()
