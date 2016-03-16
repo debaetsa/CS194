@@ -12,6 +12,14 @@ private enum Section: Int {
   case Local = 0
   case Remote
   case count
+
+  private enum RowLocal: Int {
+    case Source = 0
+    case Broadcast
+    case Playlist
+    case Name
+    case count
+  }
 }
 
 class SourceTableViewController: UITableViewController, UITextFieldDelegate {
@@ -25,13 +33,18 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
   weak var broadcastSwitch: UISwitch!
   weak var nameTextField: UITextField!
 
+  @IBOutlet weak var cellBroadcast: UITableViewCell!
+  @IBOutlet weak var cellPlaylist: UITableViewCell!
+  @IBOutlet weak var cellName: UITableViewCell!
+
   var localTableViewCells = [UITableViewCell]()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // create the static cell content
-    createLocalCells()
+    // get these objects after they are loaded from the storyboard file
+    broadcastSwitch = cellBroadcast.accessoryView as! UISwitch
+    nameTextField = cellName.viewWithTag(1) as! UITextField
 
     // set the initial state of all the views
     broadcastSwitch.on = localSession.broadcast
@@ -50,25 +63,6 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
       let center = NSNotificationCenter.defaultCenter()
       center.removeObserver(boundListener)
     }
-  }
-
-  private func createLocalCells() {
-    var cell: UITableViewCell!
-
-    cell = tableView.dequeueReusableCellWithIdentifier("RemoteCell")
-    cell.textLabel?.text = "My \(UIDevice.currentDevice().model)"
-    localTableViewCells.append(cell)
-
-    cell = tableView.dequeueReusableCellWithIdentifier("BroadcastCell")
-    broadcastSwitch = (cell.accessoryView as! UISwitch)
-    localTableViewCells.append(cell)
-
-    cell = tableView.dequeueReusableCellWithIdentifier("PlaylistCell")
-    localTableViewCells.append(cell)
-
-    cell = tableView.dequeueReusableCellWithIdentifier("NameCell")
-    nameTextField = (cell.viewWithTag(1) as! UITextField)
-    localTableViewCells.append(cell)
   }
 
   // MARK: - Actions
@@ -100,7 +94,7 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     switch Section(rawValue: section)! {
     case .Local:
-      return localTableViewCells.count
+      return Section.RowLocal.count.rawValue
 
     case .Remote:
       return max(remoteSessionManager.sessions.count, 1)
@@ -129,15 +123,26 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     if indexPath.section == Section.Local.rawValue {
-      let cell = localTableViewCells[indexPath.row]
+      switch indexPath.row {
+      case Section.RowLocal.Name.rawValue:
+        return cellName
 
-      if cell.reuseIdentifier == "RemoteCell" {
-        cell.accessoryType = (AppDelegate.sharedDelegate.currentSession == AppDelegate.sharedDelegate.localSession)
-          ? .Checkmark
-          : .None
+      case Section.RowLocal.Broadcast.rawValue:
+        return cellBroadcast
+
+      case Section.RowLocal.Playlist.rawValue:
+        return cellPlaylist
+
+      default:
+        let cell = tableView.dequeueReusableCellWithIdentifier("RemoteCell", forIndexPath: indexPath)
+        cell.textLabel?.text = "My \(UIDevice.currentDevice().model)"
+
+        let session = AppDelegate.sharedDelegate.localSession
+        let currentSession = AppDelegate.sharedDelegate.currentSession
+        cell.accessoryType = (currentSession === session) ? .Checkmark : .None
+
+        return cell
       }
-
-      return cell
 
     } else {
 
@@ -151,9 +156,7 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
         cell.textLabel?.text = session.name
 
         let currentSession = AppDelegate.sharedDelegate.currentSession
-        cell.accessoryType = (session === currentSession)
-          ? UITableViewCellAccessoryType.Checkmark
-          : UITableViewCellAccessoryType.None
+        cell.accessoryType = (session === currentSession) ? .Checkmark : .None
 
         return cell
       }
