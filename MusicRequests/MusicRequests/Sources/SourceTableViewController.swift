@@ -55,6 +55,10 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
   private func createLocalCells() {
     var cell: UITableViewCell!
 
+    cell = tableView.dequeueReusableCellWithIdentifier("RemoteCell")
+    cell.textLabel?.text = "My \(UIDevice.currentDevice().model)"
+    localTableViewCells.append(cell)
+
     cell = tableView.dequeueReusableCellWithIdentifier("BroadcastCell")
     broadcastSwitch = (cell.accessoryView as! UISwitch)
     localTableViewCells.append(cell)
@@ -125,7 +129,15 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     if indexPath.section == Section.Local.rawValue {
-      return localTableViewCells[indexPath.row]
+      let cell = localTableViewCells[indexPath.row]
+
+      if cell.reuseIdentifier == "RemoteCell" {
+        cell.accessoryType = (AppDelegate.sharedDelegate.currentSession == AppDelegate.sharedDelegate.localSession)
+          ? .Checkmark
+          : .None
+      }
+
+      return cell
 
     } else {
 
@@ -158,21 +170,30 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
   }
 
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    guard indexPath.section == Section.Remote.rawValue else {
+    let nextSession: Session
+
+    switch indexPath.section {
+    case Section.Local.rawValue where indexPath.row == 0:
+      nextSession = AppDelegate.sharedDelegate.localSession
+      break
+
+    case Section.Remote.rawValue:
+      nextSession = remoteSessionManager.sessions[indexPath.row]
+      break
+
+    default:
       return
     }
 
-    // We need to deselect the existing cell.
+    // connect to the new Session (this will automatically connect)
+    AppDelegate.sharedDelegate.currentSession = nextSession
+
+    // We need to deselect the existing cell (if it is visible).
     for cell in tableView.visibleCells {
       if cell.accessoryType == .Checkmark {
         cell.accessoryType = .None
       }
     }
-
-    // Change the session.
-    let session = remoteSessionManager.sessions[indexPath.row]
-    session.connect()
-    AppDelegate.sharedDelegate.currentSession = session
 
     // clear the row after it gets selected
     tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark

@@ -28,7 +28,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   // and this is the one we actually use for data (could be local or remote)
   var currentSession: Session! {
+    willSet {
+      // disconnect if this is a RemoteSession
+      if let remoteSession = currentSession as? RemoteSession {
+        remoteSession.disconnect()
+      }
+    }
     didSet {
+      if let remoteSession = currentSession as? RemoteSession {
+        remoteSession.connect()
+      }
       let center = NSNotificationCenter.defaultCenter()
       center.postNotificationName(AppDelegate.didChangeSession, object: self)
     }

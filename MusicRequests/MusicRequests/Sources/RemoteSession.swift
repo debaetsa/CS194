@@ -61,6 +61,8 @@ class RemoteSession: Session, NSNetServiceDelegate {
     return maybeRemoteQueue
   }
 
+  func disconnect() {
+  }
 
   /** Attempts to connect to the service.
 
