@@ -219,6 +219,10 @@ class Connection: NSObject, NSStreamDelegate {
 
     if let data = maybeData {
       bytesToSend.appendCustomData(data)
+
+    } else if code.hasData {
+      logger("sending code \(code) without data, but it is required")
+      bytesToSend.appendCustomData(NSData())
     }
 
     sendAvailableData()
