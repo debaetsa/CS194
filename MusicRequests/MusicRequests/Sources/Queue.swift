@@ -233,6 +233,10 @@ class LocalQueue: Queue {
     let count = upcomingQueueItems.count
     let target = Queue.minimumUpcomingCount
 
+    guard count < target else {
+      return  // nothing to add
+    }
+
     for _ in count..<target {
       let maybeSong = library.pickRandomSong()
       guard let song = maybeSong else {
