@@ -77,7 +77,7 @@ class Connection: NSObject, NSStreamDelegate {
   private func handleInputEvent(eventCode: NSStreamEvent) {
     switch eventCode {
     case NSStreamEvent.OpenCompleted:
-      print("\(address) finished opening the input stream.")
+      logger("\(address) finished opening the input stream")
 
     case NSStreamEvent.HasBytesAvailable:
       readAvailableData()
@@ -90,10 +90,10 @@ class Connection: NSObject, NSStreamDelegate {
   private func handleOutputEvent(eventCode: NSStreamEvent) {
     switch eventCode {
     case NSStreamEvent.OpenCompleted:
-      print("\(address) finished opening the output stream.")
+      logger("\(address) finished opening the output stream")
 
     case NSStreamEvent.HasSpaceAvailable:
-      print("\(address) has space available to write.")
+      logger("\(address) has space available to write")
       sendAvailableData()  // send data if there is data to send
 
     default:
@@ -109,7 +109,6 @@ class Connection: NSObject, NSStreamDelegate {
 
   private func readAvailableData() {
     guard inputStream.hasBytesAvailable else {
-      print("Ignoring read attempt since there are no bytes to read.")
       return
     }
 

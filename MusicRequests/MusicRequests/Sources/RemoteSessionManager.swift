@@ -73,7 +73,7 @@ class RemoteSessionManager: NSObject, NSNetServiceBrowserDelegate {
   }
 
   func netServiceBrowser(browser: NSNetServiceBrowser, didNotSearch errorDict: [String : NSNumber]) {
-    print("did not search: \(errorDict)")
+    logger("did not search: \(errorDict)")
   }
 
 }

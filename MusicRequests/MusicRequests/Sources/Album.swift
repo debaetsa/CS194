@@ -145,7 +145,7 @@ class Album: Item {
     if let item = lookup[artistId], let artist = item as? Artist {
       addArtist(artist)
     } else {
-      print("Failed to look up artist for album \(name).")
+      logger("could not find artist for album \(name)")
     }
   }
 

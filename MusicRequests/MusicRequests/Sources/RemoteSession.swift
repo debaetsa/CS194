@@ -79,12 +79,12 @@ class RemoteSession: Session, NSNetServiceDelegate {
     }
 
     guard result else {
-      print("Could not create the streams for the connection.")
+      logger("no stream created for connection")
       return false
     }
 
     guard let inputStream = maybeInputStream, outputStream = maybeOutputStream else {
-      print("Did not get actual stream objects.")
+      logger("stream objects were nil")
       return false
     }
 
@@ -100,7 +100,7 @@ class RemoteSession: Session, NSNetServiceDelegate {
 
   func didReceiveData(data: NSData, ofType type: SendableIdentifier, fromConnection connection: Connection) {
     guard let remoteLibrary = maybeRemoteLibrary else {
-      print("No Library; Ignoring \(data)")
+      logger("no library; ignored received data")
       return
     }
 
@@ -113,13 +113,13 @@ class RemoteSession: Session, NSNetServiceDelegate {
 
     case .Queue:
       guard let remoteQueue = maybeRemoteQueue else {
-        print("No Queue; Ignoring \(data)")
+        logger("no queue; ignoring received data")
         return
       }
       remoteQueue.updateFromData(data, usingLibrary: remoteLibrary)
 
     default:
-      print("Ignoring: \(data)")
+      logger("fix this: no handler for data \(data)")
     }
   }
 
@@ -127,12 +127,12 @@ class RemoteSession: Session, NSNetServiceDelegate {
     switch code {
     case .LibraryIdentifier:
       guard let data = maybeData else {
-        print("LibraryIdentifier: no data")
+        logger("LibraryIdentifier: received no data")
         return
       }
       var offset = 0
       guard let uuid = data.getNextUUID(&offset) else {
-        print("LibraryIdentifier: no UUID")
+        logger("LibraryIdentifier: data is not a UUID")
         return
       }
 
@@ -140,20 +140,20 @@ class RemoteSession: Session, NSNetServiceDelegate {
       maybeRemoteLibrary = RemoteLibrary(receivedGloballyUniqueIdentifier: uuid)
 
     default:
-      print("Code: \(code); Data: \(maybeData)")
+      logger("received code \(code) with data \(maybeData)")
     }
   }
 
   func netServiceWillResolve(sender: NSNetService) {
-    print("About to resolve \(sender).")
+    logger("will resolve \(sender)")
   }
 
   func netServiceDidResolveAddress(sender: NSNetService) {
-    print("Resolved address for \(sender): \(sender.addresses)")
+    logger("got addresses \(sender): \(sender.addresses)")
   }
 
   func netService(sender: NSNetService, didNotResolve errorDict: [String : NSNumber]) {
-    print("Encountered error while resolving: \(errorDict)")
+    logger("failed to resolve \(sender): \(errorDict)")
   }
 
 }

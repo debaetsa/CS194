@@ -127,7 +127,7 @@ class Song: Item {
       album.addSong(self, discNumber: Int(discNumber), trackNumber: Int(songNumber))
       self.album = album
     } else {
-      print("Could not look up an album for the song \(name).")
+      logger("could not find album for song \(name)")
     }
   }
 

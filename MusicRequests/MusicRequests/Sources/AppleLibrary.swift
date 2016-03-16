@@ -141,7 +141,7 @@ class AppleLibrary: Library {
           if let song = idToSong[item.persistentID] {
             playlist.addSong(song)
           } else {
-            print("Could not find Song for entry in playlist.")
+            logger("could not find song with name \(item.title) and ID \(item.persistentID)")
           }
         }
 

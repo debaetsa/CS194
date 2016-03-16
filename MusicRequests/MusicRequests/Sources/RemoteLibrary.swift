@@ -54,7 +54,7 @@ class RemoteLibrary: Library {
     if let item = maybeItem {
       array.append(item)
     } else {
-      print("Could not parse item of type \(T.description())")
+      logger("could not parse \(T.description()) from \(data)")
     }
     return maybeItem
   }
@@ -63,11 +63,9 @@ class RemoteLibrary: Library {
     var offset = 0
 
     guard let rawValue = data.getNextByte(&offset) else {
-      print("Could not read a byte.")
       return false
     }
     guard let type = Item.Tag(rawValue: rawValue) else {
-      print("Not a valid type: \(rawValue)")
       return false
     }
 
@@ -84,7 +82,7 @@ class RemoteLibrary: Library {
       maybeItem = tryToAddItem(data, withOffset: &offset, toArray: &songs)
 
     default:
-      print("Ignoring item of type \(type).")
+      logger("ignoring item of type \(type)")
     }
 
     if let item = maybeItem {

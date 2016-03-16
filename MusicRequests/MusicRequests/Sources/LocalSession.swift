@@ -25,7 +25,7 @@ class LocalSession: Session, NSNetServiceDelegate {
       if broadcast {
         // start a new session if we need to broadcast something
         let port = initializeListeningSocket()
-        print("Created listening socket on port \(port).")
+        logger("now listening on port \(port)")
 
         // and then create the object that will make it available
         let service = LocalSession.createNetServiceForName(name, port: port)
@@ -151,7 +151,7 @@ class LocalSession: Session, NSNetServiceDelegate {
     let maybeWriteStream = unmanagedWriteStream?.takeRetainedValue() as NSOutputStream?
 
     guard let readStream = maybeReadStream, writeStream = maybeWriteStream else {
-      print("Could not create the streams for the connection.")
+      logger("failed to create stream for connection")
       return
     }
 
@@ -288,11 +288,11 @@ class LocalSession: Session, NSNetServiceDelegate {
         localQueue.refresh()
 
       } else {
-        print("Could not load Request from data \(data).")
+        logger("failed to load request from data \(data)")
       }
 
     default:
-      print("Ignoring data of type \(identifier).")
+      logger("ignoring data of type \(identifier)")
     }
   }
 
@@ -354,14 +354,12 @@ class LocalSession: Session, NSNetServiceDelegate {
       // retain
       let contextPointer = UnsafeMutablePointer<ContextUserInfo>($0)
       ++contextPointer.memory.retainCount
-      print("Retain Count: ^ \(contextPointer.memory.retainCount)")
       return $0
     }
     context.release = {
       // release
       let contextPointer = UnsafeMutablePointer<ContextUserInfo>($0)
       --contextPointer.memory.retainCount
-      print("Retain Count: _ \(contextPointer.memory.retainCount)")
 
       if contextPointer.memory.retainCount == 0 {
         contextPointer.destroy()
@@ -380,7 +378,6 @@ class LocalSession: Session, NSNetServiceDelegate {
         { (socket: CFSocket!, type: CFSocketCallBackType, remoteAddress: CFData!, data: UnsafePointer<Void>, userInfo: UnsafeMutablePointer<Void>) in
           // make sure that this is actually a new connection request
           guard type == CFSocketCallBackType.AcceptCallBack else {
-            print("Ignoring callback of type \(type).")
             return
           }
 
@@ -391,12 +388,12 @@ class LocalSession: Session, NSNetServiceDelegate {
           var acceptedRemoteAddress = sockaddr_in()
           let minimumDataLength = sizeofValue(acceptedRemoteAddress)
           guard let dataForAddress = remoteAddress else {
-            print("Did not receive an address for the remote connection.")
+            logger("no address received for remote connection")
             return
           }
           let dataLength = Int(CFDataGetLength(dataForAddress))
           guard dataLength >= minimumDataLength else {
-            print("Did not receive enough bytes to build an address.")
+            logger("not enough bytes received to parse address")
             return
           }
           // store the bytes in the struct so that we can access them
@@ -441,19 +438,19 @@ class LocalSession: Session, NSNetServiceDelegate {
   }
 
   func netServiceWillPublish(sender: NSNetService) {
-    print("w.Start NSNetService: \(sender)")
+    logger("w.start NSNetService: \(sender)")
   }
 
   func netServiceDidPublish(sender: NSNetService) {
-    print("Started NSNetService: \(sender)")
+    logger("started NSNetService: \(sender)")
   }
 
   func netServiceDidStop(sender: NSNetService) {
-    print("Stopped NSNetService: \(sender.name)")
+    logger("stopped NSNetService: \(sender.name)")
   }
 
   func netService(sender: NSNetService, didNotPublish errorDict: [String : NSNumber]) {
-    print("Error   NSNetService: \(sender)")
+    logger("error   NSNetService: \(sender)")
   }
 
 }
