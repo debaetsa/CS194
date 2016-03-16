@@ -17,7 +17,7 @@ struct Style {
   static var mediumGray = UIColor(red: 0.35, green: 0.35, blue: 0.35, alpha: 1.0)
   static var gray = UIColor.grayColor()
   static var lightGray = UIColor(red: 0.75, green: 0.75, blue: 0.75, alpha: 1.0)
-  static var lightBlue = UIColor(red: 0.45, green: 0.5, blue: 0.95, alpha: 1.0)
+  static var lightBlue = UIColor(red: 0.68, green: 0.68, blue: 1.0, alpha: 1.0)
   static var white = UIColor.whiteColor()
   static var clear = UIColor.clearColor()
 

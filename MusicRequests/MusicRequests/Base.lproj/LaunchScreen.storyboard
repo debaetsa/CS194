@@ -17,18 +17,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchFileImage" translatesAutoresizingMaskIntoConstraints="NO" id="bKa-ld-yWS">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchLogo" translatesAutoresizingMaskIntoConstraints="NO" id="MVb-Py-GR0">
                                 <rect key="frame" x="225" y="225" width="150" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="qQ7-dL-b4k"/>
-                                    <constraint firstAttribute="height" constant="150" id="yOe-lB-aYl"/>
+                                    <constraint firstAttribute="height" constant="150" id="JJk-IA-F8N"/>
+                                    <constraint firstAttribute="width" constant="150" id="gHm-QH-vNJ"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.098039215686274508" green="0.098039215686274508" blue="0.098039215686274508" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="bKa-ld-yWS" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Mln-xl-4MG"/>
-                            <constraint firstItem="bKa-ld-yWS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="ZTk-zl-lW9"/>
+                            <constraint firstItem="MVb-Py-GR0" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="6TY-Wz-h7z"/>
+                            <constraint firstItem="MVb-Py-GR0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="NnD-ws-kLh"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -38,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchFileImage" width="150" height="150"/>
+        <image name="LaunchLogo" width="150" height="150"/>
     </resources>
 </document>
