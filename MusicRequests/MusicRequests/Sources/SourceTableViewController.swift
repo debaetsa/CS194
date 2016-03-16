@@ -202,7 +202,7 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
 
   override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
     let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
-    Style.darkTheme.sourceView(tableView, header: header)
+    Style.darkTheme.sourceView(tableView, header: header, textField: nameTextField)
   }
 
 }

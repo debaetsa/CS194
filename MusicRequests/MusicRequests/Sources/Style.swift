@@ -11,13 +11,18 @@ import UIKit
 
 struct Style {
 
-  static var black = UIColor.blackColor()
+  static var veryDark = UIColor(red: 0.025, green: 0.025, blue: 0.025, alpha: 1.0)
   static var dark = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
   static var darkGray = UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.0)
+  static var mediumGray = UIColor(red: 0.35, green: 0.35, blue: 0.35, alpha: 1.0)
   static var gray = UIColor.grayColor()
   static var lightGray = UIColor(red: 0.75, green: 0.75, blue: 0.75, alpha: 1.0)
+  static var lightBlue = UIColor(red: 0.45, green: 0.5, blue: 0.95, alpha: 1.0)
   static var white = UIColor.whiteColor()
   static var clear = UIColor.clearColor()
+
+  static var red = UIColor.redColor()
+  static var yellow = UIColor.yellowColor()
 
 
   struct darkTheme {
@@ -26,10 +31,21 @@ struct Style {
     // "application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool"
     static func standardView() {
 
+      // Change color of play controls in Up Next view
+      UIToolbar.appearance().tintColor = gray
+      // Change color of toolbar behind play controls in Up Next view
+      UIToolbar.appearance().barTintColor = veryDark
+      // Remove line dividing toolbar from table view
+      UIToolbar.appearance().clipsToBounds = true
+
       // Change color of background color of the table views
       UITableView.appearance().backgroundColor = dark
+      // Change color of separator lines in table view
+      UITableView.appearance().separatorColor = mediumGray
       // Change color of cells in table views
       UITableViewCell.appearance().backgroundColor = dark
+      // Change color of checkmark in sources view
+      UITableViewCell.appearance().tintColor = lightBlue
       // Change color of text in labels
       UILabel.appearance().textColor = white
 
@@ -58,20 +74,28 @@ struct Style {
       // Change color of selected icon text in tab bar
       UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: white], forState: .Selected)
 
+      // Change color of the "on" position of the switch in sources view
+      UISwitch.appearance().onTintColor = lightBlue
+
     }
 
-    // This function is called in SourceTableViewController.swift within the function 
+    // This function is called in SourceTableViewController.swift within the function
     // "tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)"
-    static func sourceView(tableView: UITableView, header: UITableViewHeaderFooterView) {
+    static func sourceView(tableView: UITableView, header: UITableViewHeaderFooterView, textField: UITextField) {
 
       // Change color of background in Source
-      tableView.backgroundColor = black
+      tableView.backgroundColor = veryDark
       // Change color of headers in Source
-      header.contentView.backgroundColor = black
+      header.contentView.backgroundColor = veryDark
       // Change color of header text labels in Source
       header.textLabel!.textColor = gray
+
+      // Change text and color of the placeholder text in text field in Source
+      textField.attributedPlaceholder = NSAttributedString(string: "Playlist Name Here", attributes: [NSForegroundColorAttributeName: gray])
+      // Change color of typed text in text field in Source
+      textField.textColor = white
     }
-
+    
   }
-
+  
 }
