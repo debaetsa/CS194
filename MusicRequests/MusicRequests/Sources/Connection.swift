@@ -220,6 +220,8 @@ class Connection: NSObject, NSStreamDelegate {
     if let data = maybeData {
       bytesToSend.appendCustomData(data)
     }
+
+    sendAvailableData()
   }
 
   private func sendAvailableData() {
