@@ -51,6 +51,19 @@ class ItemListTableViewController: UITableViewController {
     if let library = maybeLibrary {
       if library.isLoaded {
         return library
+
+      } else {
+        // The Library is not yet loaded, but there is an object.  We want to
+        // trigger a refresh (and call libraryDidChange()) whenever this object
+        // actually finishes loading.  We'll do that by requesting a callback.
+        library.runWhenLoaded {
+          [weak self] in
+
+          // If we haven't been deallocated, then we care when the Library is
+          // loaded.  If we have been deallocated, then we aren't being shown
+          // to the user, so it doesn't matter if this doesn't get called.
+          self?.libraryDidChange()
+        }
       }
     }
     return nil
