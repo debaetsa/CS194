@@ -8,12 +8,10 @@
 
 import UIKit
 
-protocol SessionChanged {
-  func didChangeSession(newSession: Session)
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+
+  static let didChangeSession = "AppDelegate.didChangeSession"
 
   /** Gets a reference to the shared application delegate.
 
@@ -28,29 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   // we always need a reference to our session that stores the configuration
   var localSession: LocalSession!
 
-  private var sessionChangedListeners = [SessionChanged]()
-  func addSessionChangedListener(listener: SessionChanged) {
-    sessionChangedListeners.append(listener)
-  }
-
   // and this is the one we actually use for data (could be local or remote)
   var currentSession: Session! {
     didSet {
-      for listener in sessionChangedListeners {
-        listener.didChangeSession(currentSession)
-      }
+      let center = NSNotificationCenter.defaultCenter()
+      center.postNotificationName(AppDelegate.didChangeSession, object: self)
     }
-  }
-
-  // implement some shortcuts to the needed values
-  var library: Library {
-    return currentSession.library
-  }
-  var queue: Queue {
-    return currentSession.queue
-  }
-  var nowPlaying: NowPlaying {
-    return queue.nowPlaying
   }
 
   // this is how we find the other sessions; it's put here so that it's always

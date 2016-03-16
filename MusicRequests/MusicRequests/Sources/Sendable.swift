@@ -132,6 +132,15 @@ extension NSData {
 
     return UIImage(data: data)
   }
+
+  func getNextUUID(inout offset: Int) -> NSUUID? {
+    guard length >= (offset + sizeof(uuid_t)) else {
+      return nil  // not enough bytes for a UUID
+    }
+
+    // we have enough bytes to get the UUID, so create an instance from them
+    return NSUUID(UUIDBytes: UnsafePointer(bytes))
+  }
 }
 
 extension NSMutableData {

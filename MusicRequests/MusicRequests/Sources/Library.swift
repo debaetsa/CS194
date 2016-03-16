@@ -8,28 +8,18 @@
 
 import UIKit
 
-protocol Library {
+class Library: NSObject {
 
-  var allSongs: [Song] { get }
+  var allSongs: [Song] { return [] }
   
-  var allArtists: [Artist] { get }
+  var allArtists: [Artist] { return [] }
   
-  var allAlbums: [Album] { get }
+  var allAlbums: [Album] { return [] }
 
-  var allPlaylists: [Playlist] { get }
+  var allPlaylists: [Playlist] { return [] }
 
-  var allGenres: [Genre] { get }
+  var allGenres: [Genre] { return [] }
 
-  func pickRandomSong() -> Song?
-
-}
-
-/** Define an extension to the protocol.
-
-This code is automatically usable by all classes implementing the Library
-protocol.  Since it only depends on methods in the protocol, it can be entirely
-implemented here. */
-extension Library {
   func pickRandomSong() -> Song? {
     let songs = allSongs
     let count = songs.count
@@ -39,7 +29,45 @@ extension Library {
       return nil
     }
 
-    let index = Int(arc4random_uniform(UInt32(count)))
-    return songs[index]
+    return songs[Int(arc4random_uniform(UInt32(count)))]
   }
+
+  let globallyUniqueIdentifier: NSUUID
+
+  init(globallyUniqueIdentifier: NSUUID? = nil) {
+    self.globallyUniqueIdentifier = globallyUniqueIdentifier ?? NSUUID()
+  }
+
+  var isLoaded: Bool {
+    return doneLoading
+  }
+
+  private var onLoadBlocks: [() -> ()] = []
+  private var doneLoading = false {
+    didSet {
+      if doneLoading {
+        for block in onLoadBlocks {
+          block()
+        }
+        onLoadBlocks.removeAll()
+      }
+    }
+  }
+
+  func finishLoading() {
+    doneLoading = true
+  }
+
+  /** Runs the provided block when the Library is loaded.
+
+   If the Library is already loaded, then it is run immediately.  Otherwise, it
+   is queued until "finishLoading()" is called. */
+  func runWhenLoaded(block: () -> ()) {
+    if isLoaded {
+      block()  // run it now
+    } else {
+      onLoadBlocks.append(block)  // run it later
+    }
+  }
+
 }

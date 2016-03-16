@@ -10,34 +10,45 @@ import UIKit
 
 class SongListTableViewController: ItemListTableViewController {
 
-  var numberedItems: [(Int?, Song)]!
+  var maybeNumberedItems: [(Int?, Song)]?
   var showNumbers = false
   var showDetails = true
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return numberedItems.count
+    return maybeNumberedItems?.count ?? 1
   }
 
   func setSongList(songs: [Song], addTrackNumbers: Bool = false) {
-    numberedItems = songs.map { (nil, $0) }
+    var numberedItems: [(Int?, Song)] = songs.map { (nil, $0) }
     if addTrackNumbers {
       for index in 0..<numberedItems.count {
         numberedItems[index].0 = (index + 1)
       }
     }
+    maybeNumberedItems = numberedItems
     showNumbers = addTrackNumbers
   }
 
   func setTrackList(tracks: [Track]) {
-    numberedItems = tracks.map { ($0.track, $0.song) }
+    maybeNumberedItems = tracks.map { ($0.track, $0.song) }
     showNumbers = true
   }
 
   override func viewDidLoad() {
-    super.viewDidLoad()
+    if let _ = maybeNumberedItems {
+      containsFilteredItems = true
+    }
 
-    if numberedItems == nil {
-      setSongList(library.allSongs)
+    super.viewDidLoad()
+  }
+
+  override func reloadItems() {
+    super.reloadItems()
+
+    if let songs = loadedLibrary?.allSongs {
+      setSongList(songs)
+    } else {
+      maybeNumberedItems = nil
     }
   }
 
@@ -62,23 +73,35 @@ class SongListTableViewController: ItemListTableViewController {
   }
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier(getCellIdentifier(), forIndexPath: indexPath)
 
-    let (number, song) = numberedItems[indexPath.row]
+    if let numberedItems = maybeNumberedItems {
+      let cell = tableView.dequeueReusableCellWithIdentifier(getCellIdentifier(), forIndexPath: indexPath)
 
-    if showNumbers {
-      (cell as! NumberedTableViewCell).numberedItem = (number!, song)
+      let (number, song) = numberedItems[indexPath.row]
+
+      if showNumbers {
+        (cell as! NumberedTableViewCell).numberedItem = (number!, song)
+      } else {
+        cell.textLabel?.text = song.name
+        cell.detailTextLabel?.text = song.artistAlbumString
+        cell.imageView?.image = song.album!.imageToShow
+        cell.selectionStyle = .Default
+      }
+
+      return cell
+
     } else {
-      cell.textLabel?.text = song.name
-      cell.detailTextLabel?.text = song.artistAlbumString
-      cell.imageView?.image = song.album!.imageToShow
-    }
+      let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
 
-    return cell
+      cell.textLabel?.text = "Loading…"
+      cell.selectionStyle = .None
+
+      return cell
+    }
   }
 
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    if segue.identifier == "PushSongPreview" {
+    if segue.identifier == "PushSongPreview", let numberedItems = maybeNumberedItems {
       let destination = segue.destinationViewController as! SongViewController
       let indexPath = indexPathForSender(sender)
 

@@ -10,40 +10,53 @@ import UIKit
 
 class AlbumListTableViewController: ItemListTableViewController {
 
-  var items: [Album]!
+  var maybeItems: [Album]?
 
   override func viewDidLoad() {
-    super.viewDidLoad()
-
-    if items == nil {
-      items = library.allAlbums
+    if let _ = maybeItems {
+      containsFilteredItems = true
     }
+
+    super.viewDidLoad()
+  }
+
+  override func reloadItems() {
+    super.reloadItems()
+
+    maybeItems = loadedLibrary?.allAlbums
   }
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return items.count
+    return maybeItems?.count ?? 1
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
 
-    let album = items[indexPath.row]
+    if let items = maybeItems {
+      let album = items[indexPath.row]
 
-    var components = [String]()
-    if let artist = album.artist {
-      components.append(artist.name)
+      var components = [String]()
+      if let artist = album.artist {
+        components.append(artist.name)
+      }
+      components.append(album.songs.count.pluralize(("Song", "Songs")))
+      
+      cell.textLabel?.text = album.name
+      cell.detailTextLabel?.text = components.joinWithSeparator(" • ")
+      cell.imageView?.image = album.imageToShow
+      cell.selectionStyle = .Default
+
+    } else {
+      cell.textLabel?.text = "Loading…"
+      cell.selectionStyle = .None
     }
-    components.append(album.songs.count.pluralize(("Song", "Songs")))
-    
-    cell.textLabel?.text = album.name
-    cell.detailTextLabel?.text = components.joinWithSeparator(" • ")
-    cell.imageView?.image = album.imageToShow
     
     return cell
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    if segue.identifier == "PushSongList" {
+    if segue.identifier == "PushSongList", let items = maybeItems {
       let destination = segue.destinationViewController as! SongListTableViewController
       let indexPath = indexPathForSender(sender)
       let album = items[indexPath.row]

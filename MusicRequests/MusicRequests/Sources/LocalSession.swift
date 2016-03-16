@@ -50,13 +50,21 @@ class LocalSession: Session, NSNetServiceDelegate {
    It will generally be some subset of the fullLibrary, though it could very
    well be the entire library.  If a user selects a playlist, we'll construct a
    library out of that playlist. */
-  var sourceLibrary: Library
+  var sourceLibrary: Library {
+    didSet {
+      sendDidChangeLibraryNotification()
+    }
+  }
 
   /** This is where we return the relevant library for this object.
 
    It is used by the application when showing the "Library" view. */
-  override var library: Library! {
+  override var library: Library? {
     return sourceLibrary
+  }
+
+  override var queue: Queue? {
+    return localQueue
   }
 
   /** This is the name of the session being broadcast.
@@ -94,16 +102,20 @@ class LocalSession: Session, NSNetServiceDelegate {
    frequency of these updates depending on the data usage. */
   private var queueChangedListener: NSObjectProtocol?
 
+  /** Stores the Queue that is used for this Session. */
   private var localQueue: LocalQueue {
-    return queue as! LocalQueue
+    didSet {
+      sendDidChangeQueueNotification()
+    }
   }
 
   init(library: Library, queue: LocalQueue) {
     self.fullLibrary = library
     self.sourceLibrary = library
     self.currentQueueData = queue.sendableData
+    self.localQueue = queue
 
-    super.init(queue: queue)
+    super.init()
 
     let center = NSNotificationCenter.defaultCenter()
     queueChangedListener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: queue, queue: nil) {
@@ -150,14 +162,12 @@ class LocalSession: Session, NSNetServiceDelegate {
     // add them to the list
     connection.onClosed = didCloseConnection
     connection.onReceivedData = didReceiveData
+    connection.onReceivedCode = didReceiveCode
     clients.append(connection)
+  }
 
-    // first things first -- send the version number
-    let version = NSMutableData()
-    version.appendByte(1)
-    connection.sendCode(.Version, withData: version)
-
-    // and then send them the contents of the entire library
+  private func sendLibraryData(toConnection connection: Connection) {
+    // first send the entire contents of the Library
     for artist in sourceLibrary.allArtists {
       connection.sendItem(artist)
     }
@@ -168,20 +178,29 @@ class LocalSession: Session, NSNetServiceDelegate {
       connection.sendItem(song)
     }
     connection.sendCode(.LibraryDone)
+  }
 
-    // send the Queue (once all the songs are known)
-    connection.sendItem(queue, withCachedData: currentQueueData)
-    
-    // and finally send compressed images, starting with the queue
-    for song in queue.getAllQueueSongs() {
-      if let album = song.album {
+  private func sendQueueData(toConnection connection: Connection) {
+    // next, send the entire Queue
+    connection.sendItem(localQueue, withCachedData: currentQueueData)
+  }
+
+  private func sendArtworkData(toConnection connection: Connection) {
+    // finally, send all of the album artwork -- if needed
+    var sentAlbumArtwork = Set<Album>()
+
+    for song in localQueue.getAllQueueSongs() {
+      if let album = song.album, let _ = album.image {
         connection.sendItem(CustomAlbumArt(albumInstance: album))
+        sentAlbumArtwork.insert(album)
       }
     }
-    
+
     // then the rest of the library
     for album in sourceLibrary.allAlbums {
-      connection.sendItem(CustomAlbumArt(albumInstance: album))
+      if let _ = album.image where !sentAlbumArtwork.contains(album) {
+        connection.sendItem(CustomAlbumArt(albumInstance: album))
+      }
     }
   }
 
@@ -200,10 +219,45 @@ class LocalSession: Session, NSNetServiceDelegate {
     }
   }
 
-  private func didReceiveData(identifier: SendableIdentifier, data: NSData) {
+  private func shouldSendLibrary(toIdentifier maybeIdentifier: NSData?) -> Bool {
+    var offset = 0
+    if let data = maybeIdentifier, let uuid = data.getNextUUID(&offset) {
+      if uuid == sourceLibrary.globallyUniqueIdentifier {
+        return false
+      }
+    }
+    return true
+  }
+
+  private func respondToLibraryIdentifier(maybeIdentifier: NSData?, fromConnection connection: Connection) {
+    let sendLibrary = shouldSendLibrary(toIdentifier: maybeIdentifier)
+
+    if sendLibrary {
+      sendLibraryData(toConnection: connection)
+    }
+
+    // we always need to send the updated Queue since that may be out of date
+    sendQueueData(toConnection: connection)
+
+    if sendLibrary {
+      sendArtworkData(toConnection: connection)
+    }
+  }
+
+  private func didReceiveCode(code: SendableCode, maybeData: NSData?, fromConnection connection: Connection) {
+    switch code {
+    case .LibraryIdentifier:
+      respondToLibraryIdentifier(maybeData, fromConnection: connection)
+
+    default:
+      break
+    }
+  }
+
+  private func didReceiveData(data: NSData, withIdentifier identifier: SendableIdentifier, fromConnection connection: Connection) {
     switch identifier {
     case .Request:
-      if let request = Request(data: data, lookup: (sourceLibrary as! AppleLibrary).lookup, queue: queue) {
+      if let request = Request(data: data, lookup: (sourceLibrary as! AppleLibrary).lookup, queue: localQueue) {
 
         let queueItem: QueueItem
 
@@ -249,14 +303,14 @@ class LocalSession: Session, NSNetServiceDelegate {
 
    Returns whether or not the data was sent. */
   func sendQueueIfNeeded() -> Bool {
-    let data = queue.sendableData
+    let data = localQueue.sendableData
     guard currentQueueData != data else {
       return false  // the data didn't change, so don't send anything
     }
     currentQueueData = data
 
     for client in clients {
-      client.sendItem(queue, withCachedData: currentQueueData)
+      client.sendItem(localQueue, withCachedData: currentQueueData)
     }
 
     return true

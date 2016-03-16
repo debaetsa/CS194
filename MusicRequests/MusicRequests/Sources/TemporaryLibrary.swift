@@ -8,15 +8,20 @@
 
 import UIKit
 
-class TemporaryLibrary: NSObject, Library {
+class TemporaryLibrary: Library {
 
-  let allSongs: [Song]
-  let allArtists: [Artist]
-  let allAlbums: [Album]
-  let allPlaylists: [Playlist]
-  let allGenres: [Genre]
+  let songs: [Song]
+  override var allSongs: [Song] { return songs }
+  let artists: [Artist]
+  override var allArtists: [Artist] { return artists }
+  let albums: [Album]
+  override var allAlbums: [Album] { return albums }
+  let playlists: [Playlist]
+  override var allPlaylists: [Playlist] { return playlists }
+  let genres: [Genre]
+  override var allGenres: [Genre] { return genres }
 
-  override init() {
+  init() {
     // Create arrays to hold the data as we add it.
     var artists = [Artist]()
     var albums = [Album]()
@@ -127,13 +132,15 @@ class TemporaryLibrary: NSObject, Library {
 
     songs.append(Song(name: "Blinded By the Light", artist: artist, album: album, discNumber: nil, trackNumber: 1))
 
-    allSongs = songs.sort(Item.sorter)
-    allArtists = artists.sort(Item.sorter)
-    allAlbums = albums.sort(Item.sorter)
-    allPlaylists = []
-    allGenres = []
+    self.songs = songs.sort(Item.sorter)
+    self.artists = artists.sort(Item.sorter)
+    self.albums = albums.sort(Item.sorter)
+    self.playlists = []
+    self.genres = []
 
     super.init()
+
+    finishLoading()
   }
 
 }

@@ -16,34 +16,40 @@ class NowPlayingViewController: SongViewController {
   @IBOutlet weak var endLabel: UILabel!
 
   /** We only want a nowPlaying object if it's one that we can modify. */
-  let queue: Queue
+  let maybeQueue: Queue?
   let maybeNowPlaying: LocalNowPlaying?
 
-  var listener: NSObjectProtocol?
+  var maybeNowPlayingUpdatedListener: NSObjectProtocol?
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    queue = AppDelegate.sharedDelegate.queue
-    maybeNowPlaying = queue.nowPlaying as? LocalNowPlaying
-    
+    maybeQueue = AppDelegate.sharedDelegate.currentSession.queue
+    maybeNowPlaying = maybeQueue?.nowPlaying as? LocalNowPlaying
+
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
   required init?(coder aDecoder: NSCoder) {
-    queue = AppDelegate.sharedDelegate.queue
-    maybeNowPlaying = queue.nowPlaying as? LocalNowPlaying
+    maybeQueue = AppDelegate.sharedDelegate.currentSession.queue
+    maybeNowPlaying = maybeQueue?.nowPlaying as? LocalNowPlaying
 
     super.init(coder: aDecoder)
   }
 
   override func viewDidLoad() {
+    song = maybeQueue?.current?.song
+
     super.viewDidLoad()
 
     let center = NSNotificationCenter.defaultCenter()
-    listener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: queue, queue: nil) {
-      [unowned self] (note) -> Void in
-      self.reloadSong()
+    if let queue = maybeQueue {
+      maybeNowPlayingUpdatedListener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: queue, queue: nil) {
+        [unowned self] (note) -> Void in
+
+        self.song = queue.current?.song
+        self.reloadSong()
+      }
     }
-    
+
     if (maybeNowPlaying != nil) && maybeNowPlaying!.isPlaying {
       playButton.setImage(UIImage(named: "pause_button"), forState: UIControlState.Normal)
     } else {
@@ -61,17 +67,9 @@ class NowPlayingViewController: SongViewController {
   }
 
   deinit {
-    if let actualListener = listener {
+    if let listener = maybeNowPlayingUpdatedListener {
       let center = NSNotificationCenter.defaultCenter()
-      center.removeObserver(actualListener)
-    }
-  }
-
-  override var song: Song? {
-    set {
-    }
-    get {
-      return queue.current?.song
+      center.removeObserver(listener)
     }
   }
 

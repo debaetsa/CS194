@@ -57,10 +57,10 @@ class RemoteSessionManager: NSObject, NSNetServiceBrowserDelegate {
         break
       }
     }
+
+    var session: RemoteSession? = nil
     if let indexToRemove = serviceIndex {
-      remoteSessions.removeAtIndex(indexToRemove)
-    } else {
-      print("Could not remove service: \(service)")
+      session = remoteSessions.removeAtIndex(indexToRemove)
     }
 
     if !moreComing {

@@ -9,17 +9,22 @@
 import MediaPlayer
 import UIKit
 
-class AppleLibrary: NSObject, Library {
+class AppleLibrary: Library {
 
-  let allSongs: [Song]
-  let allArtists: [Artist]
-  let allAlbums: [Album]
-  let allPlaylists: [Playlist]
-  let allGenres: [Genre]
+  let songs: [Song]
+  override var allSongs: [Song] { return songs }
+  let artists: [Artist]
+  override var allArtists: [Artist] { return artists }
+  let albums: [Album]
+  override var allAlbums: [Album] { return albums }
+  let playlists: [Playlist]
+  override var allPlaylists: [Playlist] { return playlists }
+  let genres: [Genre]
+  override var allGenres: [Genre] { return genres }
 
   let lookup: [UInt32: Item]
 
-  override init() {
+  init() {
     let query = MPMediaQuery.songsQuery()
 
     // By using the "!", we ensure that a runtime error occurs if something
@@ -145,19 +150,21 @@ class AppleLibrary: NSObject, Library {
       }
     }
 
-    allSongs = songs.sort(Item.sorter)
-    allArtists = albumArtists.values.sort(Item.sorter)
-    allAlbums = albums.sort(Item.sorter)
-    allPlaylists = playlists.sort(Item.sorter)
-    allGenres = genres.values.sort(Item.sorter)
+    self.songs = songs.sort(Item.sorter)
+    self.artists = albumArtists.values.sort(Item.sorter)
+    self.albums = albums.sort(Item.sorter)
+    self.playlists = playlists.sort(Item.sorter)
+    self.genres = genres.values.sort(Item.sorter)
     self.lookup = lookup
 
-    for genre in allGenres {
+    for genre in self.genres {
       genre.didFinishImporting()
     }
 
     // We have to set all of our local instance variables to some value before
     // we invoke the superclass's initialization method.
     super.init()
+
+    finishLoading()  // this is loaded at this point
   }
 }

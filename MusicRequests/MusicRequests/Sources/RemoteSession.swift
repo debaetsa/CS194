@@ -20,30 +20,45 @@ class RemoteSession: Session, NSNetServiceDelegate {
   var connection: Connection?
 
   /** Stores the data objects received into the Library. */
-  let remoteLibrary: RemoteLibrary
+  private var maybeRemoteLibrary: RemoteLibrary? = nil {
+    didSet {
+      sendDidChangeLibraryNotification()
 
-  /** Gets the Queue for this Session as a RemoteQueue. */
-  var remoteQueue: RemoteQueue {
-    return queue as! RemoteQueue  // we must have a RemoteQueue
+      if let remoteLibrary = maybeRemoteLibrary {
+        // We just set a new RemoteLibrary, so update the Queue as well.
+        let queue = RemoteQueue(library: remoteLibrary)
+        queue.remoteSession = self
+        maybeRemoteQueue = queue
+
+      } else {
+        // We cleared the RemoteLibrary, so also clear the Queue.
+        maybeRemoteQueue = nil
+      }
+    }
+  }
+
+  private var maybeRemoteQueue: RemoteQueue? = nil {
+    didSet {
+      sendDidChangeQueueNotification()
+    }
   }
 
   init(netService: NSNetService) {
     self.netService = netService
     self.name = netService.name
-    self.remoteLibrary = RemoteLibrary()
 
-    // TODO: Create a Queue() specifically for this remote session.  Just know
-    // that it will probably not be populated until it is actually accessed.
-    let queue = RemoteQueue(library: remoteLibrary)
-    super.init(queue: queue)
-    queue.remoteSession = self
+    super.init()
 
     // set the delegate after the super.init() call
     self.netService.delegate = self
   }
 
-  override var library: Library! {
-    return remoteLibrary
+  override var library: Library? {
+    return maybeRemoteLibrary
+  }
+
+  override var queue: Queue? {
+    return maybeRemoteQueue
   }
 
 
@@ -81,24 +96,50 @@ class RemoteSession: Session, NSNetServiceDelegate {
     return true
   }
 
-  func didReceiveData(type: SendableIdentifier, data: NSData) {
+  func didReceiveData(data: NSData, ofType type: SendableIdentifier, fromConnection connection: Connection) {
+    guard let remoteLibrary = maybeRemoteLibrary else {
+      print("No Library; Ignoring \(data)")
+      return
+    }
+
     switch type {
     case .Item:
       remoteLibrary.addItemFromData(data)
 
-    case .Queue:
-      remoteQueue.updateFromData(data, usingLibrary: remoteLibrary)
-
     case .Image:
       remoteLibrary.updateFromData(data, usingLibrary: remoteLibrary)
-      
+
+    case .Queue:
+      guard let remoteQueue = maybeRemoteQueue else {
+        print("No Queue; Ignoring \(data)")
+        return
+      }
+      remoteQueue.updateFromData(data, usingLibrary: remoteLibrary)
+
     default:
       print("Ignoring: \(data)")
     }
   }
 
-  func didReceiveCode(code: SendableCode, data: NSData?) {
-    print("Code: \(code); Data: \(data)")
+  func didReceiveCode(code: SendableCode, withData maybeData: NSData?, fromConnection connection: Connection) {
+    switch code {
+    case .LibraryIdentifier:
+      guard let data = maybeData else {
+        print("LibraryIdentifier: no data")
+        return
+      }
+      var offset = 0
+      guard let uuid = data.getNextUUID(&offset) else {
+        print("LibraryIdentifier: no UUID")
+        return
+      }
+
+      // Create the RemoteLibrary that will receive the songs that are sent.
+      maybeRemoteLibrary = RemoteLibrary(receivedGloballyUniqueIdentifier: uuid)
+
+    default:
+      print("Code: \(code); Data: \(maybeData)")
+    }
   }
 
   func netServiceWillResolve(sender: NSNetService) {

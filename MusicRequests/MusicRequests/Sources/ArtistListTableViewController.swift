@@ -9,42 +9,55 @@
 import UIKit
 
 class ArtistListTableViewController: ItemListTableViewController {
-  var items: [Artist]!
+  var maybeItems: [Artist]?
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return items.count
+    return maybeItems?.count ?? 1
   }
 
   override func viewDidLoad() {
-    super.viewDidLoad()
-
-    if items == nil {
-      items = library.allArtists
+    if let _ = maybeItems {
+      containsFilteredItems = true
     }
+
+    super.viewDidLoad()
+  }
+
+  override func reloadItems() {
+    super.reloadItems()
+
+    maybeItems = loadedLibrary?.allArtists
   }
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = self.tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
 
-    let artist = items[indexPath.row]
-    let albums = artist.allAlbums
-    let countOfAlbums = albums.count
-    let countOfSongs = albums.reduce(0) { $0 + $1.songs.count }
+    if let items = maybeItems {
+      let artist = items[indexPath.row]
+      let albums = artist.allAlbums
+      let countOfAlbums = albums.count
+      let countOfSongs = albums.reduce(0) { $0 + $1.songs.count }
 
-    cell.textLabel?.text = artist.name
-    cell.detailTextLabel?.text = "\(countOfAlbums.pluralize(("Album", "Albums"))) • \(countOfSongs.pluralize(("Song", "Songs")))"
-    cell.imageView?.image = artist.allAlbums.first?.imageToShow
+      cell.textLabel?.text = artist.name
+      cell.detailTextLabel?.text = "\(countOfAlbums.pluralize(("Album", "Albums"))) • \(countOfSongs.pluralize(("Song", "Songs")))"
+      cell.imageView?.image = artist.allAlbums.first?.imageToShow
+      cell.selectionStyle = .Default
+
+    } else {
+      cell.textLabel?.text = "Loading…"
+      cell.selectionStyle = .None
+    }
 
     return cell
   }
 
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    if segue.identifier == "PushAlbumList" {
+    if segue.identifier == "PushAlbumList", let items = maybeItems {
       let destination = segue.destinationViewController as! AlbumListTableViewController
       let indexPath = indexPathForSender(sender)
       let artist = items[indexPath.row]
       destination.navigationItem.title = artist.name
-      destination.items = artist.allAlbums
+      destination.maybeItems = artist.allAlbums
     }
   }
 }

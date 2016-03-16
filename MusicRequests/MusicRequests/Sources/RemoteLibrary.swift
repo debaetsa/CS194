@@ -14,28 +14,34 @@ class RemoteLibrary: Library {
   private var identifierToItem = [UInt32: Item]()
 
   private var songs = [Song]()
-  var allSongs: [Song] {
+  override var allSongs: [Song] {
     return songs
   }
 
   private var artists = [Artist]()
-  var allArtists: [Artist] {
+  override var allArtists: [Artist] {
     return artists
   }
 
   private var albums = [Album]()
-  var allAlbums: [Album] {
+  override var allAlbums: [Album] {
     return albums
   }
 
   private var playlists = [Playlist]()
-  var allPlaylists: [Playlist] {
+  override var allPlaylists: [Playlist] {
     return playlists
   }
 
   private var genres = [Genre]()
-  var allGenres: [Genre] {
+  override var allGenres: [Genre] {
     return genres
+  }
+
+  init(receivedGloballyUniqueIdentifier: NSUUID) {
+    super.init(
+      globallyUniqueIdentifier: receivedGloballyUniqueIdentifier
+    )
   }
 
   /** Looks up an Item based on its identifier. */

@@ -17,33 +17,38 @@ class Session: NSObject {
   // The constant type used to represent instances of our application.
   static let netServiceType = "_dj194._tcp"
 
+  // The constants used for notifications for this Session.
+  static let didChangeLibraryNotification = "Session.didChangeLibrary"
+  static let didChangeQueueNotification = "Session.didChangeQueue"
 
   ////////////////
   // PROPERTIES //
   ////////////////
 
-  /** This is the Queue for the session.
+  /** This is the library that is loaded, or "nil" if there isn't one.
 
-   Because each type of session will require a different Queue (we only use the
-   current device's Apple library when playing locally), we need to associate
-   the Queue with each session as well. */
-  let queue: Queue
-
-  /** This is the Library that should be shown to the user.
-
-   It is generally the filtered library for the broadcasting device, and it is
-   the received library (the only one) for the listening device. */
-  var library: Library! {
-    // This is not meant to be invoked.  By making it an implicitly-unwrapped
-    // optional and returning nil, we'll ensure that it crashes if this code is
-    // ever executed.
+   Note that the Library might not be loaded, even if this is set. */
+  var library: Library? {
     return nil
   }
 
-  init(queue: Queue) {
-    self.queue = queue
+  /** This is the Queue that is loaded, or "nil" if there isn't one.
 
-    super.init()
+   Note that the Queue might not be "loaded", even if there is an object. */
+  var queue: Queue? {
+    return nil
   }
 
+  func sendDidChangeLibraryNotification() {
+    sendDidChangeNotification(Session.didChangeLibraryNotification)
+  }
+
+  func sendDidChangeQueueNotification() {
+    sendDidChangeNotification(Session.didChangeQueueNotification)
+  }
+
+  private func sendDidChangeNotification(name: String) {
+    let center = NSNotificationCenter.defaultCenter()
+    center.postNotificationName(name, object: self)
+  }
 }

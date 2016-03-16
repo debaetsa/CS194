@@ -10,15 +10,6 @@ import UIKit
 
 class ItemListTableViewController: UITableViewController {
 
-  // This will access the shared library for the entire application.  This
-  // avoids instantiating an entire Library instance for each view controller
-  // which, in addition to being inefficient, would not actually work properly
-  // once we start using the AppleLibrary.  Because we only want a single copy
-  // of each song, we need to make sure that we don't import the data more than
-  // once.  We wait until the view controller is loaded to retrieve the object
-  // to give the AppDelegate a chance to load it.
-  var library: Library!
-
   // The search results controller is used when searching for items.  It only
   // searches the particular item type, though it should probably search all
   // of the item types.  That can be changed later.
@@ -52,6 +43,60 @@ class ItemListTableViewController: UITableViewController {
   //    tableView.reloadData()
   //  }
 
+
+  // The application needs to handle the situation where the Library is not
+  // accessible.  This can happen when the Library for a RemoteSession has not
+  // yet been loaded.  It should be handled as if the Library isn't loaded.
+  var loadedLibrary: Library? {
+    if let library = maybeLibrary {
+      if library.isLoaded {
+        return library
+      }
+    }
+    return nil
+  }
+
+  var containsFilteredItems = false
+
+  func reloadItems() {
+  }
+
+  func libraryDidChange() {
+    if !containsFilteredItems {
+      reloadItems()
+      tableView.reloadData()
+    }
+  }
+
+  private var maybeLibrary: Library? {
+    didSet {
+      if oldValue !== maybeLibrary {
+        // We have a new reference for the Library object, so notify subclasses.
+        libraryDidChange()
+      }
+    }
+  }
+
+  func sessionDidChange() {
+    let updateCurrentLibrary = {
+      [unowned self] (note: NSNotification?) in
+
+      self.maybeLibrary = AppDelegate.sharedDelegate.currentSession.library
+    }
+
+    let center = NSNotificationCenter.defaultCenter()
+    if let listener = maybeLibraryChangedListener {
+      center.removeObserver(listener)
+    }
+    maybeLibraryChangedListener = center.addObserverForName(
+      Session.didChangeLibraryNotification, object: AppDelegate.sharedDelegate.currentSession, queue: nil, usingBlock: updateCurrentLibrary
+    )
+    updateCurrentLibrary(nil)  // update it for the new Session
+  }
+
+  var maybeLibraryChangedListener: NSObjectProtocol?
+  var maybeSessionChangedListener: NSObjectProtocol?
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -59,7 +104,27 @@ class ItemListTableViewController: UITableViewController {
     // the correct color in the "bounce" area
     tableView.backgroundView = UIView()
 
-    library = AppDelegate.sharedDelegate.library
+    let updateCurrentSession = {
+      [unowned self] (note: NSNotification?) in
+
+      self.sessionDidChange()
+    }
+
+    let center = NSNotificationCenter.defaultCenter()
+    maybeSessionChangedListener = center.addObserverForName(
+      AppDelegate.didChangeSession, object: AppDelegate.sharedDelegate, queue: nil, usingBlock: updateCurrentSession
+    )
+    updateCurrentSession(nil)  // set the default value when loading
+  }
+
+  deinit {
+    let center = NSNotificationCenter.defaultCenter()
+    if let listener = maybeLibraryChangedListener {
+      center.removeObserver(listener)
+    }
+    if let listener = maybeSessionChangedListener {
+      center.removeObserver(listener)
+    }
   }
 
   override func viewWillAppear(animated: Bool) {

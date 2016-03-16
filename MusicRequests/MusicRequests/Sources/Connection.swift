@@ -22,8 +22,8 @@ class Connection: NSObject, NSStreamDelegate {
   var bytesToProcess: NSMutableData
 
   // called to allow the received data to be processed
-  var onReceivedData: ((SendableIdentifier, NSData) -> Void)?
-  var onReceivedCode: ((SendableCode, NSData?) -> Void)?
+  var onReceivedData: ((NSData, SendableIdentifier, Connection) -> Void)?
+  var onReceivedCode: ((SendableCode, NSData?, Connection) -> Void)?
   var onClosed: ((Connection, didFail: Bool) -> Void)?
 
   init(ipAddress: String, port: Int, input: NSInputStream, output: NSOutputStream) {
@@ -146,7 +146,7 @@ class Connection: NSObject, NSStreamDelegate {
     }
 
     if let callback = onReceivedCode {
-      callback(code, data)
+      callback(code, data, self)
     }
 
     return true
@@ -160,7 +160,7 @@ class Connection: NSObject, NSStreamDelegate {
 
     // pass that object as appropriate
     if let callback = onReceivedData {
-      callback(type, data)
+      callback(data, type, self)
     }
 
     return true  // because we were able to process the Item

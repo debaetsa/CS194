@@ -19,12 +19,12 @@ class QueueViewController: UIViewController {
   
   @IBAction func prevButtonPressed(sender: AnyObject) {
     let upNextVC = self.childViewControllers[0] as! UpNextTableViewController
-    ((upNextVC.queue as! LocalQueue).nowPlaying as! LocalNowPlaying).last()
+    ((upNextVC.maybeQueue as! LocalQueue).nowPlaying as! LocalNowPlaying).last()
   }
   
   @IBAction func playButtonPressed(sender: AnyObject) {
     let upNextVC = self.childViewControllers[0] as! UpNextTableViewController
-    let nowPlaying = (upNextVC.queue as! LocalQueue).nowPlaying as! LocalNowPlaying
+    let nowPlaying = (upNextVC.maybeQueue as! LocalQueue).nowPlaying as! LocalNowPlaying
     if (nowPlaying.isPlaying) {
       nowPlaying.pause()
       playButton.image = UIImage(named: playButtonFile)
@@ -36,13 +36,13 @@ class QueueViewController: UIViewController {
   
   @IBAction func nextButtonPressed(sender: AnyObject) {
     let upNextVC = self.childViewControllers[0] as! UpNextTableViewController
-    let nowPlaying = (upNextVC.queue as! LocalQueue).nowPlaying as! LocalNowPlaying
+    let nowPlaying = (upNextVC.maybeQueue as! LocalQueue).nowPlaying as! LocalNowPlaying
     nowPlaying.next()
   }
   
   override func viewDidAppear(animated: Bool) {
     let upNextVC = self.childViewControllers[0] as! UpNextTableViewController
-    let maybeLocalQueue = upNextVC.queue as? LocalQueue
+    let maybeLocalQueue = upNextVC.maybeQueue as? LocalQueue
     if (maybeLocalQueue != nil) && (maybeLocalQueue!.nowPlaying as! LocalNowPlaying).isPlaying {
       playButton.image = UIImage(named: pauseButtonFile)
     } else {
