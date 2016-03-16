@@ -138,6 +138,8 @@ extension NSData {
       return nil  // not enough bytes for a UUID
     }
 
+    offset += sizeof(uuid_t)
+
     // we have enough bytes to get the UUID, so create an instance from them
     return NSUUID(UUIDBytes: UnsafePointer(bytes))
   }
