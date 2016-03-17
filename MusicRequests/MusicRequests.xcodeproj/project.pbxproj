@@ -42,11 +42,13 @@
 		509C78931C67B50F005B7D53 /* AppleNowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C78921C67B50F005B7D53 /* AppleNowPlaying.swift */; };
 		509C9AE81C7329EB00E4AFCB /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C9AE71C7329EB00E4AFCB /* Connection.swift */; };
 		509C9AEA1C73BA9700E4AFCB /* Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509C9AE91C73BA9700E4AFCB /* Sendable.swift */; };
+		50AFDED01C84F81E000A3348 /* SwipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AFDECF1C84F81E000A3348 /* SwipeTableViewCell.swift */; };
 		50B7F3DC1C6A6CC1006F3CE7 /* ItemPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7F3DB1C6A6CC1006F3CE7 /* ItemPresentation.swift */; };
 		50D2492B1C5D754E00A10E97 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492A1C5D754E00A10E97 /* Item.swift */; };
 		50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */; };
 		50DC09251C60171B00323425 /* RemoteSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DC09241C60171B00323425 /* RemoteSessionManager.swift */; };
 		50EB49ED1C89378100486904 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB49EC1C89378100486904 /* SearchTableViewController.swift */; };
+		50F2100D1C9B6C4A00B2E3A0 /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F2100C1C9B6C4A00B2E3A0 /* SongTableViewCell.swift */; };
 		50F42E811C99272C009BDDB0 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F42E801C99272C009BDDB0 /* Logging.swift */; };
 		50F42E831C997BF0009BDDB0 /* PlaylistSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F42E821C997BF0009BDDB0 /* PlaylistSelectionTableViewController.swift */; };
 		B37573911C84F3C900537726 /* QueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37573901C84F3C900537726 /* QueueViewController.swift */; };
@@ -108,11 +110,13 @@
 		509C78921C67B50F005B7D53 /* AppleNowPlaying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppleNowPlaying.swift; path = Sources/AppleNowPlaying.swift; sourceTree = "<group>"; };
 		509C9AE71C7329EB00E4AFCB /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Connection.swift; path = Sources/Connection.swift; sourceTree = "<group>"; };
 		509C9AE91C73BA9700E4AFCB /* Sendable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sendable.swift; path = Sources/Sendable.swift; sourceTree = "<group>"; };
+		50AFDECF1C84F81E000A3348 /* SwipeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwipeTableViewCell.swift; path = Sources/SwipeTableViewCell.swift; sourceTree = "<group>"; };
 		50B7F3DB1C6A6CC1006F3CE7 /* ItemPresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemPresentation.swift; path = Sources/ItemPresentation.swift; sourceTree = "<group>"; };
 		50D2492A1C5D754E00A10E97 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Item.swift; path = Sources/Item.swift; sourceTree = "<group>"; };
 		50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporaryLibrary.swift; path = Sources/TemporaryLibrary.swift; sourceTree = "<group>"; };
 		50DC09241C60171B00323425 /* RemoteSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteSessionManager.swift; path = Sources/RemoteSessionManager.swift; sourceTree = "<group>"; };
 		50EB49EC1C89378100486904 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchTableViewController.swift; path = Sources/SearchTableViewController.swift; sourceTree = "<group>"; };
+		50F2100C1C9B6C4A00B2E3A0 /* SongTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongTableViewCell.swift; path = Sources/SongTableViewCell.swift; sourceTree = "<group>"; };
 		50F42E801C99272C009BDDB0 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Logging.swift; path = Sources/Logging.swift; sourceTree = "<group>"; };
 		50F42E821C997BF0009BDDB0 /* PlaylistSelectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistSelectionTableViewController.swift; path = Sources/PlaylistSelectionTableViewController.swift; sourceTree = "<group>"; };
 		B37573901C84F3C900537726 /* QueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QueueViewController.swift; path = Sources/QueueViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +153,7 @@
 				BD7D58921C8518B600203450 /* Style.swift */,
 				50159F661C65B3C7000E4878 /* Pluralize.swift */,
 				50B7F3DB1C6A6CC1006F3CE7 /* ItemPresentation.swift */,
+				50F2100B1C9B674F00B2E3A0 /* Swipe Cells */,
 				50C2436C1C85873D002EDA63 /* Sources */,
 				50159F651C65AE2C000E4878 /* Up Next */,
 				50159F5A1C65AE11000E4878 /* Library */,
@@ -310,6 +315,15 @@
 			name = Temporary;
 			sourceTree = "<group>";
 		};
+		50F2100B1C9B674F00B2E3A0 /* Swipe Cells */ = {
+			isa = PBXGroup;
+			children = (
+				50AFDECF1C84F81E000A3348 /* SwipeTableViewCell.swift */,
+				50F2100C1C9B6C4A00B2E3A0 /* SongTableViewCell.swift */,
+			);
+			name = "Swipe Cells";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -437,6 +451,7 @@
 				509C9AEA1C73BA9700E4AFCB /* Sendable.swift in Sources */,
 				B37573911C84F3C900537726 /* QueueViewController.swift in Sources */,
 				50159F611C65AE26000E4878 /* ArtistListTableViewController.swift in Sources */,
+				50AFDED01C84F81E000A3348 /* SwipeTableViewCell.swift in Sources */,
 				50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */,
 				50F42E831C997BF0009BDDB0 /* PlaylistSelectionTableViewController.swift in Sources */,
 				5010EB4C1C6488EE0085D615 /* AppleLibrary.swift in Sources */,
@@ -450,6 +465,7 @@
 				50B7F3DC1C6A6CC1006F3CE7 /* ItemPresentation.swift in Sources */,
 				50F42E811C99272C009BDDB0 /* Logging.swift in Sources */,
 				505B5E651C55D16800235C1C /* Queue.swift in Sources */,
+				50F2100D1C9B6C4A00B2E3A0 /* SongTableViewCell.swift in Sources */,
 				505B5E841C56EF0F00235C1C /* Song.swift in Sources */,
 				505B5E5E1C55D0B300235C1C /* NowPlaying.swift in Sources */,
 				505B5E7E1C56EF0F00235C1C /* Artist.swift in Sources */,

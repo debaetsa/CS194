@@ -55,12 +55,12 @@ class SongListTableViewController: ItemListTableViewController {
   private func getCellIdentifier() -> String {
     if showNumbers {
       if showDetails {
-        return "DetailedNumberedCell"
+        return "DetailedNumbered"
       } else {
-        return "BasicNumberedCell"
+        return "BasicNumbered"
       }
     } else {
-      return "SmallCell"
+      return "Basic"
     }
   }
 
@@ -75,23 +75,20 @@ class SongListTableViewController: ItemListTableViewController {
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
     if let numberedItems = maybeNumberedItems {
-      let cell = tableView.dequeueReusableCellWithIdentifier(getCellIdentifier(), forIndexPath: indexPath)
+      // Use "!" here since we require a class of a particular type for this to work.
+      let cell = tableView.dequeueReusableCellWithIdentifier(getCellIdentifier(), forIndexPath: indexPath) as! SongTableViewCell
 
+      // Get the number/song to be displayed in this row.
       let (number, song) = numberedItems[indexPath.row]
 
-      if showNumbers {
-        (cell as! NumberedTableViewCell).numberedItem = (number!, song)
-      } else {
-        cell.textLabel?.text = song.name
-        cell.detailTextLabel?.text = song.artistAlbumString
-        cell.imageView?.image = song.album!.imageToShow
-        cell.selectionStyle = .Default
-      }
+      cell.delegate = self
+      cell.updateContent(withSong: song, andNumber: number)
+      cell.selectionStyle = .Default
 
       return cell
 
     } else {
-      let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
+      let cell = tableView.dequeueReusableCellWithIdentifier("Loading", forIndexPath: indexPath)
 
       cell.textLabel?.text = "Loading…"
       cell.selectionStyle = .None
@@ -111,19 +108,13 @@ class SongListTableViewController: ItemListTableViewController {
   }
 }
 
-class NumberedTableViewCell : UITableViewCell {
-  @IBOutlet weak var labelName: UILabel!
-  @IBOutlet weak var labelDetails: UILabel?
-  @IBOutlet weak var labelNumber: UILabel!
+extension SongListTableViewController: SwipeTableViewCellDelegate {
+  func swipeTableViewCell(cell: SwipeTableViewCell, didPressButton button: SwipeTableViewCell.Location) {
+    if let _ = tableView.indexPathForCell(cell) {
+      // TODO: we can now reference the Song to call the voting code
 
-  var numberedItem: (number: Int, song: Song)? {
-    didSet {
-      if let item = numberedItem {
-        labelName.text = item.song.name
-        labelDetails?.text = item.song.artistAlbumString  // don't set if not needed
-        labelNumber.text = "\(item.number)."
-      }
+    } else {
+      logger("could not find indexPath of cell")
     }
   }
 }
-
