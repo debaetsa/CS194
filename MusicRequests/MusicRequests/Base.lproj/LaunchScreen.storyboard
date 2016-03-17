@@ -17,18 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchLogo" translatesAutoresizingMaskIntoConstraints="NO" id="MVb-Py-GR0">
-                                <rect key="frame" x="225" y="225" width="150" height="150"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="JJk-IA-F8N"/>
-                                    <constraint firstAttribute="width" constant="150" id="gHm-QH-vNJ"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="LaunchLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Lgf-6R-WP1">
+                                <rect key="frame" x="236" y="236" width="128" height="128"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.098039215686274508" green="0.098039215686274508" blue="0.098039215686274508" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.098039215690000001" green="0.098039215690000001" blue="0.098039215690000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="MVb-Py-GR0" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="6TY-Wz-h7z"/>
-                            <constraint firstItem="MVb-Py-GR0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="NnD-ws-kLh"/>
+                            <constraint firstItem="Lgf-6R-WP1" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="c0A-eL-Zuz"/>
+                            <constraint firstItem="Lgf-6R-WP1" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="q5d-x1-eJL"/>
                         </constraints>
                     </view>
                 </viewController>

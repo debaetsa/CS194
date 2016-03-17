@@ -31,6 +31,9 @@ struct Style {
     // "application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool"
     static func standardView() {
 
+      UIApplication.sharedApplication().statusBarStyle = .LightContent
+      UIApplication.sharedApplication().statusBarHidden = false
+
       // Change color of play controls in Up Next view
       UIToolbar.appearance().tintColor = gray
       // Change color of toolbar behind play controls in Up Next view
