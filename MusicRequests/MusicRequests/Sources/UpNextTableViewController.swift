@@ -137,9 +137,25 @@ class UpNextTableViewController: ItemListTableViewController {
       cell.detailTextLabel?.text = queueItem.song.artistAlbumString
       cell.imageView?.image = queueItem.song.album!.imageToShow
       cell.selectionStyle = .Default
-      let imageView = UIImageView(frame: CGRectMake(0, 0, 28.0, 28.0))
-      imageView.image = UIImage(named: "Temp_down_button")
 
+      var imageView: UIImageView?
+      var vote = Request.Vote.None
+      
+      if let localQueueItem = queueItem as? LocalQueueItem {
+        vote = localQueueItem.song.cachedVote
+      } else if let remoteQueueItem = queueItem as? RemoteQueueItem {
+        vote = remoteQueueItem.request.vote
+      }
+
+      imageView = UIImageView(frame: CGRectMake(0, 0, 28.0, 28.0))
+      if (vote == .Up) {
+        imageView!.image = UIImage(named: "Temp_up_button")
+      } else if (vote == .Down) {
+        imageView!.image = UIImage(named: "Temp_down_button")
+      } else {
+        imageView = nil
+      }
+      
       cell.accessoryView = imageView
   
 
