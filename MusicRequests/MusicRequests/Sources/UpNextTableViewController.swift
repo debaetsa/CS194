@@ -131,6 +131,11 @@ class UpNextTableViewController: ItemListTableViewController {
       cell.detailTextLabel?.text = queueItem.song.artistAlbumString
       cell.imageView?.image = queueItem.song.album!.imageToShow
       cell.selectionStyle = .Default
+      let imageView = UIImageView(frame: CGRectMake(0, 0, 28.0, 28.0))
+      imageView.image = UIImage(named: "LaunchLogo.jpg")
+
+      cell.accessoryView = imageView
+  
 
     } else {
       cell = tableView.dequeueReusableCellWithIdentifier("NormalCell", forIndexPath: indexPath)
