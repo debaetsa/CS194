@@ -132,7 +132,7 @@ class UpNextTableViewController: ItemListTableViewController {
       cell.imageView?.image = queueItem.song.album!.imageToShow
       cell.selectionStyle = .Default
       let imageView = UIImageView(frame: CGRectMake(0, 0, 28.0, 28.0))
-      imageView.image = UIImage(named: "LaunchLogo.jpg")
+      imageView.image = UIImage(named: "Temp_down_button")
 
       cell.accessoryView = imageView
   
