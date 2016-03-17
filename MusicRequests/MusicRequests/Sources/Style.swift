@@ -31,7 +31,9 @@ struct Style {
     // "application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool"
     static func standardView() {
 
+      // Change color of status bar
       UIApplication.sharedApplication().statusBarStyle = .LightContent
+      // Show status bar after launch screen (bar is hidden in Info.plist)
       UIApplication.sharedApplication().statusBarHidden = false
 
       // Change color of play controls in Up Next view
