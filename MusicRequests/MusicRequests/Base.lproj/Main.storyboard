@@ -271,19 +271,28 @@
                                                         <constraint firstAttribute="width" secondItem="YuB-dd-YJu" secondAttribute="height" multiplier="1:1" id="9r4-re-lYa"/>
                                                     </constraints>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NVm-ai-mER">
+                                                    <rect key="frame" x="552" y="5" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="1zO-9O-Vx1"/>
+                                                        <constraint firstAttribute="height" constant="40" id="JUD-HV-oHK"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstItem="NVm-ai-mER" firstAttribute="leading" secondItem="wFY-GV-WUZ" secondAttribute="trailing" constant="8" id="H2t-fd-yYs"/>
+                                                <constraint firstItem="NVm-ai-mER" firstAttribute="centerY" secondItem="rg6-es-psW" secondAttribute="centerY" id="Jq2-9b-HGh"/>
                                                 <constraint firstItem="YuB-dd-YJu" firstAttribute="top" secondItem="rg6-es-psW" secondAttribute="top" id="K4c-GO-ewX"/>
                                                 <constraint firstItem="wFY-GV-WUZ" firstAttribute="leading" secondItem="YuB-dd-YJu" secondAttribute="trailing" constant="8" id="Uav-AC-cjd"/>
                                                 <constraint firstAttribute="bottom" secondItem="YuB-dd-YJu" secondAttribute="bottom" id="YEb-Vg-XCv"/>
+                                                <constraint firstItem="NVm-ai-mER" firstAttribute="leading" secondItem="hfX-DP-d0m" secondAttribute="trailing" constant="8" id="eTO-fc-F8w"/>
                                                 <constraint firstItem="hfX-DP-d0m" firstAttribute="leading" secondItem="YuB-dd-YJu" secondAttribute="trailing" constant="8" id="iEO-U3-8Ux"/>
-                                                <constraint firstAttribute="trailing" secondItem="hfX-DP-d0m" secondAttribute="trailing" constant="8" id="iUZ-iA-jQD"/>
-                                                <constraint firstAttribute="trailing" secondItem="wFY-GV-WUZ" secondAttribute="trailing" constant="8" id="lzc-1j-Pdf"/>
                                                 <constraint firstItem="YuB-dd-YJu" firstAttribute="leading" secondItem="rg6-es-psW" secondAttribute="leading" id="mDs-Kp-nXO"/>
                                                 <constraint firstAttribute="bottom" secondItem="wFY-GV-WUZ" secondAttribute="bottom" priority="999" constant="7" id="nYi-Og-ZBb"/>
                                                 <constraint firstItem="wFY-GV-WUZ" firstAttribute="top" secondItem="hfX-DP-d0m" secondAttribute="bottom" id="ou6-nE-vVE"/>
                                                 <constraint firstItem="hfX-DP-d0m" firstAttribute="top" secondItem="rg6-es-psW" secondAttribute="top" priority="999" constant="8" id="rVC-mq-UHU"/>
+                                                <constraint firstItem="NVm-ai-mER" firstAttribute="trailing" secondItem="rg6-es-psW" secondAttribute="trailingMargin" id="sPP-Xy-PR4"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -305,6 +314,7 @@
                                     <outlet property="customContentView" destination="rg6-es-psW" id="Nm7-Vg-mIs"/>
                                     <outlet property="customDetailTextLabel" destination="wFY-GV-WUZ" id="ZTK-eI-Gcq"/>
                                     <outlet property="customImageView" destination="YuB-dd-YJu" id="ktu-8Y-K87"/>
+                                    <outlet property="customIndicatorImageView" destination="NVm-ai-mER" id="9lH-jm-Bvd"/>
                                     <outlet property="customLeftView" destination="QQr-v6-ZbZ" id="g4z-zx-E4B"/>
                                     <outlet property="customRightView" destination="qDU-ff-JuV" id="iPT-vW-Q1x"/>
                                     <outlet property="customTextLabel" destination="hfX-DP-d0m" id="qWO-Xy-rVM"/>

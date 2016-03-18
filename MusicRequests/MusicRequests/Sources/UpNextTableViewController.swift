@@ -138,27 +138,6 @@ class UpNextTableViewController: ItemListTableViewController {
       cell.delegate = (indexPath.section == 2) ? self : nil
       return cell
 
-      var imageView: UIImageView?
-      var vote = Request.Vote.None
-      
-      if let localQueueItem = queueItem as? LocalQueueItem {
-        vote = localQueueItem.song.cachedVote
-      } else if let remoteQueueItem = queueItem as? RemoteQueueItem {
-        vote = remoteQueueItem.request.vote
-      }
-
-      imageView = UIImageView(frame: CGRectMake(0, 0, 28.0, 28.0))
-      if (vote == .Up) {
-        imageView!.image = UIImage(named: "up_vote")
-      } else if (vote == .Down) {
-        imageView!.image = UIImage(named: "down_vote")
-      } else {
-        imageView = nil
-      }
-      
-      cell.accessoryView = imageView
-  
-
     } else {
       let cell = tableView.dequeueReusableCellWithIdentifier("Loading", forIndexPath: indexPath)
       cell.textLabel?.text = "Loading…"
