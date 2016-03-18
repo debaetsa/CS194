@@ -110,8 +110,28 @@ class SongListTableViewController: ItemListTableViewController {
 
 extension SongListTableViewController: SwipeTableViewCellDelegate {
   func swipeTableViewCell(cell: SwipeTableViewCell, didPressButton button: SwipeTableViewCell.Location) {
-    if let _ = tableView.indexPathForCell(cell) {
-      // TODO: we can now reference the Song to call the voting code
+    if let numberedItems = maybeNumberedItems, let indexPath = tableView.indexPathForCell(cell) {
+
+      // get the Song for the swiped row
+      let (number, song) = numberedItems[indexPath.row]
+
+      if let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as? RemoteQueue {
+        // We have a valid RemoteQueue object.  Log an error if we don't.
+        switch button {
+        case .Right:
+          remoteQueue.upvote(withSong: song)
+
+        case .Left:
+          remoteQueue.downvote(withSong: song)
+        }
+
+      } else {
+        logger("could not handle swipe")
+      }
+
+      // Refresh the display to immediately indicate the vote.  This avoids
+      // needing to reload the entire table view.
+      (cell as! SongTableViewCell).updateContent(withSong: song, andNumber: number)
 
     } else {
       logger("could not find indexPath of cell")
