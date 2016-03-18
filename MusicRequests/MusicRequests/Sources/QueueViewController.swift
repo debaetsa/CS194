@@ -42,6 +42,9 @@ class QueueViewController: UIViewController {
   override func viewDidAppear(animated: Bool) {
     let upNextVC = self.childViewControllers[0] as! UpNextTableViewController
     let maybeLocalQueue = upNextVC.maybeQueue as? LocalQueue
+    if (maybeLocalQueue == nil) {
+      self.navigationController?.setToolbarHidden(true, animated: false)
+    }
     if (maybeLocalQueue != nil) && (maybeLocalQueue!.nowPlaying as! LocalNowPlaying).isPlaying {
       playButton.image = UIImage(named: pauseButtonFile)
     } else {
