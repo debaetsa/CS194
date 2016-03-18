@@ -69,6 +69,8 @@ struct Style {
       UISearchBar.appearance().tintColor = lightGray
       // Change color of text typed in search bar
       UITextField.appearance().textColor = lightGray
+      // Remove line dividing search bar from table view
+      UISearchBar.appearance().searchBarStyle = .Minimal
 
       // Change color of tab bar
       UITabBar.appearance().barTintColor = darkGray
