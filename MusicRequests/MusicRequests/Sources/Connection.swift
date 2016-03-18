@@ -56,7 +56,7 @@ class Connection: NSObject, NSStreamDelegate {
       stream.close()
       stream.delegate = nil
       stream.removeFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
-      outputStream = nil
+      inputStream = nil
     }
     if let stream = outputStream {
       stream.close()
