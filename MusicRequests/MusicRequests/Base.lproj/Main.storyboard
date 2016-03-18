@@ -434,7 +434,14 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tay-ez-kvP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="8x6-Ki-YTX" style="IBUITableViewCellStyleDefault" id="B1Q-e6-RX1" userLabel="Broadcast Cell">
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Oje-F4-CLY" userLabel="Broadcast Switch">
+                    <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="didChangeBroadcastSwitch:" destination="w67-fo-vCv" eventType="valueChanged" id="W4B-VI-Me1"/>
+                    </connections>
+                </switch>
+                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="8x6-Ki-YTX" style="IBUITableViewCellStyleDefault" id="B1Q-e6-RX1" userLabel="Broadcast Cell">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="B1Q-e6-RX1" id="4Gx-y6-y0b">
@@ -454,13 +461,6 @@
                         <outlet property="accessoryView" destination="Oje-F4-CLY" id="rgN-2l-S8L"/>
                     </connections>
                 </tableViewCell>
-                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Oje-F4-CLY" userLabel="Broadcast Switch">
-                    <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <connections>
-                        <action selector="didChangeBroadcastSwitch:" destination="w67-fo-vCv" eventType="valueChanged" id="W4B-VI-Me1"/>
-                    </connections>
-                </switch>
                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="uvX-1v-hf2" detailTextLabel="S0S-99-h6D" style="IBUITableViewCellStyleValue1" id="ZM2-7p-y5U" userLabel="Playlist Cell">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -1538,7 +1538,7 @@
         <image name="rewind_button" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Cup-8b-1YC"/>
+        <segue reference="ACS-C6-O8T"/>
         <segue reference="spU-Yu-CwB"/>
     </inferredMetricsTieBreakers>
 </document>

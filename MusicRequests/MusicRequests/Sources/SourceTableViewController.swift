@@ -113,7 +113,11 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     switch Section(rawValue: section)! {
     case .Local:
-      return Section.RowLocal.count.rawValue
+      if AppDelegate.sharedDelegate.currentSession is LocalSession {
+        return Section.RowLocal.count.rawValue
+      } else {
+        return 1  // only show one row if a remote session is selected
+      }
 
     case .Remote:
       return max(remoteSessionManager.sessions.count, 1)
@@ -210,6 +214,12 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
     // connect to the new Session (this will automatically connect)
     AppDelegate.sharedDelegate.currentSession = nextSession
 
+    if !(nextSession is LocalSession) {
+      // We're not using the LocalSession, so turn it off.
+      broadcastSwitch.on = false
+      localSession.broadcast = false
+    }
+
     // We need to deselect the existing cell (if it is visible).
     for cell in tableView.visibleCells {
       if cell.accessoryType == .Checkmark {
@@ -217,8 +227,13 @@ class SourceTableViewController: UITableViewController, UITextFieldDelegate {
       }
     }
 
-    // clear the row after it gets selected
+    // update the checkmark (always)
     tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
+
+    // we need to reload this section whenever we make a different selection
+    tableView.reloadSections(NSIndexSet(index: Section.Local.rawValue), withRowAnimation: .Automatic)
+
+    // clear the row after it gets selected
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
   }
 
