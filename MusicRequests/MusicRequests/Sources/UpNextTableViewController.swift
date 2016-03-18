@@ -157,6 +157,30 @@ class UpNextTableViewController: ItemListTableViewController {
 }
 
 extension UpNextTableViewController: SwipeTableViewCellDelegate {
-  func swipeTableViewCell(cell: SwipeTableViewCell, didPressButton: SwipeTableViewCell.Location) {
+  func swipeTableViewCell(cell: SwipeTableViewCell, didPressButton button: SwipeTableViewCell.Location) {
+    if let items = maybeItems, let indexPath = tableView.indexPathForCell(cell) {
+      let queueItem: QueueItem
+      switch Section(rawValue: indexPath.section)! {
+      case .Previous: queueItem = items.0[indexPath.row]
+      case .Current:  queueItem = items.1!  // it better exist if we request it
+      case .Upcoming: queueItem = items.2[indexPath.row]
+      }
+
+      // We have the QueueItem, so determine what we should do with it.
+      if let remoteQueueItem = queueItem as? RemoteQueueItem {
+        // It's a RemoteQueueItem, and it's "loaded", so we better have a
+        // RemoteQueue that is associated with the Session.
+        let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as! RemoteQueue
+
+        switch button {
+        case .Left:
+          remoteQueue.downvote(withQueueItem: remoteQueueItem)
+
+        case .Right:
+          remoteQueue.upvote(withQueueItem: remoteQueueItem)
+        }
+      }
+
+    }
   }
 }
