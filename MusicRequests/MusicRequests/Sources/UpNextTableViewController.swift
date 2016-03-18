@@ -181,6 +181,9 @@ extension UpNextTableViewController: SwipeTableViewCellDelegate {
         }
       }
 
+      // Finally, refresh the cell since the content could be different.
+      (cell as! QueueTableViewCell).updateContent(withQueueItem: queueItem)
+
     }
   }
 }
