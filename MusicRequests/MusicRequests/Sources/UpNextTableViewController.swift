@@ -10,10 +10,22 @@ import UIKit
 
 class UpNextTableViewController: ItemListTableViewController {
 
+  // we need a reference to be able to pass the scroll information
+  weak var mainViewController: MainViewController?
+  @IBOutlet var nowPlayingView: NowPlayingView!
+
   override func viewDidLoad() {
     shouldShowSearchBar = false  // don't add search bar here
 
     super.viewDidLoad()
+
+    nowPlayingView.delegate = self
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    mainViewController?.updateViewPosition(inTableView: tableView)
   }
 
   // This is posted when the contents of the Queue changed.
@@ -44,6 +56,8 @@ class UpNextTableViewController: ItemListTableViewController {
 
       self.updateData()
       self.tableView.reloadData()
+      self.nowPlayingView.updateContent(withQueueItem: self.maybeItems?.1)
+      self.mainViewController?.updateViewPosition(inTableView: self.tableView)
     }
 
     if let queue = maybeQueue {
@@ -131,12 +145,22 @@ class UpNextTableViewController: ItemListTableViewController {
       }
 
       let isPlayingRow = (indexPath.section == 1)
-      let cell = tableView.dequeueReusableCellWithIdentifier(isPlayingRow ? "NowPlaying" : "Item", forIndexPath: indexPath) as! QueueTableViewCell
 
-      cell.updateContent(withQueueItem: queueItem)
-      cell.selectionStyle = isPlayingRow ? .Default : .None
-      cell.delegate = (indexPath.section == 2) ? self : nil
-      return cell
+      if isPlayingRow {
+        let cell = tableView.dequeueReusableCellWithIdentifier("NowPlaying", forIndexPath: indexPath)
+        cell.textLabel?.text = nil
+        cell.selectionStyle = .Default
+        return cell
+
+      } else {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Item", forIndexPath: indexPath) as! QueueTableViewCell
+
+        cell.updateContent(withQueueItem: queueItem)
+        cell.selectionStyle = isPlayingRow ? .Default : .None
+        cell.delegate = (indexPath.section == 2) ? self : nil
+
+        return cell
+      }
 
     } else {
       let cell = tableView.dequeueReusableCellWithIdentifier("Loading", forIndexPath: indexPath)
@@ -148,6 +172,12 @@ class UpNextTableViewController: ItemListTableViewController {
 
   override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     return (indexPath.section == 1) ? 100 : 50
+  }
+
+  // MARK: - Scrolling
+
+  override func scrollViewDidScroll(scrollView: UIScrollView) {
+    mainViewController?.updateViewPosition(inTableView: tableView)
   }
 
   // MARK: - Dismissing Modal Controllers
@@ -187,5 +217,11 @@ extension UpNextTableViewController: SwipeTableViewCellDelegate {
       (cell as! QueueTableViewCell).updateContent(withQueueItem: queueItem)
 
     }
+  }
+}
+
+extension UpNextTableViewController: NowPlayingViewDelegate {
+  func nowPlayingViewTapped(nowPlayingView: NowPlayingView) {
+    performSegueWithIdentifier("PushNowPlaying", sender: nil)
   }
 }
