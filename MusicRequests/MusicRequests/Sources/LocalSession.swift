@@ -122,6 +122,7 @@ class LocalSession: Session, NSNetServiceDelegate {
     self.fullLibrary = library
     self.sourceLibrary = library
     self.currentQueueData = queue.sendableData
+    self.lastSentQueueData = self.currentQueueData
     self.localQueue = queue
 
     super.init()
@@ -384,21 +385,49 @@ class LocalSession: Session, NSNetServiceDelegate {
   // when the data object is different.  This also gives a quick way to send
   // the Queue when a new client connects.
 
+  private var lastSentQueueData: NSData
   private var currentQueueData: NSData
+
+  private var maybeLastQueueSentDate: NSDate?
+  private var waitingForDelay = false
 
   /** Sends the Queue data if it has changed.
 
    Returns whether or not the data was sent. */
   func sendQueueIfNeeded() -> Bool {
     let data = localQueue.sendableData
-    guard currentQueueData != data else {
+    guard lastSentQueueData != data else {
       return false  // the data didn't change, so don't send anything
     }
     currentQueueData = data
 
+    // We update the data, but we might not send it unless the required time
+    // interval has elapsed.  This is to ensure that we don't use too much
+    // bandwidth.  It will also prevent slowdowns as the number of clients
+    // increases.  This should be tested and optimized.
+    if let date = maybeLastQueueSentDate {
+      if -date.timeIntervalSinceNow < 0.9 {
+        // We are going to delay this, so post a single delayed request.
+        if !waitingForDelay {
+          // mark that we're waiting
+          waitingForDelay = true
+
+          // and then start waiting
+          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC)), dispatch_get_main_queue()) {
+            // clear this first in case we need to wait again
+            self.waitingForDelay = false
+            self.sendQueueIfNeeded()
+          }
+        }
+        return false
+      }
+    }
+    maybeLastQueueSentDate = NSDate()  // update when it was last sent
+
     for client in validClients {
       client.sendItem(localQueue, withCachedData: currentQueueData)
     }
+    lastSentQueueData = data
 
     return true
   }
