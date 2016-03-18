@@ -22,10 +22,25 @@ class SongTableViewCell: SwipeTableViewCell {
     customDetailTextLabel?.text = song.artistAlbumString
     customImageView?.image = song.album?.imageToShow  // TODO: might not get an image
 
+    customNumberLabel?.textColor = Style.gray
+
     if let number = maybeNumber {
       customNumberLabel?.text = "\(number)."
     } else {
       customNumberLabel?.text = nil
     }
   }
+
+//      var imageView: UIImageView?
+//      let vote = song.cachedVote
+    //
+      //imageView = UIImageView(frame: CGRectMake(0, 0, 28.0, 28.0))
+//      if (vote == .Up) {
+//        imageView!.image = UIImage(named: "up_vote")
+//      } else if (vote == .Down) {
+//        imageView!.image = UIImage(named: "down_vote")
+//      } else {
+//        imageView = nil
+//      }
+//      cell.accessoryView = imageView
 }

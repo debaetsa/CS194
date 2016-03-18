@@ -12,7 +12,6 @@ class QueueViewController: UIViewController {
   
   let playButtonFile = "play_button"
   let pauseButtonFile = "pause_button"
-  let addSongButtonFile = "temp_plus_button"
   
   @IBOutlet weak var addSongButton: UIButton!
   @IBOutlet weak var playButton: UIBarButtonItem!

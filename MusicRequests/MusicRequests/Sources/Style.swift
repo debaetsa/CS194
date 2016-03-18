@@ -51,7 +51,7 @@ struct Style {
       UITableViewCell.appearance().backgroundColor = dark
       // Change color of checkmark in sources view
       UITableViewCell.appearance().tintColor = lightBlue
-      // Change color of text in labels
+      // Change color of text in labels - NOTE: listed number labels are colored in SongTableViewCell
       UILabel.appearance().textColor = white
 
       // Change color of navigation bar
