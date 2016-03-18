@@ -20,6 +20,7 @@ class LocalSession: Session, NSNetServiceDelegate {
       }
 
       netService = nil
+      removeAllConnections()
       destroyListeningSocket()
 
       if broadcast {
@@ -177,6 +178,20 @@ class LocalSession: Session, NSNetServiceDelegate {
     clientRequests[connection] = []
   }
 
+  private func removeAllConnections() {
+    for connection in allClients {
+      connection.onClosed = nil
+      connection.onReceivedCode = nil
+      connection.onReceivedData = nil
+      connection.close()
+    }
+
+    // clear out all of the objects
+    allClients.removeAll()
+    validClients.removeAll()
+    clientRequests.removeAll()
+  }
+
   private func sendLibraryData(toConnection connection: Connection) {
     // first send the entire contents of the Library
     for artist in sourceLibrary.allArtists {
@@ -221,6 +236,7 @@ class LocalSession: Session, NSNetServiceDelegate {
     // stop paying attention to anything said by this client
     connection.onReceivedCode = nil
     connection.onReceivedData = nil
+    connection.onClosed = nil
 
     // remove it from the list of allClients
     if let index = allClients.indexOf(connection) {

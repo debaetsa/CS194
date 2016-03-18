@@ -49,7 +49,7 @@ class Connection: NSObject, NSStreamDelegate {
     stream.open()
   }
 
-  private func close() {
+  func close() {
     inputStream.close()
     outputStream.close()
   }
