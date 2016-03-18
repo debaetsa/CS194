@@ -17,6 +17,9 @@ class MainViewController: UIViewController {
   // we need a reference to this so that we can determine the cell location
   var upNextViewController: UpNextTableViewController!
 
+  // get a reference to this for hierarchy purposes
+  @IBOutlet weak var buttonLibrary: UIButton!
+
   // we need a view that we can move around the screen to cover the cell
   private var viewToMove: UIView!
   private var topConstraint: NSLayoutConstraint?
@@ -31,7 +34,7 @@ class MainViewController: UIViewController {
 
     // get a reference to the view that needs to move, and make it visible
     viewToMove = upNextViewController.nowPlayingView
-    view.addSubview(viewToMove)
+    view.insertSubview(viewToMove, belowSubview: buttonLibrary)
 
     // create the constraints to size this view
     view.addConstraint(NSLayoutConstraint(
