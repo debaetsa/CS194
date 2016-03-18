@@ -109,7 +109,7 @@ class SongListTableViewController: ItemListTableViewController {
 }
 
 extension SongListTableViewController: SwipeTableViewCellDelegate {
-  func swipeTableViewCell(cell: SwipeTableViewCell, didPressButton button: SwipeTableViewCell.Location) {
+  func swipeTableViewCell(cell: SwipeTableViewCell, didPressButton button: SwipeTableViewCell.Direction) {
     if let numberedItems = maybeNumberedItems, let indexPath = tableView.indexPathForCell(cell) {
 
       // get the Song for the swiped row

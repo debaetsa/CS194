@@ -19,7 +19,7 @@ protocol SwipeTableViewCellDelegate: class {
   /** Called when a button is "pressed".
 
    Though note that a button is "pressed" when it is fully-swiped. */
-  func swipeTableViewCell(cell: SwipeTableViewCell, didPressButton: SwipeTableViewCell.Location)
+  func swipeTableViewCell(cell: SwipeTableViewCell, didPressButton: SwipeTableViewCell.Direction)
 }
 
 class SwipeTableViewCell: UITableViewCell {
@@ -27,7 +27,7 @@ class SwipeTableViewCell: UITableViewCell {
   /** The location of the buttons.
 
    Use the notify the delegate of which button was pressed. */
-  enum Location {
+  enum Direction {
     case Left
     case Right
   }
@@ -67,6 +67,14 @@ class SwipeTableViewCell: UITableViewCell {
     }
   }
 
+  static func colorFromHexadecimal(value: Int) -> UIColor {
+    let r = (value >> 16) & 0xFF
+    let g = (value >>  8) & 0xFF
+    let b = (value >>  0) & 0xFF
+
+    return UIColor(colorLiteralRed: Float(r) / 255, green: Float(g) / 255, blue: Float(b) / 255, alpha: 1)
+  }
+
   override func awakeFromNib() {
     super.awakeFromNib()
 
@@ -78,8 +86,9 @@ class SwipeTableViewCell: UITableViewCell {
 
     // set the background color
     customContentView.backgroundColor = Style.dark  // use the "dark" color
-    customLeftView.backgroundColor = UIColor.redColor()
-    customRightView.backgroundColor = UIColor.greenColor()
+
+    customLeftView.backgroundColor = SwipeTableViewCell.colorFromHexadecimal(0x32c964)
+    customRightView.backgroundColor = SwipeTableViewCell.colorFromHexadecimal(0xf02828)
   }
 
   private var addedGestureRecognizer = false
@@ -98,6 +107,14 @@ class SwipeTableViewCell: UITableViewCell {
     addedGestureRecognizer = needGestureRecognizer
   }
 
+  private func updateAlphaValues() {
+    let left = abs(max(0, offset / customLeftView.bounds.size.width))
+    customLeftView.alpha = (left >= 1.0) ? 1.0 : (0.5 * left + 0.25)
+
+    let right = abs(max(0, -offset / customRightView.bounds.size.width))
+    customRightView.alpha = (right >= 1.0) ? 1.0 : (0.5 * right + 0.25)
+  }
+
   private func setOffset(offset: CGFloat, animated: Bool) {
     // clamp the offset based on the sizes of the views
     var boundOffset = offset
@@ -112,9 +129,13 @@ class SwipeTableViewCell: UITableViewCell {
         delay: 0,
         options: .CurveEaseOut,
         animations: {
+          self.updateAlphaValues()
           self.contentView.layoutIfNeeded()  // actually update all the frames
         },
         completion: nil)
+
+    } else {
+      updateAlphaValues()  // just update them if it isn't animated
     }
   }
 
@@ -146,14 +167,15 @@ class SwipeTableViewCell: UITableViewCell {
 
   /** Sends a button press if a button is pressed. */
   private func checkForButtonPress() {
-    var maybeButton: Location? = nil  // no button
+    var maybeButton: Direction? = nil  // no button
 
     if offset >= customLeftView.bounds.size.width {
-      // All the way to the left, so it's a left button press.
-      maybeButton = .Left
+      // We're move to the right (because the left button is visible), so they
+      // are swiping to the right.  Also evidenced by the positive offset.
+      maybeButton = .Right
 
     } else if offset <= -customRightView.bounds.size.width {
-      maybeButton = .Right
+      maybeButton = .Left
     }
 
     if let button = maybeButton {

@@ -190,7 +190,7 @@ class UpNextTableViewController: ItemListTableViewController {
 }
 
 extension UpNextTableViewController: SwipeTableViewCellDelegate {
-  func swipeTableViewCell(cell: SwipeTableViewCell, didPressButton button: SwipeTableViewCell.Location) {
+  func swipeTableViewCell(cell: SwipeTableViewCell, didPressButton button: SwipeTableViewCell.Direction) {
     if let items = maybeItems, let indexPath = tableView.indexPathForCell(cell) {
       let queueItem: QueueItem
       switch Section(rawValue: indexPath.section)! {
