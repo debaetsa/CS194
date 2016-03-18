@@ -10,7 +10,14 @@ import UIKit
 
 class NowPlaying: NSObject {
 
-  var playing = false
+  static let didChangeNotification = "NowPlaying.didChange"
+
+  var playing = false {
+    didSet {
+      let center = NSNotificationCenter.defaultCenter()
+      center.postNotificationName(NowPlaying.didChangeNotification, object: self)
+    }
+  }
 
   // This would ideally be "unowned", which operates very similarly to this,
   // but we can't make that work since the unowned value shouldn't be optional.
@@ -26,9 +33,17 @@ class NowPlaying: NSObject {
     return playing
   }
 
+}
+
+class LocalNowPlaying: NowPlaying {
+  /** This must be associated with a LocalQueue object. */
+  var localQueue: LocalQueue {
+    return queue as! LocalQueue
+  }
+
   func didFinishCurrentSong() {
     // Tell the queue to advance to the next song.
-    queue.advanceToNextSong()
+    localQueue.advanceToNextSong()
 
     // And then tell this instance to play that song.
     playCurrentSong()
@@ -42,7 +57,7 @@ class NowPlaying: NSObject {
 
     playing = true
     if queue.current == nil {
-      queue.advanceToNextSong()
+      localQueue.advanceToNextSong()
     }
     playCurrentSong()
   }
@@ -52,22 +67,29 @@ class NowPlaying: NSObject {
 
     playing = false
   }
-  
+
   func next() {
-    queue.advanceToNextSong()
+    localQueue.advanceToNextSong()
     if playing {
       playCurrentSong()
     }
-  }
-  
-  func last() {
-    queue.returnToPreviousSong()
-    if playing {
-      playCurrentSong()
-    }
-  }
-  
-  func scrub() {
   }
 
+  func last() {
+    localQueue.returnToPreviousSong()
+    if playing {
+      playCurrentSong()
+    }
+  }
+
+  func scrub(value: Double) {
+  }
+
+  var currentPlaybackTime: NSTimeInterval? {
+    return nil
+  }
+
+  var currentPlaybackDuration: NSTimeInterval? {
+    return nil
+  }
 }

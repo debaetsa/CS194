@@ -18,8 +18,18 @@ class Song: Item {
   let userInfo: AnyObject?
 
   let artistOverride: Artist?
-  let album: Album?
-  let genre: Genre?
+  var album: Album?
+  var genre: Genre?
+
+  var cachedVote = Request.Vote.None
+
+  var isUpvoted: Bool {
+    return cachedVote == .Up
+  }
+
+  var isDownvoted: Bool {
+    return cachedVote == .Down
+  }
 
   init(name: String, sortName: String, artist: Artist?, album: Album?, genre: Genre?, discNumber: Int?, trackNumber: Int?, userInfo: AnyObject?) {
 
@@ -75,6 +85,64 @@ class Song: Item {
 
   var artist: Artist? {
     return artistOverride ?? album?.artist
+  }
+
+  // MARK: - Sending
+
+  override var tag: Tag {
+    return .Song
+  }
+
+  override func buildSendableData(mutableData: NSMutableData) {
+    // add the basic data
+    super.buildSendableData(mutableData)
+
+    // add the ID for the album and the genre
+    mutableData.appendCustomInteger(self.album?.identifier ?? UInt32(0))
+    mutableData.appendCustomInteger(self.genre?.identifier ?? UInt32(0))
+
+    // and then tell it which track we are on that album
+    let track = self.album?.trackForSong(self)
+    mutableData.appendCustomInteger(UInt32(track?.disc ?? 0))
+    mutableData.appendCustomInteger(UInt32(track?.track ?? 0))
+  }
+
+  required init?(data: NSData, lookup: [UInt32: Item], inout offset: Int) {
+    self.userInfo = nil
+    self.artistOverride = nil
+
+    super.init(data: data, lookup: lookup, offset: &offset)
+
+    guard let albumId = data.getNextInteger(&offset) else {
+      return nil
+    }
+    guard let genreId = data.getNextInteger(&offset) else {
+      return nil
+    }
+    guard let discNumber = data.getNextInteger(&offset) else {
+      return nil
+    }
+    guard let songNumber = data.getNextInteger(&offset) else {
+      return nil
+    }
+
+    if albumId > 0 {
+      if let item = lookup[albumId], let album = item as? Album {
+        album.addSong(self, discNumber: Int(discNumber), trackNumber: Int(songNumber))
+        self.album = album
+      } else {
+        logger("could not find album for song \(name)")
+      }
+    }
+
+    if genreId > 0 {
+      if let item = lookup[genreId], let genre = item as? Genre {
+        genre.addSong(self)
+        self.genre = genre
+      } else {
+        logger("could not find genre #\(genreId) for song \(name)")
+      }
+    }
   }
 
 }

@@ -9,7 +9,7 @@
 import Foundation
 import MediaPlayer
 
-class AppleQueue: Queue {
+class AppleQueue: LocalQueue {
 
   override init(nowPlaying: NowPlaying, sourceLibrary: Library) {
     super.init(nowPlaying: nowPlaying, sourceLibrary: sourceLibrary)

@@ -3,7 +3,7 @@
 //  MusicRequests
 //
 //  Created by Max Radermacher on 1/24/16.
-//
+//  Copyright © 2016 Capps, De Baets, Radermacher, Volk. All rights reserved.
 //
 
 import UIKit
@@ -11,27 +11,67 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+  static let didChangeSession = "AppDelegate.didChangeSession"
+
+  /** Gets a reference to the shared application delegate.
+
+   This is unwrapped with "!" since the application cannot possibly work if
+   this is not the case.  It's not a recoverable error. */
+  static var sharedDelegate: AppDelegate {
+    return (UIApplication.sharedApplication().delegate as? AppDelegate)!
+  }
+
   var window: UIWindow?
-  var library: Library?
-  var queue: Queue?
-  var nowPlaying: NowPlaying?
 
+  // we always need a reference to our session that stores the configuration
+  var localSession: LocalSession!
 
+  // and this is the one we actually use for data (could be local or remote)
+  var currentSession: Session! {
+    willSet {
+      // disconnect if this is a RemoteSession
+      if let remoteSession = currentSession as? RemoteSession {
+        remoteSession.disconnect()
+      }
+    }
+    didSet {
+      if let remoteSession = currentSession as? RemoteSession {
+        remoteSession.connect()
+      }
+      let center = NSNotificationCenter.defaultCenter()
+      center.postNotificationName(AppDelegate.didChangeSession, object: self)
+    }
+  }
+
+  // this is how we find the other sessions; it's put here so that it's always
+  // looking; this way the data is ready when the user taps "sources"
+  var remoteSessionManager: RemoteSessionManager!
+
+  // this is the main view controller of the application
+  weak var mainViewController: UIViewController!
+  
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
+    // change the color theme of the app
+    Style.darkTheme.standardView()
+
     #if (arch(i386) || arch(x86_64)) && os(iOS)
-      let tempLibrary = TemporaryLibrary()
-      library = tempLibrary
-      nowPlaying = NowPlaying()
-      queue = Queue(nowPlaying: nowPlaying!, sourceLibrary: tempLibrary)
+      let library = TemporaryLibrary()
+      let queue = LocalQueue(library: library)
     #else
-      let appleLibrary = AppleLibrary()
-      library = appleLibrary
-      nowPlaying = AppleNowPlaying()
-      queue = AppleQueue(nowPlaying: nowPlaying!, sourceLibrary: appleLibrary)
+      let library = AppleLibrary()
+      let queue = AppleQueue(sourceLibrary: library)
     #endif
 
-    nowPlaying?.next()
+    // advance to the next song so that something is always playing
+    (queue.nowPlaying as! LocalNowPlaying).next()
+
+    // start the browser first
+    remoteSessionManager = RemoteSessionManager()
+
+    // do some tests with broadcasting the service
+    localSession = LocalSession(library: library, queue: queue)
+    currentSession = localSession  // start with the local session
 
     // VERYHELPFUL
     // Uncomment the following block to automatically start playing two seconds
@@ -49,7 +89,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     */
 
+    // set the mainViewController based on the rootViewController of the window
+    mainViewController = (window?.rootViewController as! UINavigationController).viewControllers.first
+
     return true
+  }
+
+  func resetInterface() {
+    currentSession = localSession  // go back to the LocalSession
+    mainViewController.dismissViewControllerAnimated(true, completion: nil)
+  }
+
+  func presentSources() {
+    mainViewController.performSegueWithIdentifier("PresentSource", sender: nil)
   }
 
   func applicationWillResignActive(application: UIApplication) {

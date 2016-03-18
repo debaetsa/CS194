@@ -9,15 +9,22 @@
 import MediaPlayer
 import UIKit
 
-class AppleLibrary: NSObject, Library {
+class AppleLibrary: Library {
 
-  let allSongs: [Song]
-  let allArtists: [Artist]
-  let allAlbums: [Album]
-  let allPlaylists: [Playlist]
-  let allGenres: [Genre]
+  let songs: [Song]
+  override var allSongs: [Song] { return songs }
+  let artists: [Artist]
+  override var allArtists: [Artist] { return artists }
+  let albums: [Album]
+  override var allAlbums: [Album] { return albums }
+  let playlists: [Playlist]
+  override var allPlaylists: [Playlist] { return playlists }
+  let genres: [Genre]
+  override var allGenres: [Genre] { return genres }
 
-  override init() {
+  private let lookup: [UInt32: Item]
+
+  init() {
     let query = MPMediaQuery.songsQuery()
 
     // By using the "!", we ensure that a runtime error occurs if something
@@ -30,10 +37,12 @@ class AppleLibrary: NSObject, Library {
     var songs = [Song]()  // store all the songs as they are imported
 
     var playlists = [Playlist]()
-    var artists = [String: Artist]()
+    var albumArtists = [String: Artist]()
+    var songArtists = [String: Artist]()
     var albums = [Album]()
     var genres = [String: Genre]()
     var idToSong = [MPMediaEntityPersistentID: Song]()
+    var lookup = [UInt32: Item]()
 
     for item in items {
       var genre: Genre?
@@ -45,25 +54,59 @@ class AppleLibrary: NSObject, Library {
         }
       }
 
-      var artist: Artist?
+      let artistNameForAlbum: String
+      if let albumArtistName = item.albumArtist {
+        artistNameForAlbum = albumArtistName
+      } else {
+        // If it's a compilation, use "Various Artists".
+        if let artistName = item.artist where !item.compilation {
+          artistNameForAlbum = artistName
+        } else {
+          artistNameForAlbum = "Various Artists"
+        }
+      }
+
+      // Set to the "unique" name for the (artist, album) pair.  Will depend on
+      // the album artist, "is compilation?" flag, and the artist.
+      var artistForAlbum: Artist! = albumArtists[artistNameForAlbum]
+      if artistForAlbum == nil {
+        artistForAlbum = songArtists[artistNameForAlbum]
+        albumArtists[artistNameForAlbum] = artistForAlbum
+      }
+      if artistForAlbum == nil {
+        // We haven't seen this artist before, so create a new entry.
+        artistForAlbum = Artist(name: artistNameForAlbum)
+        albumArtists[artistNameForAlbum] = artistForAlbum
+      }
+
+
+      var maybeArtistNameForSong: String? = nil
       if let artistName = item.artist {
-        // The artist has a name, so we want to use it with this Song.
-        artist = artists[artistName]
-        if artist == nil {
-          // We haven't seen this artist before, so create a new entry.
-          artist = Artist(name: artistName)
-          artists[artistName] = artist
+        if artistName != artistNameForAlbum {
+          maybeArtistNameForSong = artistName
+        }
+      }
+
+      // Set the the name for the artist for the Song, but only if it should be
+      // overridden from the artist for the album.
+      var artistForSong: Artist? = nil
+      if let artistNameForSong = maybeArtistNameForSong {
+        artistForSong = songArtists[artistNameForSong]
+        if artistForSong == nil {
+          artistForSong = albumArtists[artistNameForSong]
+        }
+        if artistForSong == nil {
+          artistForSong = Artist(name: artistNameForSong)
+          songArtists[artistNameForSong] = artistForSong
         }
       }
 
       var album: Album?
       if let albumName = item.albumTitle {
-        if let boundArtist = artist {
-          album = boundArtist.albumWithName(albumName)
-        }
+        album = artistForAlbum.albumWithName(albumName)
         if album == nil {
           // We couldn't find the album, or there wasn't an artist.
-          let boundAlbum = Album(name: albumName, artist: artist)
+          let boundAlbum = Album(name: albumName, artist: artistForAlbum, date: item.releaseDate)
           album = boundAlbum
           albums.append(boundAlbum)
         }
@@ -72,11 +115,11 @@ class AppleLibrary: NSObject, Library {
       if let boundAlbum = album {
         if boundAlbum.image == nil {
           boundAlbum.image = item.artwork?.imageWithSize(CGSize(width: 100, height: 100))
-          item.artwork
         }
       }
 
-      let song = Song(name: item.title ?? "", artist: artist, album: album, genre: genre, discNumber: item.discNumber, trackNumber: item.albumTrackNumber, userInfo: item)
+      let song = Song(name: item.title ?? "", artist: artistForSong, album: album, genre: genre, discNumber: item.discNumber, trackNumber: item.albumTrackNumber, userInfo: item)
+      lookup[song.identifier] = song
       songs.append(song)
       idToSong[item.persistentID] = song
     }
@@ -92,13 +135,13 @@ class AppleLibrary: NSObject, Library {
     for collection in playlistItemCollections {
       if let playlistName = (collection.valueForProperty(MPMediaPlaylistPropertyName) as? String) {
         // We have a valid name for the Playlist, so create a Playlist.
-        let playlist = Playlist(name: playlistName)
+        let playlist = Playlist(name: playlistName, sortName: playlistName)
 
         for item in collection.items {
           if let song = idToSong[item.persistentID] {
             playlist.addSong(song)
           } else {
-            print("Could not find Song for entry in playlist.")
+            logger("could not find song with name \(item.title) and ID \(item.persistentID)")
           }
         }
 
@@ -107,18 +150,25 @@ class AppleLibrary: NSObject, Library {
       }
     }
 
-    allSongs = songs.sort(Item.sorter)
-    allArtists = artists.values.sort(Item.sorter)
-    allAlbums = albums.sort(Item.sorter)
-    allPlaylists = playlists.sort(Item.sorter)
-    allGenres = genres.values.sort(Item.sorter)
+    self.songs = songs.sort(Item.sorter)
+    self.artists = albumArtists.values.sort(Item.sorter)
+    self.albums = albums.sort(Item.sorter)
+    self.playlists = playlists.sort(Item.sorter)
+    self.genres = genres.values.sort(Item.sorter)
+    self.lookup = lookup
 
-    for genre in allGenres {
+    for genre in self.genres {
       genre.didFinishImporting()
     }
 
     // We have to set all of our local instance variables to some value before
     // we invoke the superclass's initialization method.
     super.init()
+
+    finishLoading()  // this is loaded at this point
+  }
+
+  override func itemForIdentifier(identifier: UInt32) -> Item? {
+    return lookup[identifier]
   }
 }

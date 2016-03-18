@@ -8,78 +8,234 @@
 
 import UIKit
 
-class UpNextTableViewController: ItemTableViewController {
+class UpNextTableViewController: ItemListTableViewController {
 
-  var listener: NSObjectProtocol?
-
-  var items = [QueueItem]()
-  var currentIndex: Int?
+  // we need a reference to be able to pass the scroll information
+  weak var mainViewController: MainViewController?
+  @IBOutlet var nowPlayingView: NowPlayingView!
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.updateData()  // load the initial data
+    tableView.showsVerticalScrollIndicator = false  // hide the scroll bar
+    nowPlayingView.delegate = self
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    mainViewController?.updateViewPosition(inTableView: tableView)
+  }
+
+  // This is posted when the contents of the Queue changed.
+  var maybeQueueUpdatedListener: NSObjectProtocol?
+
+  // Whereas this is posted when the Queue itself changes.  (This happens if or
+  // when you switch the Session.)
+  var maybeQueueChangedListener: NSObjectProtocol?
+  var maybeQueue: Queue? {
+    didSet {
+      if oldValue !== maybeQueue {
+        queueDidChange()
+      }
+    }
+  }
+
+  private func queueDidChange() {
+    logger("queue changed to " + ((maybeQueue != nil) ? "value" : "nil"))
 
     let center = NSNotificationCenter.defaultCenter()
-    listener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: nil, queue: nil, usingBlock: {
-      [unowned self] (note) in
+
+    if let listener = maybeQueueUpdatedListener {
+      center.removeObserver(listener)
+    }
+
+    let updateCurrentQueue = {
+      [unowned self] (note: NSNotification?) in
+
       self.updateData()
       self.tableView.reloadData()
-      }
+      self.nowPlayingView.updateContent(withQueueItem: self.maybeItems?.1)
+      self.mainViewController?.updateViewPosition(inTableView: self.tableView)
+    }
+
+    if let queue = maybeQueue {
+      maybeQueueUpdatedListener = center.addObserverForName(
+        Queue.didChangeNowPlayingNotification, object: queue, queue: nil, usingBlock: updateCurrentQueue
+      )
+    }
+    updateCurrentQueue(nil)  // refresh it always -- could have disappeared
+  }
+
+  // either the items or nothing if they aren't yet loaded
+  var maybeItems: ([QueueItem], QueueItem?, [QueueItem])?
+
+  override func sessionDidChange() {
+    super.sessionDidChange()
+
+    let updateCurrentQueue = {
+      [unowned self] (note: NSNotification?) in
+
+      self.maybeQueue = AppDelegate.sharedDelegate.currentSession.queue
+    }
+
+    let center = NSNotificationCenter.defaultCenter()
+    if let listener = maybeQueueChangedListener {
+      center.removeObserver(listener)
+    }
+    maybeQueueChangedListener = center.addObserverForName(
+      Session.didChangeQueueNotification, object: AppDelegate.sharedDelegate.currentSession, queue: nil, usingBlock: updateCurrentQueue
     )
+    updateCurrentQueue(nil)  // set the starting value
   }
 
   deinit {
-    if let listener = self.listener {
-      let center = NSNotificationCenter.defaultCenter()
+    let center = NSNotificationCenter.defaultCenter()
+    if let listener = maybeQueueUpdatedListener {
+      center.removeObserver(listener)
+    }
+    if let listener = maybeQueueChangedListener {
       center.removeObserver(listener)
     }
   }
 
   private func updateData() {
-    items.removeAll()
-    items.appendContentsOf(queue.history)
-    if let current = queue.current {
-      currentIndex = items.count
-      items.append(current)
+    if let queue = maybeQueue {
+      maybeItems = (queue.history, queue.current, queue.upcoming)
     } else {
-      currentIndex = nil  // there is not a playing item
+      maybeItems = nil
     }
-    items.appendContentsOf(queue.upcoming)
+  }
+
+  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    if let _ = maybeItems {
+      return 3
+    } else {
+      return 1  // only one when loading
+    }
+  }
+
+  enum Section: Int {
+    case Previous = 0
+    case Current
+    case Upcoming
   }
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return items.count
+    if let (previous, current, upcoming) = maybeItems {
+      switch Section(rawValue: section)! {  // unwrap to catch errors
+      case .Previous: return previous.count
+      case .Current:  return (current != nil) ? 1 : 0
+      case .Upcoming: return upcoming.count
+      }
+
+    } else {
+      return 1  // one row when loading
+    }
   }
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    var cell: UITableViewCell
+    if let items = maybeItems {
+      let queueItem: QueueItem
+      switch Section(rawValue: indexPath.section)! {
+      case .Previous: queueItem = items.0[indexPath.row]
+      case .Current:  queueItem = items.1!  // it better exist if we request it
+      case .Upcoming: queueItem = items.2[indexPath.row]
+      }
 
-    let isPlayingRow = (indexPath.row == currentIndex)
+      let isPlayingRow = (indexPath.section == 1)
 
-    if (isPlayingRow) {
-      cell = tableView.dequeueReusableCellWithIdentifier("BigCell", forIndexPath: indexPath)
+      if isPlayingRow {
+        let cell = tableView.dequeueReusableCellWithIdentifier("NowPlaying", forIndexPath: indexPath)
+        cell.textLabel?.text = nil
+        cell.selectionStyle = .Default
+        return cell
+
+      } else {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Item", forIndexPath: indexPath) as! QueueTableViewCell
+
+        cell.updateContent(withQueueItem: queueItem)
+        cell.selectionStyle = isPlayingRow ? .Default : .None
+        cell.delegate = (indexPath.section == 2) ? self : nil
+
+        return cell
+      }
+
     } else {
-      cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
+      let cell = tableView.dequeueReusableCellWithIdentifier("Loading", forIndexPath: indexPath)
+      cell.textLabel?.text = "Loading…"
+      cell.selectionStyle = .None
+      return cell
     }
-
-    let song = items[indexPath.row].song
-    cell.textLabel?.text = song.name
-    cell.detailTextLabel?.text = song.artistAlbumString
-    cell.imageView?.image = song.album!.imageToShow
-
-    return cell
   }
 
   override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return (indexPath.row == currentIndex) ? 100 : 50
+    return (indexPath.section == 1) ? 100 : 50
   }
 
-  override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-    return (indexPath.row == currentIndex) ? indexPath : nil
+  // MARK: - Scrolling
+
+  override func scrollViewDidScroll(scrollView: UIScrollView) {
+    mainViewController?.updateViewPosition(inTableView: tableView)
   }
+
+  // MARK: - Dismissing Modal Controllers
 
   @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
     self.dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+}
+
+extension UpNextTableViewController: SwipeTableViewCellDelegate {
+  func swipeTableViewCell(cell: SwipeTableViewCell, didPressButton button: SwipeTableViewCell.Direction) {
+    if let items = maybeItems, let indexPath = tableView.indexPathForCell(cell) {
+      let queueItem: QueueItem
+      switch Section(rawValue: indexPath.section)! {
+      case .Previous: queueItem = items.0[indexPath.row]
+      case .Current:  queueItem = items.1!  // it better exist if we request it
+      case .Upcoming: queueItem = items.2[indexPath.row]
+      }
+
+      // We have the QueueItem, so determine what we should do with it.
+      if let remoteQueueItem = queueItem as? RemoteQueueItem {
+        // It's a RemoteQueueItem, and it's "loaded", so we better have a
+        // RemoteQueue that is associated with the Session.
+        let remoteQueue = AppDelegate.sharedDelegate.currentSession.queue as! RemoteQueue
+
+        switch button {
+        case .Left:
+          remoteQueue.downvote(withQueueItem: remoteQueueItem)
+
+        case .Right:
+          remoteQueue.upvote(withQueueItem: remoteQueueItem)
+        }
+      }
+
+      if let localQueueItem = queueItem as? LocalQueueItem {
+        // We better have a LocalQueue if we have LocalQueueItem objects.
+        let localQueue = AppDelegate.sharedDelegate.currentSession.queue as! LocalQueue
+
+        switch button {
+        case .Left:
+          --localQueueItem.votes
+
+        case .Right:
+          ++localQueueItem.votes
+        }
+
+        localQueue.refresh()  // we updated the votes, so refresh the Queue
+      }
+
+      // Finally, refresh the cell since the content could be different.
+      (cell as! QueueTableViewCell).updateContent(withQueueItem: queueItem)
+
+    }
+  }
+}
+
+extension UpNextTableViewController: NowPlayingViewDelegate {
+  func nowPlayingViewTapped(nowPlayingView: NowPlayingView) {
+    performSegueWithIdentifier("PushNowPlaying", sender: nil)
   }
 }

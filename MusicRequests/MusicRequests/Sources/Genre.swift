@@ -23,4 +23,16 @@ class Genre: Item {
     songs.sortInPlace(Item.sorter)
   }
 
+  // MARK: - Sending
+
+  override var tag: Tag {
+    return .Genre
+  }
+
+}
+
+extension Genre: ShallowCopy {
+  func shallowCopy() -> Genre {
+    return Genre(name: name, sortName: sortName)
+  }
 }
