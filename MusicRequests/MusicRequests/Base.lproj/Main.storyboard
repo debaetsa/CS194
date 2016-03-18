@@ -69,16 +69,23 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Music Requests" id="8Oy-4U-Wrn">
+                    <navigationItem key="navigationItem" id="8Oy-4U-Wrn">
                         <barButtonItem key="leftBarButtonItem" title="Source" id="fdq-D9-woY">
                             <connections>
                                 <segue destination="rAk-2t-h0h" kind="presentation" modalTransitionStyle="coverVertical" id="KQQ-gv-JPo"/>
                             </connections>
                         </barButtonItem>
+                        <connections>
+                            <outlet property="titleView" destination="XUX-QM-dbr" id="r5b-25-yD0"/>
+                        </connections>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zrp-Gd-AzN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogo" id="XUX-QM-dbr">
+                    <rect key="frame" x="0.0" y="0.0" width="29" height="29"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
             </objects>
             <point key="canvasLocation" x="-2933.5" y="184.5"/>
         </scene>
@@ -1484,6 +1491,7 @@
     </scenes>
     <resources>
         <image name="Albums" width="25" height="25"/>
+        <image name="AppLogo" width="29" height="29"/>
         <image name="Artists" width="25" height="25"/>
         <image name="Genres" width="25" height="25"/>
         <image name="LibraryButton" width="50" height="50"/>
