@@ -49,6 +49,7 @@
 		50DC09251C60171B00323425 /* RemoteSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DC09241C60171B00323425 /* RemoteSessionManager.swift */; };
 		50EB49ED1C89378100486904 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB49EC1C89378100486904 /* SearchTableViewController.swift */; };
 		50F2100D1C9B6C4A00B2E3A0 /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F2100C1C9B6C4A00B2E3A0 /* SongTableViewCell.swift */; };
+		50F2100F1C9B7A9B00B2E3A0 /* QueueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F2100E1C9B7A9B00B2E3A0 /* QueueTableViewCell.swift */; };
 		50F42E811C99272C009BDDB0 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F42E801C99272C009BDDB0 /* Logging.swift */; };
 		50F42E831C997BF0009BDDB0 /* PlaylistSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F42E821C997BF0009BDDB0 /* PlaylistSelectionTableViewController.swift */; };
 		B37573911C84F3C900537726 /* QueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37573901C84F3C900537726 /* QueueViewController.swift */; };
@@ -117,6 +118,7 @@
 		50DC09241C60171B00323425 /* RemoteSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteSessionManager.swift; path = Sources/RemoteSessionManager.swift; sourceTree = "<group>"; };
 		50EB49EC1C89378100486904 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchTableViewController.swift; path = Sources/SearchTableViewController.swift; sourceTree = "<group>"; };
 		50F2100C1C9B6C4A00B2E3A0 /* SongTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongTableViewCell.swift; path = Sources/SongTableViewCell.swift; sourceTree = "<group>"; };
+		50F2100E1C9B7A9B00B2E3A0 /* QueueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QueueTableViewCell.swift; path = Sources/QueueTableViewCell.swift; sourceTree = "<group>"; };
 		50F42E801C99272C009BDDB0 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Logging.swift; path = Sources/Logging.swift; sourceTree = "<group>"; };
 		50F42E821C997BF0009BDDB0 /* PlaylistSelectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistSelectionTableViewController.swift; path = Sources/PlaylistSelectionTableViewController.swift; sourceTree = "<group>"; };
 		B37573901C84F3C900537726 /* QueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QueueViewController.swift; path = Sources/QueueViewController.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 			children = (
 				50AFDECF1C84F81E000A3348 /* SwipeTableViewCell.swift */,
 				50F2100C1C9B6C4A00B2E3A0 /* SongTableViewCell.swift */,
+				50F2100E1C9B7A9B00B2E3A0 /* QueueTableViewCell.swift */,
 			);
 			name = "Swipe Cells";
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				505B5E691C55D19D00235C1C /* LocalSession.swift in Sources */,
 				505B5E581C55CEE100235C1C /* FilteredLibrary.swift in Sources */,
 				50159F641C65AE26000E4878 /* UpNextTableViewController.swift in Sources */,
+				50F2100F1C9B7A9B00B2E3A0 /* QueueTableViewCell.swift in Sources */,
 				B3BD51C01C682B860079299F /* SongViewController.swift in Sources */,
 				509C78911C67B2B3005B7D53 /* TemporaryQueue.swift in Sources */,
 				50159F671C65B3C7000E4878 /* Pluralize.swift in Sources */,

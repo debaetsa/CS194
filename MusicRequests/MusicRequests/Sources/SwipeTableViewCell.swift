@@ -44,8 +44,17 @@ class SwipeTableViewCell: UITableViewCell {
   @IBOutlet weak var customLeftView: UIView!
   @IBOutlet weak var customRightView: UIView!
 
-  /** The delegate where notifications are sent about button selections. */
-  weak var delegate: SwipeTableViewCellDelegate?
+  /** The delegate where notifications are sent about button selections.
+   
+   If there is not a delegate, then the cell will not be swipeable.  It would 
+   be pointless since there is nothing to handle the action when it occurs.
+   
+   This also give the ability to disable swiping as needed. */
+  weak var delegate: SwipeTableViewCellDelegate? {
+    didSet {
+      updateGestureRecognizer()
+    }
+  }
 
   /** Stores the gesture recognizer for this cell. */
   private var panGestureRecognizer: UIPanGestureRecognizer!
@@ -65,13 +74,28 @@ class SwipeTableViewCell: UITableViewCell {
     let recognizer = UIPanGestureRecognizer()
     recognizer.addTarget(self, action: "handlePanRecognizer:")
     recognizer.delegate = self
-    customContentView.addGestureRecognizer(recognizer)
     panGestureRecognizer = recognizer
 
     // set the background color
     customContentView.backgroundColor = Style.dark  // use the "dark" color
     customLeftView.backgroundColor = UIColor.redColor()
     customRightView.backgroundColor = UIColor.greenColor()
+  }
+
+  private var addedGestureRecognizer = false
+  private func updateGestureRecognizer() {
+    let needGestureRecognizer = (delegate != nil)
+
+    if needGestureRecognizer == addedGestureRecognizer {
+      return  // they already match
+    }
+
+    if needGestureRecognizer {
+      customContentView.addGestureRecognizer(panGestureRecognizer)
+    } else {
+      customContentView.removeGestureRecognizer(panGestureRecognizer)
+    }
+    addedGestureRecognizer = needGestureRecognizer
   }
 
   private func setOffset(offset: CGFloat, animated: Bool) {
