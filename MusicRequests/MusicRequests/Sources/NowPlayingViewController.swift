@@ -8,152 +8,248 @@
 
 import UIKit
 
-class NowPlayingViewController: SongViewController {
+/** This class manages the play controls.
 
-  @IBOutlet weak var playButton: UIButton!
-  @IBOutlet weak var scrubber: UISlider!
-  @IBOutlet weak var nextButton: UIButton!
-  @IBOutlet weak var prevButton: UIButton!
-  @IBOutlet weak var startLabel: UILabel!
-  @IBOutlet weak var endLabel: UILabel!
+   It will add their functionality, update their state, and show/hide them as
+   needed.  It is used on this view controller and on the cell that shows the
+   currently-playing song in the queue. */
+class PlayControlsView: UIView {
+  @IBOutlet weak var buttonPlayPause: UIButton!
+  @IBOutlet weak var buttonNext: UIButton!
+  @IBOutlet weak var buttonPrevoius: UIButton!
 
-  /** We only want a nowPlaying object if it's one that we can modify. */
-  let maybeQueue: Queue?
-  let maybeNowPlaying: LocalNowPlaying?
+  private var nowPlayingListener: NSObjectProtocol?
 
-  var maybeNowPlayingUpdatedListener: NSObjectProtocol?
+  private var maybeNowPlaying: LocalNowPlaying? {
+    didSet {
+      // hide without "nowPlaying"
+      hidden = (maybeNowPlaying == nil)
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    maybeQueue = AppDelegate.sharedDelegate.currentSession.queue
-    maybeNowPlaying = maybeQueue?.nowPlaying as? LocalNowPlaying
+      // update the button state (it depends on this value)
+      updatePlayPauseButton()
 
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    maybeQueue = AppDelegate.sharedDelegate.currentSession.queue
-    maybeNowPlaying = maybeQueue?.nowPlaying as? LocalNowPlaying
-
-    super.init(coder: aDecoder)
-  }
-
-  override func viewDidLoad() {
-    song = maybeQueue?.current?.song
-
-    super.viewDidLoad()
-
-    let center = NSNotificationCenter.defaultCenter()
-    if let queue = maybeQueue {
-      maybeNowPlayingUpdatedListener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: queue, queue: nil) {
-        [unowned self] (note) -> Void in
-
-        self.song = queue.current?.song
-        self.reloadSong()
+      // register for updates if the value changes elsewhere in the application
+      let center = NSNotificationCenter.defaultCenter()
+      if let listener = nowPlayingListener {
+        center.removeObserver(listener)
+      }
+      if let nowPlaying = maybeNowPlaying {
+        nowPlayingListener = center.addObserverForName(NowPlaying.didChangeNotification, object: nowPlaying, queue: nil) {
+          [unowned self] (note) in self.updatePlayPauseButton()
+        }
       }
     }
+  }
+  private var nowPlaying: LocalNowPlaying {
+    // This is used when we are assuming that the content is visible.
+    return maybeNowPlaying!
+  }
 
-    if (maybeNowPlaying != nil) && maybeNowPlaying!.isPlaying {
-      playButton.setImage(UIImage(named: "pause_button"), forState: UIControlState.Normal)
-    } else {
-      playButton.setImage(UIImage(named: "play_button"), forState: UIControlState.Normal)
-    }
-    
-    if(maybeNowPlaying != nil){
-    
-      scrubber.minimumValue = 0.0
-      scrubber.maximumValue = 10.0
-      scrubber.value = 0.0
-      endLabel.text = ""
-      startLabel.text = ""
-    
-      _ = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
-      
-    } else {
-      
-      nextButton.hidden = true
-      prevButton.hidden = true
-      scrubber.hidden = true
-      endLabel.hidden = true
-      startLabel.hidden = true
-      playButton.hidden = true
-    }
+  override func awakeFromNib() {
+    super.awakeFromNib()
 
+    registerForNotifications()
+    updatePlayPauseButton()
   }
 
   deinit {
-    if let listener = maybeNowPlayingUpdatedListener {
-      let center = NSNotificationCenter.defaultCenter()
+    unregisterFromNotifications()
+
+    let center = NSNotificationCenter.defaultCenter()
+    if let listener = nowPlayingListener {
       center.removeObserver(listener)
     }
   }
 
+  private func updatePlayPauseButton() {
+    if maybeNowPlaying?.isPlaying == true {  // cool trick with Optionals…
+      buttonPlayPause.setImage(UIImage(named: "pause_button"), forState: UIControlState.Normal)
+    } else {
+      buttonPlayPause.setImage(UIImage(named: "play_button"), forState: UIControlState.Normal)
+    }
+  }
+
   @IBAction func pressedPlayButton(sender: UIButton) {
-    if let nowPlaying = maybeNowPlaying {
-      if (nowPlaying.isPlaying) {
-        nowPlaying.pause()
-        sender.setImage(UIImage(named: "play_button"), forState: UIControlState.Normal)
-      } else {
-        nowPlaying.play()
-        sender.setImage(UIImage(named: "pause_button"), forState: UIControlState.Normal)
-      }
+    if nowPlaying.isPlaying {
+      nowPlaying.pause()
+    } else {
+      nowPlaying.play()
     }
   }
 
   @IBAction func pressedPreviousButton(sender: UIButton) {
-    if let nowPlaying = maybeNowPlaying {
-      nowPlaying.last()
-    }
+    nowPlaying.last()
   }
 
   @IBAction func pressedNextButton(sender: UIButton) {
-    if let nowPlaying = maybeNowPlaying {
-      nowPlaying.next()
+    nowPlaying.next()
+  }
+
+  // MARK: - Session/Queue Change Notifications
+
+  private var sessionChangedListener: NSObjectProtocol?
+  private var queueChangedListener: NSObjectProtocol?
+
+  private func registerForNotifications() {
+    let center = NSNotificationCenter.defaultCenter()
+
+    let didChangeSession = {
+      [unowned self] (note: NSNotification?) in
+
+      self.updateQueueListener()
+    }
+    sessionChangedListener = center.addObserverForName(
+      AppDelegate.didChangeSession, object: nil, queue: nil, usingBlock: didChangeSession
+    )
+    didChangeSession(nil)
+  }
+
+  private func updateQueueListener() {
+    let center = NSNotificationCenter.defaultCenter()
+
+    if let listener = queueChangedListener {
+      center.removeObserver(listener)
+    }
+
+    let didChangeQueue = {
+      [unowned self] (note: NSNotification?) in
+
+      // Set this if it is of the proper type to show the buttons.  If it's
+      // not, then it will remain invisible.
+      self.maybeNowPlaying = (AppDelegate.sharedDelegate.currentSession.queue?.nowPlaying as? LocalNowPlaying)
+    }
+    queueChangedListener = center.addObserverForName(Session.didChangeQueueNotification,
+      object: AppDelegate.sharedDelegate.currentSession, queue: nil, usingBlock: didChangeQueue
+    )
+    didChangeQueue(nil)
+  }
+
+  private func unregisterFromNotifications() {
+    let center = NSNotificationCenter.defaultCenter()
+    if let listener = sessionChangedListener {
+      center.removeObserver(listener)
+    }
+    if let listener = queueChangedListener {
+      center.removeObserver(listener)
     }
   }
-  
+}
+
+
+class NowPlayingViewController: SongViewController {
+
+  @IBOutlet weak var viewScrubber: UIView!
+  @IBOutlet weak var scrubber: UISlider!
+  @IBOutlet weak var startLabel: UILabel!
+  @IBOutlet weak var endLabel: UILabel!
+
+  private var maybeQueue: Queue?
+  private var nowPlayingUpdatedListener: NSObjectProtocol?
+  private var maybeNowPlaying: LocalNowPlaying?  // only need local for this
+
+  override func viewDidLoad() {
+    maybeQueue = AppDelegate.sharedDelegate.currentSession.queue
+
+    let updateCurrentSong = { [unowned self] in
+      self.song = self.maybeQueue?.current?.song  // set it if we can
+    }
+    updateCurrentSong()
+
+    super.viewDidLoad()
+
+    // register for updates when the current song changes
+    if let queue = maybeQueue {
+      let center = NSNotificationCenter.defaultCenter()
+      nowPlayingUpdatedListener = center.addObserverForName(Queue.didChangeNowPlayingNotification, object: queue, queue: nil) {
+        [unowned self] (note) -> Void in
+
+        updateCurrentSong()
+        self.reloadSong()
+      }
+
+      // get a reference to this, but only if it's modifiable
+      maybeNowPlaying = (queue.nowPlaying as? LocalNowPlaying)
+
+    }
+
+    // We are running on the local device, so get everything configured.
+    if let _ = maybeNowPlaying {
+      scheduleScrubberUpdate()
+      updateScrubberDetails()
+
+    } else {
+      viewScrubber.hidden = true  // make it invisible
+    }
+
+    // set this font in code -- it's not accessible in Interface Builder
+    startLabel.font = UIFont.monospacedDigitSystemFontOfSize(14, weight: UIFontWeightRegular)
+    endLabel.font = UIFont.monospacedDigitSystemFontOfSize(14, weight: UIFontWeightRegular)
+  }
+
+  deinit {
+    let center = NSNotificationCenter.defaultCenter()
+    if let listener = nowPlayingUpdatedListener {
+      center.removeObserver(listener)
+    }
+  }
+
+  override func reloadSong() {
+    super.reloadSong()
+
+    // We need to size the headerView as appropriate.  We will set it to the
+    // ideal size, and then we'll let the navigationItem resize it as needed.
+    var idealWidth: CGFloat = 0
+
+    // Figure out the space needed for each label.
+    idealWidth = max(idealWidth, labelSongName.intrinsicContentSize().width)
+    idealWidth = max(idealWidth, labelSongArtist!.intrinsicContentSize().width)
+
+    // Then set the bounds to that value.
+    var bounds = navigationItem.titleView!.bounds
+    bounds.size.width = idealWidth
+    navigationItem.titleView!.bounds = bounds
+  }
+
   @IBAction func changedScrubberValue(sender: UISlider) {
     if (maybeNowPlaying != nil) {
       maybeNowPlaying!.scrub(Double(scrubber.value))
     }
   }
-  
-  func updateTime(){
-    if (maybeNowPlaying != nil && maybeNowPlaying?.isPlaying == true){
-      let endTime = (maybeNowPlaying?.currentPlayBackDuration())!
-      let startTime = (maybeNowPlaying?.currentPlayBackTime())!
-      scrubber.minimumValue = 0.0
-      scrubber.maximumValue = Float(endTime)
-      scrubber.value = Float(startTime)
-    
-      var endMinutes = String(Int(endTime/60))
-      if endMinutes.isEmpty {
-        endMinutes = "0"
-      }
-      
-      var endSeconds = String(Int(endTime%60))
-      if endSeconds.isEmpty {
-        endSeconds = "00"
-      } else if endSeconds.characters.count == 1 {
-        endSeconds = "0" + String(Int(endTime%60))
-      }
-      
-      var startMinutes = String(Int(startTime/60))
-      if startMinutes.isEmpty {
-        startMinutes = "0"
-      }
-      
-      var startSeconds = String(Int(startTime%60))
-      if startSeconds.isEmpty {
-        startSeconds = "00"
-      } else if startSeconds.characters.count == 1 {
-        startSeconds = "0" + String(Int(startTime%60))
-      }
-      
-      let endTimeString = endMinutes + ":" + endSeconds
-      let startTimeString = startMinutes + ":" + startSeconds;
-    
-      endLabel.text = endTimeString
-      startLabel.text = startTimeString
+
+  private func scheduleScrubberUpdate() {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC)), dispatch_get_main_queue()) {
+      [weak self] in
+
+      // If "self" goes away, then this won't get called, and we won't schedule
+      // the block to run again.  If it's still here, then it will run.
+      //
+      // This breaks the retain cycle that was present with the timer approach.
+      self?.updateScrubberDetails()
+      self?.scheduleScrubberUpdate()
     }
+  }
+
+  private func formatTime(maybeValue: NSTimeInterval?) -> String {
+    if let value = maybeValue {
+      if !value.isNaN {
+        let roundedValue = Int(floor(value))
+        let minutes = roundedValue / 60
+        let seconds = roundedValue % 60
+
+        return String(format: "%d:%02d", minutes, seconds)
+      }
+    }
+    return "0:00"  // use this as the value when an error occurs
+  }
+
+  private func updateScrubberDetails() {
+    let current = maybeNowPlaying!.currentPlaybackTime
+    let total = maybeNowPlaying!.currentPlaybackDuration
+
+    scrubber.value = Float(current ?? 0)
+    scrubber.maximumValue = Float(total ?? 1)  // use "1" to avoid divide by zero
+
+    startLabel.text = formatTime(current)
+    endLabel.text = formatTime(total)
   }
 }

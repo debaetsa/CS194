@@ -88,11 +88,11 @@ class AppleNowPlaying: LocalNowPlaying {
     musicPlayer.currentPlaybackTime = value
   }
   
-  override func currentPlayBackDuration() -> NSTimeInterval {
-    return musicPlayer.nowPlayingItem != nil ? (musicPlayer.nowPlayingItem?.playbackDuration)! : 0.0
+  override var currentPlaybackTime: NSTimeInterval? {
+    return musicPlayer.currentPlaybackTime
   }
   
-  override func currentPlayBackTime() -> Double {
-    return musicPlayer.currentPlaybackTime.isNaN ? 0.0 : musicPlayer.currentPlaybackTime
+  override var currentPlaybackDuration: NSTimeInterval? {
+    return musicPlayer.nowPlayingItem?.playbackDuration
   }
 }

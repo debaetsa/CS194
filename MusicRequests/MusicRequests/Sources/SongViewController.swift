@@ -12,7 +12,8 @@ class SongViewController: UIViewController {
 
   // set the outlets for updating the information
   @IBOutlet weak var labelSongName: UILabel!
-  @IBOutlet weak var labelSongDetails: UILabel!
+  @IBOutlet weak var labelSongDetails: UILabel?
+  @IBOutlet weak var labelSongArtist: UILabel?
   @IBOutlet weak var imageViewAlbumArt: UIImageView!
 
   // the Song that we are supposed to display
@@ -26,8 +27,14 @@ class SongViewController: UIViewController {
 
   func reloadSong() {
     navigationItem.title = song.name
+
     labelSongName.text = song.name
-    labelSongDetails.text = song.artistAlbumString
+    if let label = labelSongDetails {
+      label.text = song.artistAlbumString
+    }
+    if let label = labelSongArtist {
+      label.text = song.artist?.name
+    }
     imageViewAlbumArt.image = song.album?.imageToShow
   }
 

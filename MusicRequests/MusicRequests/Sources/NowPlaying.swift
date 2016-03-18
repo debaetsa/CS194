@@ -10,7 +10,14 @@ import UIKit
 
 class NowPlaying: NSObject {
 
-  var playing = false
+  static let didChangeNotification = "NowPlaying.didChange"
+
+  var playing = false {
+    didSet {
+      let center = NSNotificationCenter.defaultCenter()
+      center.postNotificationName(NowPlaying.didChangeNotification, object: self)
+    }
+  }
 
   // This would ideally be "unowned", which operates very similarly to this,
   // but we can't make that work since the unowned value shouldn't be optional.
@@ -77,12 +84,12 @@ class LocalNowPlaying: NowPlaying {
 
   func scrub(value: Double) {
   }
-  
-  func currentPlayBackTime() -> Double{
-    return 10.0;
+
+  var currentPlaybackTime: NSTimeInterval? {
+    return nil
   }
-  
-  func currentPlayBackDuration() -> Double {
-    return 0.0;
+
+  var currentPlaybackDuration: NSTimeInterval? {
+    return nil
   }
 }
