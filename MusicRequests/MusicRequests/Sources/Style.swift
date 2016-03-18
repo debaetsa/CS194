@@ -84,6 +84,8 @@ struct Style {
       // Change color of the "on" position of the switch in sources view
       UISwitch.appearance().onTintColor = lightBlue
 
+      UIScrollView.appearance().indicatorStyle = .White
+
     }
 
     // This function is called in SourceTableViewController.swift within the function
