@@ -19,10 +19,8 @@ radio DJs.
 
 ## Contributors
 
-James Capps
-Alex De Baets
-Max Radermacher
-Matt Volk
-
-
+ - James Capps
+ - Alex De Baets
+ - Max Radermacher
+ - Matt Volk
 
