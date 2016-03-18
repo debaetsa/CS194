@@ -34,9 +34,9 @@ class SongTableViewCell: SwipeTableViewCell {
     //
       //imageView = UIImageView(frame: CGRectMake(0, 0, 28.0, 28.0))
 //      if (vote == .Up) {
-//        imageView!.image = UIImage(named: "Temp_up_button")
+//        imageView!.image = UIImage(named: "up_vote")
 //      } else if (vote == .Down) {
-//        imageView!.image = UIImage(named: "Temp_down_button")
+//        imageView!.image = UIImage(named: "down_vote")
 //      } else {
 //        imageView = nil
 //      }
