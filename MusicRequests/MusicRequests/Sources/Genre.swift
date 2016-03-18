@@ -30,3 +30,9 @@ class Genre: Item {
   }
 
 }
+
+extension Genre: ShallowCopy {
+  func shallowCopy() -> Genre {
+    return Genre(name: name, sortName: sortName)
+  }
+}

@@ -10,12 +10,14 @@ import UIKit
 
 class FilteredLibrary: Library {
 
-  let songs: [Song]
+  private let songs: [Song]
   override var allSongs: [Song] { return songs }
-  let artists: [Artist]
+  private let artists: [Artist]
   override var allArtists: [Artist] { return artists }
-  let albums: [Album]
+  private let albums: [Album]
   override var allAlbums: [Album] { return albums }
+  private let genres: [Genre]
+  override var allGenres: [Genre] { return genres }
 
   private var lookup = [UInt32: Item]()
 
@@ -27,6 +29,7 @@ class FilteredLibrary: Library {
     // we need to recreate the Library based on the Song contents
     var mappedAlbums = [Album: Album]()
     var mappedArtists = [Artist: Artist]()
+    var mappedGenres = [Genre: Genre]()
     var mappedAlbumArtists = Set<Artist>()
     var mappedSongs = [Song]()
 
@@ -85,26 +88,40 @@ class FilteredLibrary: Library {
         }
       }
 
+      // Get the mapped Genre.  This one should be pretty easy.
+      var mappedGenre: Genre? = nil
+
+      if let genre = song.genre {
+        if let existingMappedGenre = mappedGenres[genre] {
+          mappedGenre = existingMappedGenre
+
+        } else {
+          mappedGenre = genre.shallowCopy()
+          mappedGenres[genre] = mappedGenre
+        }
+      }
+
       // Finally, we can create the new Song object and add it to the list that
       // we are constructing.  We'll get Artists/Albums later.
       let track = song.album?.trackForSong(song)
-      let song = Song(
+      let filteredSong = Song(
         name: song.name,
         artist: mappedArtistOverride,
         album: mappedAlbum,
-        genre: nil,
+        genre: mappedGenre,
         discNumber: track?.disc,
         trackNumber: track?.track,
         userInfo: song.userInfo
       )
 
-      mappedSongs.append(song)
-      lookup[song.identifier] = song
+      mappedSongs.append(filteredSong)
+      lookup[filteredSong.identifier] = filteredSong
     }
 
     songs = mappedSongs.sort(Item.sorter)
     artists = Array(mappedAlbumArtists).sort(Item.sorter)
     albums = mappedAlbums.values.sort(Item.sorter)
+    genres = mappedGenres.values.sort(Item.sorter)
 
     // initialize the superclass
     super.init()
