@@ -1449,7 +1449,6 @@
         <image name="Albums" width="25" height="25"/>
         <image name="Artists" width="25" height="25"/>
         <image name="Genres" width="25" height="25"/>
-        <image name="LaunchLogo" width="150" height="150"/>
         <image name="LibraryButton" width="275" height="275"/>
         <image name="Playlists" width="25" height="25"/>
         <image name="Songs" width="25" height="25"/>
