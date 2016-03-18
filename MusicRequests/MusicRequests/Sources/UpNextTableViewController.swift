@@ -12,7 +12,7 @@ class UpNextTableViewController: ItemListTableViewController {
 
   override func viewDidLoad() {
     shouldShowSearchBar = false  // don't add search bar here
-
+    
     super.viewDidLoad()
   }
 

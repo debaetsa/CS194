@@ -12,6 +12,8 @@ class NowPlayingViewController: SongViewController {
 
   @IBOutlet weak var playButton: UIButton!
   @IBOutlet weak var scrubber: UISlider!
+  @IBOutlet weak var nextButton: UIButton!
+  @IBOutlet weak var prevButton: UIButton!
   @IBOutlet weak var startLabel: UILabel!
   @IBOutlet weak var endLabel: UILabel!
 
@@ -56,13 +58,25 @@ class NowPlayingViewController: SongViewController {
       playButton.setImage(UIImage(named: "play_button"), forState: UIControlState.Normal)
     }
     
-    scrubber.minimumValue = 0.0
-    scrubber.maximumValue = 10.0
-    scrubber.value = 0.0
-    endLabel.text = ""
-    startLabel.text = ""
+    if(maybeNowPlaying != nil){
     
-    _ = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+      scrubber.minimumValue = 0.0
+      scrubber.maximumValue = 10.0
+      scrubber.value = 0.0
+      endLabel.text = ""
+      startLabel.text = ""
+    
+      _ = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+      
+    } else {
+      
+      nextButton.hidden = true
+      prevButton.hidden = true
+      scrubber.hidden = true
+      endLabel.hidden = true
+      startLabel.hidden = true
+      playButton.hidden = true
+    }
 
   }
 
