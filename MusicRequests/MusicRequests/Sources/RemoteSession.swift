@@ -66,6 +66,7 @@ class RemoteSession: Session, NSNetServiceDelegate {
     connection?.onReceivedCode = nil
     connection?.onReceivedData = nil
     connection?.onClosed = nil
+    connection = nil
   }
 
   /** Attempts to connect to the service.
