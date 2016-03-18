@@ -212,6 +212,21 @@ extension UpNextTableViewController: SwipeTableViewCellDelegate {
         }
       }
 
+      if let localQueueItem = queueItem as? LocalQueueItem {
+        // We better have a LocalQueue if we have LocalQueueItem objects.
+        let localQueue = AppDelegate.sharedDelegate.currentSession.queue as! LocalQueue
+
+        switch button {
+        case .Left:
+          --localQueueItem.votes
+
+        case .Right:
+          ++localQueueItem.votes
+        }
+
+        localQueue.refresh()  // we updated the votes, so refresh the Queue
+      }
+
       // Finally, refresh the cell since the content could be different.
       (cell as! QueueTableViewCell).updateContent(withQueueItem: queueItem)
 

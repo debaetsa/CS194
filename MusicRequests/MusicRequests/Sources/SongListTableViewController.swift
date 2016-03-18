@@ -159,8 +159,10 @@ extension SongListTableViewController: SwipeTableViewCellDelegate {
           remoteQueue.downvote(withSong: song)
         }
 
-      } else {
-        logger("could not handle swipe")
+      }
+
+      if let localQueue = AppDelegate.sharedDelegate.currentSession.queue as? LocalQueue {
+        localQueue.applyVote((button == .Right) ? .Up : .Down, toSong: song)
       }
 
       // Refresh the display to immediately indicate the vote.  This avoids

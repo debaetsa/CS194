@@ -229,6 +229,21 @@ class LocalQueue: Queue {
     }
   }
 
+  /** Applies the specified vote to the specified Song.
+
+   This will add the Song to the Queue if it is not already present. */
+  func applyVote(vote: Request.Vote, toSong song: Song) {
+    let localQueueItem = createUpcomingItemForSong(song) as! LocalQueueItem  // better be this in the LocalQueue
+
+    switch vote {
+    case .Up:   ++localQueueItem.votes
+    case .Down: --localQueueItem.votes
+    default: break
+    }
+
+    refresh()  // refresh since we changed the number of votes
+  }
+
   // MARK: - Queue Filling and Sorting
 
   override var sourceLibrary: Library {
