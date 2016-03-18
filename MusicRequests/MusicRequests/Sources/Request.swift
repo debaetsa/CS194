@@ -22,19 +22,7 @@ class Request: NSObject, Sendable {
    means that we should show the Song as highlighted in the Library.  Once the
    Song is played (i.e., not in the list of upcoming), this will be cleared,
    and when it is, we'll also clear the Request status of the Song. */
-  var song: Song? {
-    didSet {
-      if let song = self.song {
-        // We just set a new Song for this Request, so send the Vote.
-        song.cachedVote = vote
-
-      } else {
-        if let song = oldValue {
-          song.cachedVote = .None  // clear any Vote
-        }
-      }
-    }
-  }
+  var song: Song?
 
   /** Stores the QueueItem for the Song.
 
@@ -46,13 +34,7 @@ class Request: NSObject, Sendable {
 
    When we call "upvote" or "downvote", we'll use this to determine exactly
    what we need to send and how we need to respond. */
-  var vote = Vote.None {
-    didSet {
-      if let song = self.song {
-        song.cachedVote = vote  // we changed the Vote, so show in the library
-      }
-    }
-  }
+  var vote = Vote.None
 
   /** Applies a vote of the specified type.
 
@@ -155,6 +137,30 @@ class Request: NSObject, Sendable {
         self.song = song  // this just has a Song, so only set that value
       } else {
         return nil
+      }
+    }
+  }
+}
+
+class RemoteRequest: Request {
+  override var song: Song? {
+    didSet {
+      if let song = self.song {
+        // We just set a new Song for this Request, so send the Vote.
+        song.cachedVote = vote
+
+      } else {
+        if let song = oldValue {
+          song.cachedVote = .None  // clear any Vote
+        }
+      }
+    }
+  }
+
+  override var vote: Vote {
+    didSet {
+      if let song = self.song {
+        song.cachedVote = vote  // we changed the Vote, so show in the library
       }
     }
   }

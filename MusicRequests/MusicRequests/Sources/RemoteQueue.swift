@@ -35,7 +35,7 @@ class RemoteQueue: Queue {
     if let boundRequest = temporarySongRequests.removeValueForKey(song) {
       request = boundRequest
     } else {
-      request = Request()  // create a new one if we haven't requested it
+      request = RemoteRequest()  // create a new one if we haven't requested it
     }
 
     let queueItem = RemoteQueueItem(identifier: identifier, song: song, request: request)
@@ -125,7 +125,7 @@ class RemoteQueue: Queue {
         request = boundRequest
 
       } else {
-        request = Request()
+        request = RemoteRequest()
         request.song = song
         temporarySongRequests[song] = request
       }
