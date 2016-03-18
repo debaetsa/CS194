@@ -28,4 +28,17 @@ class SongTableViewCell: SwipeTableViewCell {
       customNumberLabel?.text = nil
     }
   }
+
+//      var imageView: UIImageView?
+//      let vote = song.cachedVote
+    //
+      //imageView = UIImageView(frame: CGRectMake(0, 0, 28.0, 28.0))
+//      if (vote == .Up) {
+//        imageView!.image = UIImage(named: "Temp_up_button")
+//      } else if (vote == .Down) {
+//        imageView!.image = UIImage(named: "Temp_down_button")
+//      } else {
+//        imageView = nil
+//      }
+//      cell.accessoryView = imageView
 }
