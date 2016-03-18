@@ -20,11 +20,13 @@ class PlaylistListTableViewController: ItemListTableViewController {
     super.viewDidLoad()
   }
 
-  var freshLaunch = true
+  private var freshLaunch = true
   override func viewWillAppear(animated: Bool) {
-    if freshLaunch == true {
+    super.viewWillAppear(animated)
+
+    if freshLaunch {
       freshLaunch = false
-      self.tabBarController?.selectedIndex = 2 // 3rd tab (Songs)
+      tabBarController?.selectedIndex = 2 // 3rd tab (Songs)
     }
   }
 
