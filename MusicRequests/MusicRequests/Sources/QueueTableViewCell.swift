@@ -24,10 +24,10 @@ class QueueTableViewCell: SwipeTableViewCell {
       // use "None" if it is not a LocalQueueItem
       switch (item as? RemoteQueueItem)?.request.vote ?? .None {
       case .Up:
-        indicatorImageView.image = UIImage(named: "Temp_up_button")
+        indicatorImageView.image = UIImage(named: "up_vote")
 
       case .Down:
-        indicatorImageView.image = UIImage(named: "Temp_down_button")
+        indicatorImageView.image = UIImage(named: "down_vote")
 
       case .None:
         indicatorImageView.image = nil  // don't show an image if there isn't a vote

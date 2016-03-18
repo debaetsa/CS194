@@ -248,7 +248,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="49"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfX-DP-d0m">
-                                                    <rect key="frame" x="57" y="8" width="535" height="20"/>
+                                                    <rect key="frame" x="57" y="8" width="487" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="na1-o4-GhP"/>
                                                     </constraints>
@@ -257,7 +257,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Name • Album Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFY-GV-WUZ">
-                                                    <rect key="frame" x="57" y="28" width="535" height="14"/>
+                                                    <rect key="frame" x="57" y="28" width="487" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="RrL-cX-91B"/>
                                                     </constraints>
