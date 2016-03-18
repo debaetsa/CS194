@@ -67,8 +67,6 @@ struct Style {
       UISearchBar.appearance().barTintColor = dark
       // Change color of the cancel button in the search bar
       UISearchBar.appearance().tintColor = lightGray
-      // Change color of text typed in search bar
-      UITextField.appearance().textColor = lightGray
       // Remove line dividing search bar from table view
       UISearchBar.appearance().searchBarStyle = .Minimal
 
@@ -84,6 +82,7 @@ struct Style {
       // Change color of the "on" position of the switch in sources view
       UISwitch.appearance().onTintColor = lightBlue
 
+      // Change color of scrollbar
       UIScrollView.appearance().indicatorStyle = .White
 
     }
