@@ -72,7 +72,7 @@
                     <navigationItem key="navigationItem" id="8Oy-4U-Wrn">
                         <barButtonItem key="leftBarButtonItem" title="Source" id="fdq-D9-woY">
                             <connections>
-                                <segue destination="rAk-2t-h0h" kind="presentation" modalTransitionStyle="coverVertical" id="KQQ-gv-JPo"/>
+                                <segue destination="rAk-2t-h0h" kind="presentation" identifier="PresentSource" modalTransitionStyle="coverVertical" id="KQQ-gv-JPo"/>
                             </connections>
                         </barButtonItem>
                         <connections>

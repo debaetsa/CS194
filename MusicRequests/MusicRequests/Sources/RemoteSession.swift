@@ -62,6 +62,10 @@ class RemoteSession: Session, NSNetServiceDelegate {
   }
 
   func disconnect() {
+    connection?.close()
+    connection?.onReceivedCode = nil
+    connection?.onReceivedData = nil
+    connection?.onClosed = nil
   }
 
   /** Attempts to connect to the service.
@@ -92,6 +96,7 @@ class RemoteSession: Session, NSNetServiceDelegate {
     let connection = Connection(ipAddress: "", port: 0, input: inputStream, output: outputStream)
     connection.onReceivedData = didReceiveData
     connection.onReceivedCode = didReceiveCode
+    connection.onClosed = didClose
     self.connection = connection
 
     // we need to write our LibraryIdentifier (for now, it's nil)
@@ -153,6 +158,13 @@ class RemoteSession: Session, NSNetServiceDelegate {
     default:
       logger("received code \(code) with data \(maybeData)")
     }
+  }
+
+  func didClose(connection connection: Connection, didFail failed: Bool) {
+    disconnect()  // if it closes, then get rid of our state as much as possible
+
+    AppDelegate.sharedDelegate.resetInterface()
+    AppDelegate.sharedDelegate.presentSources()
   }
 
   func netServiceWillResolve(sender: NSNetService) {

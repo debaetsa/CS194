@@ -47,6 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   // looking; this way the data is ready when the user taps "sources"
   var remoteSessionManager: RemoteSessionManager!
 
+  // this is the main view controller of the application
+  weak var mainViewController: UIViewController!
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
@@ -87,7 +89,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     */
 
+    // set the mainViewController based on the rootViewController of the window
+    mainViewController = (window?.rootViewController as! UINavigationController).viewControllers.first
+
     return true
+  }
+
+  func resetInterface() {
+    currentSession = localSession  // go back to the LocalSession
+    mainViewController.dismissViewControllerAnimated(true, completion: nil)
+  }
+
+  func presentSources() {
+    mainViewController.performSegueWithIdentifier("PresentSource", sender: nil)
   }
 
   func applicationWillResignActive(application: UIApplication) {

@@ -160,6 +160,10 @@ class LocalSession: Session, NSNetServiceDelegate {
       return
     }
 
+    // we want to close the native sockets when the streams are closed
+    readStream.setProperty(kCFBooleanTrue, forKey: kCFStreamPropertyShouldCloseNativeSocket as String)
+    writeStream.setProperty(kCFBooleanTrue, forKey: kCFStreamPropertyShouldCloseNativeSocket as String)
+
     // next, figure out the address as a string
     let port = Int(UInt16(bigEndian: from.sin_port))
     let address = String.fromCString(UnsafePointer(inet_ntoa(from.sin_addr)))!

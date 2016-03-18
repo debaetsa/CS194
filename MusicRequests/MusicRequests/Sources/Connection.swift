@@ -14,8 +14,8 @@ class Connection: NSObject, NSStreamDelegate {
   let address: (ip: String, port: Int)
 
   // we need the streams to be able to send/receive data
-  let inputStream: NSInputStream
-  let outputStream: NSOutputStream
+  private var inputStream: NSInputStream?
+  private var outputStream: NSOutputStream?
 
   // keep track of the bytes that we need to send to each client
   var bytesToSend: NSMutableData
@@ -39,8 +39,8 @@ class Connection: NSObject, NSStreamDelegate {
   }
 
   func prepare() {
-    prepareStream(inputStream)
-    prepareStream(outputStream)
+    prepareStream(inputStream!)
+    prepareStream(outputStream!)
   }
 
   func prepareStream(stream: NSStream) {
@@ -49,12 +49,29 @@ class Connection: NSObject, NSStreamDelegate {
     stream.open()
   }
 
+  private var didClose = false
+
   func close() {
-    inputStream.close()
-    outputStream.close()
+    if let stream = inputStream {
+      stream.close()
+      stream.delegate = nil
+      stream.removeFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+      outputStream = nil
+    }
+    if let stream = outputStream {
+      stream.close()
+      stream.delegate = nil
+      stream.removeFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+      outputStream = nil
+    }
+    didClose = true
   }
 
   private func closeOnError(didFail didFail: Bool) {
+    if didClose {
+      return  // only allow the streams to be closed once
+    }
+
     if let callback = onClosed {
       callback(self, didFail: didFail)  // report that it closed
     }
@@ -82,6 +99,14 @@ class Connection: NSObject, NSStreamDelegate {
     case NSStreamEvent.HasBytesAvailable:
       readAvailableData()
 
+    case NSStreamEvent.ErrorOccurred:
+      logger("input event error")
+      closeOnError(didFail: true)
+
+    case NSStreamEvent.EndEncountered:
+      logger("input event end")
+      closeOnError(didFail: false)
+
     default:
       break
     }
@@ -96,6 +121,11 @@ class Connection: NSObject, NSStreamDelegate {
       logger("\(address) has space available to write")
       sendAvailableData()  // send data if there is data to send
 
+    case NSStreamEvent.EndEncountered: fallthrough
+    case NSStreamEvent.ErrorOccurred:
+      logger("output event end/error")
+      closeOnError(didFail: true)
+
     default:
       break
     }
@@ -108,11 +138,11 @@ class Connection: NSObject, NSStreamDelegate {
   private static let buffer = UnsafeMutablePointer<UInt8>.alloc(bufferLength)
 
   private func readAvailableData() {
-    guard inputStream.hasBytesAvailable else {
+    guard inputStream!.hasBytesAvailable else {
       return
     }
 
-    let read = inputStream.read(Connection.buffer, maxLength: Connection.bufferLength)
+    let read = inputStream!.read(Connection.buffer, maxLength: Connection.bufferLength)
 
     guard read > 0 else {
       closeOnError(didFail: (read < 0))
@@ -234,18 +264,21 @@ class Connection: NSObject, NSStreamDelegate {
       return  // nothing left to send
     }
 
-    let space = outputStream.hasSpaceAvailable
+    let space = outputStream!.hasSpaceAvailable
     guard space else {
       return  // no space available to write anything
     }
 
     // write as many bytes as possible
-    let written = outputStream.write(UnsafePointer(bytesToSend.bytes), maxLength: count)
+    let written = outputStream!.write(UnsafePointer(bytesToSend.bytes), maxLength: count)
 
-    // TODO: Handle the case where written is -1.
     if written > 0 {
       // get rid of the bytes that we sent so that we don't send them again
       bytesToSend.replaceBytesInRange(NSMakeRange(0, written), withBytes: nil, length: 0)
+    }
+
+    if written < 0 {
+      closeOnError(didFail: true)
     }
   }
 
