@@ -126,3 +126,9 @@ class ItemListTableViewController: UITableViewController {
     return tableView.indexPathForCell(sender as! UITableViewCell)!
   }
 }
+
+class StandardTableViewCell: UITableViewCell {
+  @IBOutlet weak var customTextLabel: UILabel!
+  @IBOutlet weak var customDetailTextLabel: UILabel!
+  @IBOutlet weak var customImageView: UIImageView!
+}

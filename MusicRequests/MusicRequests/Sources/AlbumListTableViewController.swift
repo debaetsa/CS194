@@ -31,9 +31,9 @@ class AlbumListTableViewController: ItemListTableViewController {
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
-
     if let items = maybeItems {
+      let cell = tableView.dequeueReusableCellWithIdentifier("Standard", forIndexPath: indexPath) as! StandardTableViewCell
+
       let album = items[indexPath.row]
 
       var components = [String]()
@@ -42,17 +42,19 @@ class AlbumListTableViewController: ItemListTableViewController {
       }
       components.append(album.songs.count.pluralize(("Song", "Songs")))
       
-      cell.textLabel?.text = album.name
-      cell.detailTextLabel?.text = components.joinWithSeparator(" • ")
-      cell.imageView?.image = album.imageToShow
+      cell.customTextLabel.text = album.name
+      cell.customDetailTextLabel.text = components.joinWithSeparator(" • ")
+      cell.customImageView.image = album.imageToShow
       cell.selectionStyle = .Default
 
+      return cell
+
     } else {
+      let cell = tableView.dequeueReusableCellWithIdentifier("Loading", forIndexPath: indexPath)
       cell.textLabel?.text = "Loading…"
       cell.selectionStyle = .None
+      return cell
     }
-    
-    return cell
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {

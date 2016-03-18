@@ -30,25 +30,29 @@ class ArtistListTableViewController: ItemListTableViewController {
   }
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = self.tableView.dequeueReusableCellWithIdentifier("SmallCell", forIndexPath: indexPath)
+
 
     if let items = maybeItems {
+      let cell = self.tableView.dequeueReusableCellWithIdentifier("Standard", forIndexPath: indexPath) as! StandardTableViewCell
+
       let artist = items[indexPath.row]
       let albums = artist.allAlbums
       let countOfAlbums = albums.count
       let countOfSongs = albums.reduce(0) { $0 + $1.songs.count }
 
-      cell.textLabel?.text = artist.name
-      cell.detailTextLabel?.text = "\(countOfAlbums.pluralize(("Album", "Albums"))) • \(countOfSongs.pluralize(("Song", "Songs")))"
-      cell.imageView?.image = artist.allAlbums.first?.imageToShow
+      cell.customTextLabel.text = artist.name
+      cell.customDetailTextLabel.text = "\(countOfAlbums.pluralize(("Album", "Albums"))) • \(countOfSongs.pluralize(("Song", "Songs")))"
+      cell.customImageView.image = artist.allAlbums.first?.imageToShow
       cell.selectionStyle = .Default
 
+      return cell
+
     } else {
+      let cell = self.tableView.dequeueReusableCellWithIdentifier("Loading", forIndexPath: indexPath)
       cell.textLabel?.text = "Loading…"
       cell.selectionStyle = .None
+      return cell
     }
-
-    return cell
   }
 
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
