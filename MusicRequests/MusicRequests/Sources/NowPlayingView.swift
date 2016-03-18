@@ -19,6 +19,12 @@ class NowPlayingView: UIView {
 
   weak var delegate: NowPlayingViewDelegate?
 
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+
+    translatesAutoresizingMaskIntoConstraints = false
+  }
+
   override func awakeFromNib() {
     super.awakeFromNib()
 

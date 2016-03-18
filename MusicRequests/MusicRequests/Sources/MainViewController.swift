@@ -19,6 +19,8 @@ class MainViewController: UIViewController {
 
   // we need a view that we can move around the screen to cover the cell
   private var viewToMove: UIView!
+  private var topConstraint: NSLayoutConstraint?
+  private var heightConstraint: NSLayoutConstraint?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -30,6 +32,51 @@ class MainViewController: UIViewController {
     // get a reference to the view that needs to move, and make it visible
     viewToMove = upNextViewController.nowPlayingView
     view.addSubview(viewToMove)
+
+    // create the constraints to size this view
+    view.addConstraint(NSLayoutConstraint(
+      item: viewToMove,
+      attribute: .Leading,
+      relatedBy: .Equal,
+      toItem: view,
+      attribute: .Leading,
+      multiplier: 1,
+      constant: 0
+    ))
+
+    view.addConstraint(NSLayoutConstraint(
+      item: viewToMove,
+      attribute: .Trailing,
+      relatedBy: .Equal,
+      toItem: view,
+      attribute: .Trailing,
+      multiplier: 1,
+      constant: 0
+    ))
+
+    let topConstraint = NSLayoutConstraint(
+      item: viewToMove,
+      attribute: .Top,
+      relatedBy: .Equal,
+      toItem: view,
+      attribute: .Top,
+      multiplier: 1,
+      constant: 0
+    )
+    view.addConstraint(topConstraint)
+    self.topConstraint = topConstraint
+
+    let heightConstraint = NSLayoutConstraint(
+      item: viewToMove,
+      attribute: .Height,
+      relatedBy: .Equal,
+      toItem: nil,
+      attribute: .NotAnAttribute,
+      multiplier: 0,
+      constant: 0
+    )
+    viewToMove.addConstraint(heightConstraint)
+    self.heightConstraint = heightConstraint
   }
 
   func updateViewPosition(inTableView tableView: UITableView) {
@@ -43,7 +90,8 @@ class MainViewController: UIViewController {
     let maximum = view.bounds.size.height - cellFrame.size.height
     cellPosition.y = min(cellPosition.y, maximum)  // can't go off the bottom of the screen
 
-    viewToMove.frame = CGRect(origin: cellPosition, size: cellFrame.size)
+    heightConstraint?.constant = max(0, cellFrame.size.height)
+    topConstraint?.constant = cellPosition.y
   }
 
 }
