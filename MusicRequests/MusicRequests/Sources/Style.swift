@@ -21,10 +21,6 @@ struct Style {
   static var white = UIColor.whiteColor()
   static var clear = UIColor.clearColor()
 
-  static var red = UIColor.redColor()
-  static var yellow = UIColor.yellowColor()
-
-
   struct darkTheme {
 
     // This function is called in AppDelegate.swift on initial launch of the app within the function
