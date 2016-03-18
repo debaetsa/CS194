@@ -81,12 +81,25 @@ class SongListTableViewController: ItemListTableViewController {
 
       if showNumbers {
         (cell as! NumberedTableViewCell).numberedItem = (number!, song)
+        
       } else {
         cell.textLabel?.text = song.name
         cell.detailTextLabel?.text = song.artistAlbumString
         cell.imageView?.image = song.album!.imageToShow
         cell.selectionStyle = .Default
       }
+      var imageView: UIImageView?
+      let vote = song.cachedVote
+    
+      imageView = UIImageView(frame: CGRectMake(0, 0, 28.0, 28.0))
+      if (vote == .Up) {
+        imageView!.image = UIImage(named: "Temp_up_button")
+      } else if (vote == .Down) {
+        imageView!.image = UIImage(named: "Temp_down_button")
+      } else {
+        imageView = nil
+      }
+      cell.accessoryView = imageView
 
       return cell
 
