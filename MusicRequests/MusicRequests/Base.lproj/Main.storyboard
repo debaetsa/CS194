@@ -473,11 +473,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jLL-3q-Q4V">
-<<<<<<< HEAD
-                                            <rect key="frame" x="15" y="0.0" width="570" height="49"/>
-=======
                                             <rect key="frame" x="15" y="0.0" width="570" height="49.5"/>
->>>>>>> 0f35c0a679c3f8e978c8a1c984dbf7de613d7fa7
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
