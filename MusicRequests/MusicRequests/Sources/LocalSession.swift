@@ -200,8 +200,14 @@ class LocalSession: Session, NSNetServiceDelegate {
     for album in sourceLibrary.allAlbums {
       connection.sendItem(album)
     }
+    for genre in sourceLibrary.allGenres {
+      connection.sendItem(genre)
+    }
     for song in sourceLibrary.allSongs {
       connection.sendItem(song)
+    }
+    for playlist in sourceLibrary.allPlaylists {
+      connection.sendItem(playlist)
     }
     connection.sendCode(.LibraryDone)
   }

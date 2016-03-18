@@ -19,7 +19,7 @@ class Song: Item {
 
   let artistOverride: Artist?
   var album: Album?
-  let genre: Genre?
+  var genre: Genre?
 
   var cachedVote = Request.Vote.None
 
@@ -97,8 +97,9 @@ class Song: Item {
     // add the basic data
     super.buildSendableData(mutableData)
 
-    // add the ID for the album
+    // add the ID for the album and the genre
     mutableData.appendCustomInteger(self.album?.identifier ?? UInt32(0))
+    mutableData.appendCustomInteger(self.genre?.identifier ?? UInt32(0))
 
     // and then tell it which track we are on that album
     let track = self.album?.trackForSong(self)
@@ -109,11 +110,13 @@ class Song: Item {
   required init?(data: NSData, lookup: [UInt32: Item], inout offset: Int) {
     self.userInfo = nil
     self.artistOverride = nil
-    self.genre = nil
 
     super.init(data: data, lookup: lookup, offset: &offset)
 
     guard let albumId = data.getNextInteger(&offset) else {
+      return nil
+    }
+    guard let genreId = data.getNextInteger(&offset) else {
       return nil
     }
     guard let discNumber = data.getNextInteger(&offset) else {
@@ -128,6 +131,13 @@ class Song: Item {
       self.album = album
     } else {
       logger("could not find album for song \(name)")
+    }
+
+    if let item = lookup[genreId], let genre = item as? Genre {
+      genre.addSong(self)
+      self.genre = genre
+    } else {
+      logger("could not find genre for song \(name)")
     }
   }
 

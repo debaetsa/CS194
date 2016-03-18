@@ -23,4 +23,10 @@ class Genre: Item {
     songs.sortInPlace(Item.sorter)
   }
 
+  // MARK: - Sending
+
+  override var tag: Tag {
+    return .Genre
+  }
+
 }

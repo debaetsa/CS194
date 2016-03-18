@@ -81,6 +81,12 @@ class RemoteLibrary: Library {
     case .Song:
       maybeItem = tryToAddItem(data, withOffset: &offset, toArray: &songs)
 
+    case .Playlist:
+      maybeItem = tryToAddItem(data, withOffset: &offset, toArray: &playlists)
+
+    case .Genre:
+      maybeItem = tryToAddItem(data, withOffset: &offset, toArray: &genres)
+
     default:
       logger("ignoring item of type \(type)")
     }

@@ -135,7 +135,7 @@ class AppleLibrary: Library {
     for collection in playlistItemCollections {
       if let playlistName = (collection.valueForProperty(MPMediaPlaylistPropertyName) as? String) {
         // We have a valid name for the Playlist, so create a Playlist.
-        let playlist = Playlist(name: playlistName)
+        let playlist = Playlist(name: playlistName, sortName: playlistName)
 
         for item in collection.items {
           if let song = idToSong[item.persistentID] {
