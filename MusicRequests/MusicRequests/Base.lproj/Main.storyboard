@@ -1486,7 +1486,7 @@
         <image name="Albums" width="25" height="25"/>
         <image name="Artists" width="25" height="25"/>
         <image name="Genres" width="25" height="25"/>
-        <image name="LibraryButton" width="275" height="275"/>
+        <image name="LibraryButton" width="50" height="50"/>
         <image name="Playlists" width="25" height="25"/>
         <image name="Songs" width="25" height="25"/>
         <image name="forward_button" width="40" height="40"/>
