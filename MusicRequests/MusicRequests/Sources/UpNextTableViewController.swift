@@ -19,6 +19,7 @@ class UpNextTableViewController: ItemListTableViewController {
 
     super.viewDidLoad()
 
+    tableView.showsVerticalScrollIndicator = false  // hide the scroll bar
     nowPlayingView.delegate = self
   }
 
