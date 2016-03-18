@@ -22,6 +22,8 @@ class SongTableViewCell: SwipeTableViewCell {
     customDetailTextLabel?.text = song.artistAlbumString
     customImageView?.image = song.album?.imageToShow  // TODO: might not get an image
 
+    customNumberLabel?.textColor = Style.gray
+
     if let number = maybeNumber {
       customNumberLabel?.text = "\(number)."
     } else {
