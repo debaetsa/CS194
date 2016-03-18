@@ -412,7 +412,7 @@
                             <outlet property="delegate" destination="w67-fo-vCv" id="hdg-lz-wPI"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Sources" id="w5m-oZ-MRy">
+                    <navigationItem key="navigationItem" title="Source" id="w5m-oZ-MRy">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="F3h-xY-dLo">
                             <connections>
                                 <segue destination="ODz-A7-0rQ" kind="unwind" unwindAction="unwindAction:" id="Dt8-kc-rgS"/>
