@@ -22,7 +22,7 @@ class AppleLibrary: Library {
   let genres: [Genre]
   override var allGenres: [Genre] { return genres }
 
-  let lookup: [UInt32: Item]
+  private let lookup: [UInt32: Item]
 
   init() {
     let query = MPMediaQuery.songsQuery()
@@ -166,5 +166,9 @@ class AppleLibrary: Library {
     super.init()
 
     finishLoading()  // this is loaded at this point
+  }
+
+  override func itemForIdentifier(identifier: UInt32) -> Item? {
+    return lookup[identifier]
   }
 }

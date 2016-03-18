@@ -17,6 +17,8 @@ class FilteredLibrary: Library {
   let albums: [Album]
   override var allAlbums: [Album] { return albums }
 
+  private var lookup = [UInt32: Item]()
+
   let playlist: Playlist
 
   init(playlist: Playlist) {
@@ -86,17 +88,18 @@ class FilteredLibrary: Library {
       // Finally, we can create the new Song object and add it to the list that
       // we are constructing.  We'll get Artists/Albums later.
       let track = song.album?.trackForSong(song)
-      mappedSongs.append(
-        Song(
-          name: song.name,
-          artist: mappedArtistOverride,
-          album: mappedAlbum,
-          genre: nil,
-          discNumber: track?.disc,
-          trackNumber: track?.track,
-          userInfo: song.userInfo
-        )
+      let song = Song(
+        name: song.name,
+        artist: mappedArtistOverride,
+        album: mappedAlbum,
+        genre: nil,
+        discNumber: track?.disc,
+        trackNumber: track?.track,
+        userInfo: song.userInfo
       )
+
+      mappedSongs.append(song)
+      lookup[song.identifier] = song
     }
 
     songs = mappedSongs.sort(Item.sorter)
@@ -108,5 +111,9 @@ class FilteredLibrary: Library {
 
     // we have loaded everything at this point
     finishLoading()
+  }
+
+  override func itemForIdentifier(identifier: UInt32) -> Item? {
+    return lookup[identifier]
   }
 }

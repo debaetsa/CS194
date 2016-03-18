@@ -120,7 +120,7 @@ class Request: NSObject, Sendable {
     return data
   }
 
-  init?(data: NSData, lookup: [UInt32: Item], queue: Queue) {
+  init?(data: NSData, library: Library, queue: Queue) {
     super.init()  // nothing to configure before super
 
     var offset = 0
@@ -151,7 +151,7 @@ class Request: NSObject, Sendable {
       }
 
     case .Song:
-      if let item = lookup[identifier], let song = item as? Song {
+      if let item = library.itemForIdentifier(identifier), let song = item as? Song {
         self.song = song  // this just has a Song, so only set that value
       } else {
         return nil

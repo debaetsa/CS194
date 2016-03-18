@@ -70,4 +70,8 @@ class Library: NSObject {
     }
   }
 
+  func itemForIdentifier(identifier: UInt32) -> Item? {
+    return nil
+  }
+
 }

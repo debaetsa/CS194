@@ -45,7 +45,7 @@ class RemoteLibrary: Library {
   }
 
   /** Looks up an Item based on its identifier. */
-  func itemForIdentifier(identifier: UInt32) -> Item? {
+  override func itemForIdentifier(identifier: UInt32) -> Item? {
     return identifierToItem[identifier]
   }
 

@@ -281,7 +281,7 @@ class LocalSession: Session, NSNetServiceDelegate {
   private func didReceiveData(data: NSData, withIdentifier identifier: SendableIdentifier, fromConnection connection: Connection) {
     switch identifier {
     case .Request:
-      if let request = Request(data: data, lookup: (sourceLibrary as! AppleLibrary).lookup, queue: localQueue) {
+      if let request = Request(data: data, library: sourceLibrary, queue: localQueue) {
 
         let queueItem: QueueItem
 
