@@ -107,7 +107,7 @@ class SongListTableViewController: ItemListTableViewController {
 
       cell.delegate = self
       cell.updateContent(withSong: song, andNumber: number)
-      cell.selectionStyle = .Default
+      cell.selectionStyle = .None
 
       return cell
 
@@ -118,21 +118,6 @@ class SongListTableViewController: ItemListTableViewController {
       cell.selectionStyle = .None
 
       return cell
-    }
-  }
-
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    if segue.identifier == "PushSongPreview", let numberedItems = maybeNumberedItems {
-      let destination = segue.destinationViewController as! SongViewController
-      let indexPath = indexPathForSender(sender)
-
-      let song: Song
-      if let filteredItems = maybeFilteredItems where searchController?.active == true {
-        (_, song) = filteredItems[indexPath.row]
-      } else {
-        (_, song) = numberedItems[indexPath.row]
-      }
-      destination.song = song
     }
   }
 }

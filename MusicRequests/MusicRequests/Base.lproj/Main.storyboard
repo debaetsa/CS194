@@ -629,9 +629,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="eq0-SH-uWZ" kind="show" identifier="PushSongPreview" id="LQW-w3-NSf"/>
-                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Basic" rowHeight="50" id="LxS-U4-3ot" userLabel="BasicSwipeCell" customClass="SongTableViewCell" customModule="JAMM" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="142" width="375" height="50"/>
@@ -1314,81 +1311,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cJy-oE-Yf8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="353" y="2322"/>
-        </scene>
-        <!--Song View Controller-->
-        <scene sceneID="alZ-vI-dBO">
-            <objects>
-                <viewController id="eq0-SH-uWZ" customClass="SongViewController" customModule="JAMM" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="UFh-xk-rMq"/>
-                        <viewControllerLayoutGuide type="bottom" id="Woy-lU-pPF"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="dP3-7b-tQs">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c1G-4e-q0E">
-                                <rect key="frame" x="10" y="74" width="355" height="355"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="c1G-4e-q0E" secondAttribute="height" multiplier="1:1" id="2y0-fC-uRj"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hozier - Hozier" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="33q-bf-ZQa">
-                                <rect key="frame" x="24" y="505" width="327" height="23"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take Me to Church" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydf-Ru-P8F">
-                                <rect key="frame" x="24" y="464" width="327" height="33"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aLR-9e-O04" userLabel="Song Details">
-                                <rect key="frame" x="16" y="464" width="343" height="74"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="Woy-lU-pPF" firstAttribute="top" secondItem="aLR-9e-O04" secondAttribute="bottom" constant="85" id="2YG-TD-02W"/>
-                            <constraint firstItem="aLR-9e-O04" firstAttribute="top" secondItem="c1G-4e-q0E" secondAttribute="bottom" constant="35" id="6ig-xb-4EL"/>
-                            <constraint firstItem="33q-bf-ZQa" firstAttribute="leading" secondItem="ydf-Ru-P8F" secondAttribute="leading" id="84o-wr-QYu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="aLR-9e-O04" secondAttribute="trailing" id="8CO-up-vvg"/>
-                            <constraint firstItem="c1G-4e-q0E" firstAttribute="top" secondItem="dP3-7b-tQs" secondAttribute="top" constant="74" id="BqI-vn-nwd"/>
-                            <constraint firstItem="aLR-9e-O04" firstAttribute="centerX" secondItem="33q-bf-ZQa" secondAttribute="centerX" id="NAM-vc-C2o"/>
-                            <constraint firstItem="33q-bf-ZQa" firstAttribute="top" secondItem="ydf-Ru-P8F" secondAttribute="bottom" constant="8" symbolic="YES" id="OoZ-Ct-lwc"/>
-                            <constraint firstItem="c1G-4e-q0E" firstAttribute="leading" secondItem="dP3-7b-tQs" secondAttribute="leading" constant="10" id="QFH-4A-Qd1"/>
-                            <constraint firstItem="aLR-9e-O04" firstAttribute="leading" secondItem="dP3-7b-tQs" secondAttribute="leadingMargin" id="Zdx-05-vd8"/>
-                            <constraint firstItem="33q-bf-ZQa" firstAttribute="leading" secondItem="dP3-7b-tQs" secondAttribute="leadingMargin" constant="8" id="mfn-oq-hGD"/>
-                            <constraint firstItem="aLR-9e-O04" firstAttribute="centerX" secondItem="ydf-Ru-P8F" secondAttribute="centerX" id="oJf-Eu-vjW"/>
-                            <constraint firstItem="aLR-9e-O04" firstAttribute="top" secondItem="ydf-Ru-P8F" secondAttribute="top" id="wz0-kO-MB9"/>
-                            <constraint firstAttribute="trailing" secondItem="c1G-4e-q0E" secondAttribute="trailing" constant="10" id="zsH-IG-r5h"/>
-                        </constraints>
-                    </view>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="x8g-9x-AdV" userLabel="Song Preview">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="4TZ-2V-7qz">
-                            <connections>
-                                <segue destination="mo1-gv-mo7" kind="unwind" unwindAction="unwindAction:" id="zVR-en-bW2"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <outlet property="imageViewAlbumArt" destination="c1G-4e-q0E" id="ulS-VS-YMb"/>
-                        <outlet property="labelSongDetails" destination="33q-bf-ZQa" id="q7B-Rb-Yns"/>
-                        <outlet property="labelSongName" destination="ydf-Ru-P8F" id="9y4-xd-8IB"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="e7h-tJ-Ubv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="mo1-gv-mo7" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="-1159.5" y="4925.5"/>
         </scene>
         <!--Now Playing View Controller-->
         <scene sceneID="jCK-5h-xxm">
