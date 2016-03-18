@@ -47,7 +47,6 @@
 		50D2492B1C5D754E00A10E97 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492A1C5D754E00A10E97 /* Item.swift */; };
 		50D2492E1C5D790B00A10E97 /* TemporaryLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */; };
 		50DC09251C60171B00323425 /* RemoteSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DC09241C60171B00323425 /* RemoteSessionManager.swift */; };
-		50EB49ED1C89378100486904 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB49EC1C89378100486904 /* SearchTableViewController.swift */; };
 		50F2100D1C9B6C4A00B2E3A0 /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F2100C1C9B6C4A00B2E3A0 /* SongTableViewCell.swift */; };
 		50F2100F1C9B7A9B00B2E3A0 /* QueueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F2100E1C9B7A9B00B2E3A0 /* QueueTableViewCell.swift */; };
 		50F210111C9BC34700B2E3A0 /* NowPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F210101C9BC34700B2E3A0 /* NowPlayingView.swift */; };
@@ -117,7 +116,6 @@
 		50D2492A1C5D754E00A10E97 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Item.swift; path = Sources/Item.swift; sourceTree = "<group>"; };
 		50D2492D1C5D790B00A10E97 /* TemporaryLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporaryLibrary.swift; path = Sources/TemporaryLibrary.swift; sourceTree = "<group>"; };
 		50DC09241C60171B00323425 /* RemoteSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteSessionManager.swift; path = Sources/RemoteSessionManager.swift; sourceTree = "<group>"; };
-		50EB49EC1C89378100486904 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchTableViewController.swift; path = Sources/SearchTableViewController.swift; sourceTree = "<group>"; };
 		50F2100C1C9B6C4A00B2E3A0 /* SongTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongTableViewCell.swift; path = Sources/SongTableViewCell.swift; sourceTree = "<group>"; };
 		50F2100E1C9B7A9B00B2E3A0 /* QueueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QueueTableViewCell.swift; path = Sources/QueueTableViewCell.swift; sourceTree = "<group>"; };
 		50F210101C9BC34700B2E3A0 /* NowPlayingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlayingView.swift; path = Sources/NowPlayingView.swift; sourceTree = "<group>"; };
@@ -174,7 +172,6 @@
 				50159F5E1C65AE26000E4878 /* SongListTableViewController.swift */,
 				50159F5B1C65AE26000E4878 /* AlbumListTableViewController.swift */,
 				1A533B971C75B8AD00B41D7F /* GenreListTableViewController.swift */,
-				50EB49EC1C89378100486904 /* SearchTableViewController.swift */,
 				B3BD51BF1C682B860079299F /* SongViewController.swift */,
 				B3BD51BD1C680EBA0079299F /* NowPlayingViewController.swift */,
 			);
@@ -454,7 +451,6 @@
 				505B5E601C55D0E100235C1C /* RemoteLibrary.swift in Sources */,
 				505B5E6B1C55D1AC00235C1C /* RemoteSession.swift in Sources */,
 				50F210111C9BC34700B2E3A0 /* NowPlayingView.swift in Sources */,
-				50EB49ED1C89378100486904 /* SearchTableViewController.swift in Sources */,
 				50159F601C65AE26000E4878 /* AlbumListTableViewController.swift in Sources */,
 				509C9AEA1C73BA9700E4AFCB /* Sendable.swift in Sources */,
 				B37573911C84F3C900537726 /* MainViewController.swift in Sources */,

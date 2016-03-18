@@ -15,8 +15,6 @@ class UpNextTableViewController: ItemListTableViewController {
   @IBOutlet var nowPlayingView: NowPlayingView!
 
   override func viewDidLoad() {
-    shouldShowSearchBar = false  // don't add search bar here
-
     super.viewDidLoad()
 
     tableView.showsVerticalScrollIndicator = false  // hide the scroll bar
