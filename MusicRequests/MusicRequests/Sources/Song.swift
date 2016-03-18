@@ -126,18 +126,22 @@ class Song: Item {
       return nil
     }
 
-    if let item = lookup[albumId], let album = item as? Album {
-      album.addSong(self, discNumber: Int(discNumber), trackNumber: Int(songNumber))
-      self.album = album
-    } else {
-      logger("could not find album for song \(name)")
+    if albumId > 0 {
+      if let item = lookup[albumId], let album = item as? Album {
+        album.addSong(self, discNumber: Int(discNumber), trackNumber: Int(songNumber))
+        self.album = album
+      } else {
+        logger("could not find album for song \(name)")
+      }
     }
 
-    if let item = lookup[genreId], let genre = item as? Genre {
-      genre.addSong(self)
-      self.genre = genre
-    } else {
-      logger("could not find genre for song \(name)")
+    if genreId > 0 {
+      if let item = lookup[genreId], let genre = item as? Genre {
+        genre.addSong(self)
+        self.genre = genre
+      } else {
+        logger("could not find genre #\(genreId) for song \(name)")
+      }
     }
   }
 
