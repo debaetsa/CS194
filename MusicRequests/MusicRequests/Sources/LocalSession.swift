@@ -87,6 +87,7 @@ class LocalSession: Session, NSNetServiceDelegate {
   /** Stores all the clients who are currently connected. */
   private var allClients = [Connection]()
   private var validClients = [Connection]()  // clients that have requested a Library
+  private var clientRequests = [Connection: [Request]]()
 
   /** Stores the broadcasted NSNetService.
 
@@ -173,6 +174,7 @@ class LocalSession: Session, NSNetServiceDelegate {
     connection.onReceivedData = didReceiveData
     connection.onReceivedCode = didReceiveCode
     allClients.append(connection)
+    clientRequests[connection] = []
   }
 
   private func sendLibraryData(toConnection connection: Connection) {
@@ -229,6 +231,8 @@ class LocalSession: Session, NSNetServiceDelegate {
     if let index = validClients.indexOf(connection) {
       validClients.removeAtIndex(index)
     }
+
+    clientRequests.removeValueForKey(connection)
   }
 
   private func shouldSendLibrary(toIdentifier maybeIdentifier: NSData?) -> Bool {
@@ -300,7 +304,40 @@ class LocalSession: Session, NSNetServiceDelegate {
 
         // Now that we have the QueueItem for this Request, figure out if the
         // response changed.  For now, just increment/decrement for up/down.
-        ++(queueItem as! LocalQueueItem).votes
+
+        var previousVote = Request.Vote.None
+        if let requests = clientRequests[connection] {
+          // try to find the Index for the previous Request
+          let maybeIndex = requests.indexOf({ $0.queueItem === queueItem })
+
+          if let index = maybeIndex {
+            // grab the vote
+            previousVote = requests[index].vote
+
+            // and then replace the request if we can
+            clientRequests[connection]![index] = request
+
+          } else {
+            // otherwise, just add it to the list for the next iteration
+            clientRequests[connection]!.append(request)
+          }
+        }
+
+        let localQueueItem = (queueItem as! LocalQueueItem)
+
+        // undo whatever was done previously
+        switch previousVote {
+        case .Up:   --localQueueItem.votes
+        case .Down: ++localQueueItem.votes
+        default: break
+        }
+
+        // and then apply whatever has been done now
+        switch request.vote {
+        case .Up:   ++localQueueItem.votes
+        case .Down: --localQueueItem.votes
+        default: break
+        }
 
         // Refresh the display.  Wahoo!
         localQueue.refresh()
