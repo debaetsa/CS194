@@ -150,6 +150,8 @@ class UpNextTableViewController: ItemListTableViewController {
     return (indexPath.section == 1) ? 100 : 50
   }
 
+  // MARK: - Dismissing Modal Controllers
+
   @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
     self.dismissViewControllerAnimated(true, completion: nil)
   }
