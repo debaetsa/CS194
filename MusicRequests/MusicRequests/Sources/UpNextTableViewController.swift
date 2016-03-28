@@ -134,6 +134,23 @@ class UpNextTableViewController: ItemListTableViewController {
     }
   }
 
+  // Convert an image to grayscale. Reference: http://myxcode.net/2015/08/30/converting-an-image-to-black-white-in-swift/
+  func convertToGrayScale(image: UIImage) -> UIImage {
+    let imageRect:CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
+    let colorSpace = CGColorSpaceCreateDeviceGray()
+    let width = image.size.width
+    let height = image.size.height
+
+    let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.None.rawValue)
+    let context = CGBitmapContextCreate(nil, Int(width), Int(height), 8, 0, colorSpace, bitmapInfo.rawValue)
+
+    CGContextDrawImage(context, imageRect, image.CGImage)
+    let imageRef = CGBitmapContextCreateImage(context)
+    let newImage = UIImage(CGImage: imageRef!)
+    
+    return newImage
+  }
+
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     if let items = maybeItems {
       let queueItem: QueueItem
@@ -157,6 +174,15 @@ class UpNextTableViewController: ItemListTableViewController {
         cell.updateContent(withQueueItem: queueItem)
         cell.selectionStyle = isPlayingRow ? .Default : .None
         cell.delegate = (indexPath.section == 2) ? self : nil
+
+        if indexPath.section == 0 {
+          cell.customTextLabel?.textColor = Style.gray
+          cell.customDetailTextLabel?.textColor = Style.gray
+          cell.customImageView?.image = convertToGrayScale((cell.customImageView?.image)!)
+        } else {
+          cell.customTextLabel?.textColor = Style.white
+          cell.customDetailTextLabel?.textColor = Style.white
+        }
 
         return cell
       }
